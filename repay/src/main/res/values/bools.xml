@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="lock_orientation">true</bool>
+    <bool name="use_tabView">true</bool>
+
+</resources>

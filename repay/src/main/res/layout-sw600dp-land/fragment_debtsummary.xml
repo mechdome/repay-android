@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_foreground" >
+
+    <RelativeLayout
+        android:id="@+id/fragment_debtsummary_header"
+        android:layout_width="350dp"
+        android:layout_height="fill_parent"
+        android:background="@color/main_foreground"
+        android:minHeight="130dp"
+        android:padding="10dp" >
+
+        <com.repay.android.RoundedImageView
+            android:id="@+id/fragment_debtsummary_headerPic"
+            style="@style/EnterDebt_Pic"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/contentDesc" />
+
+        <ProgressBar
+            android:id="@+id/fragment_debtsummary_headerLoading"
+            style="@style/EnterDebt_Pic"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/fragment_debtsummary_headerName"
+            style="@style/EnterDebt_NamesText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_debtsummary_headerPic"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/text" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_debtsummary_radioGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_toRightOf="@id/fragment_debtsummary_header"
+        android:background="@color/main_background"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/fragment_debtsummary_theyOweMe"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/main_background_slightlyDarker"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/fragment_enterdebt_theyoweme"
+            android:textAllCaps="true"
+            android:textColor="@color/main_foreground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_debtsummary_iOweThem"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/main_background_slightlyDarker"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/fragment_enterdebt_iowethem"
+            android:textAllCaps="true"
+            android:textColor="@color/main_foreground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/fragment_debtsummary_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_debtsummary_radioGroup"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@id/fragment_debtsummary_header"
+        android:hint="@string/fragment_enterdebt_enterdescription"
+        android:lines="2"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp" />
+
+    <CheckBox
+        android:id="@+id/fragment_debtsummary_splitAmount"
+        style="@style/CustomCheckBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_debtsummary_description"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/fragment_debtsummary_header"
+        android:checked="false"
+        android:paddingTop="5dp"
+        android:text="@string/fragment_enterdebt_splitAmount" />
+
+    <CheckBox
+        android:id="@+id/fragment_debtsummary_inclMe"
+        style="@style/CustomCheckBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_debtsummary_splitAmount"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@id/fragment_debtsummary_header"
+        android:checked="false"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:text="@string/fragment_debtsummary_inclme" />
+
+    <TextView
+        android:id="@+id/fragment_debtsummary_amount"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_debtsummary_inclMe"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/fragment_debtsummary_header"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center_horizontal"
+        android:textSize="60sp" />
+
+    <Button
+        android:id="@+id/fragment_debtsummary_donebtn"
+        style="@style/CustomBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_wide_red"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onNextBtn"
+        android:text="@string/done" />
+
+</RelativeLayout>

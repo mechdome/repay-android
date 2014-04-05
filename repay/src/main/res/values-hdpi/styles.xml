@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="EnterDebtAmount_Button">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:background">@drawable/btn_enteramount</item>
+    </style>
+    
+    <style name="EnterDebtAmount_Text">
+        <item name="android:textSize">58sp</item>
+    </style>
+    
+    <style name="EnterDebt_PicBorder">
+        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_height">110dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+    
+    <style name="EnterDebt_Pic">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    
+    <style name="EnterDebt_NamesText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+    
+    <style name="EnterDebt_Button">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>

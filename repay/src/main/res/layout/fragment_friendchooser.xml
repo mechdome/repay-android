@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_foreground" >
+
+    <Button
+        android:id="@+id/activity_friendchooser_donebtn"
+        style="@style/CustomBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_wide_red"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onNextBtn"
+        android:text="@string/next" />
+
+    <ListView
+        android:id="@+id/activity_friendchooser_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/activity_friendchooser_donebtn"
+        android:divider="@null" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/activity_friendchooser_emptystate"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/activity_friendchooser_donebtn"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/activity_friendchooser_helptxt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_friendchooser_helptxt"
+            android:textColor="@color/text"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/activity_friendchooser_helpbtn"
+            style="@style/CustomBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_friendchooser_helptxt"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_wide_red"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="15dp"
+            android:text="@string/activity_friendchooser_helpbtn_txt" />
+    </RelativeLayout>
+
+</RelativeLayout>

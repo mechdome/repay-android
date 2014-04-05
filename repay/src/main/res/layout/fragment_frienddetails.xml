@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_foreground" >
+
+    <RelativeLayout
+        android:id="@+id/fragment_frienddetails_header"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp" >
+
+        <com.repay.android.RoundedImageView
+            android:id="@+id/fragment_frienddetails_headerPicBG"
+            android:layout_width="194dp"
+            android:layout_height="194dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/contentDesc"
+            android:scaleType="centerCrop"
+            android:src="@drawable/debt_ind_white" />
+
+        <com.repay.android.RoundedImageView
+            android:id="@+id/fragment_frienddetails_headerPic"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="7dp"
+            android:contentDescription="@string/contentDesc"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/fragment_frienddetails_debttotal_prefix"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_frienddetails_header"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textColor="@color/emphasised_text"
+        android:textSize="25sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/fragment_frienddetails_debttotal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_frienddetails_debttotal_prefix"
+        android:layout_marginTop="-10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="top|center_horizontal"
+        android:textColor="@color/emphasised_text"
+        android:textSize="60sp" />
+
+    <Button
+        android:id="@+id/fragment_frienddetails_share"
+        style="@style/CustomBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_wide_red"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/fragment_friendoverview_share" />
+
+    <Button
+        android:id="@+id/fragment_frienddetails_repaid"
+        style="@style/CustomBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fragment_frienddetails_share"
+        android:background="@drawable/btn_wide_red_darker"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onClick"
+        android:text="@string/fragment_friendoverview_repaid" />
+
+</RelativeLayout>

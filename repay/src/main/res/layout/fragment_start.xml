@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_foreground"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/fragment_start_emptystate"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/fragment_start_nofriendsadded"
+            style="@style/FriendsList.EmptyListText"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_horizontal"
+            android:text="@string/fragment_start_nofriendsadded" />
+        
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/fragment_start_friendsgrid"
+        style="@style/GridView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" >
+    </GridView>
+
+    <ProgressBar
+        android:id="@+id/fragment_start_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+    </ProgressBar>
+
+</RelativeLayout>
