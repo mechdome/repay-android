@@ -35,11 +35,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif-condensed"
+            style="@style/FriendsList.EmptyListText"
             android:gravity="center_horizontal"
-            android:text="@string/activity_friendchooser_helptxt"
-            android:textColor="@color/text"
-            android:textSize="20sp" />
+            android:text="@string/activity_friendchooser_helptxt"/>
 
         <Button
             android:id="@+id/activity_friendchooser_helpbtn"
