@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/fragment_debthistory_noDebts"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="sans-serif-condensed"
         style="@style/FriendsList.EmptyListText"/>
 
     <ListView
