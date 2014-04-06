@@ -15,6 +15,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -161,6 +162,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 		return friends;
 	}
+
+    /**
+     * Convenience method for knowing how many friend entries are in the database
+     * @return Number of friends in database
+     * @throws NullPointerException If no records are found
+     */
+    public int getNumberOfPeople() throws NullPointerException{
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(Names.F_TABLENAME,null,null,null,null,null,null);
+        return c.getCount();
+    }
+
+    /**
+     * Convenience method for knowing how many debt entries are in the database
+     * @return Number of debts in database
+     * @throws NullPointerException If no records are found
+     */
+    public int getNumberOfDebts() throws NullPointerException{
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(Names.D_TABLENAME,null,null,null,null,null,null);
+        return c.getCount();
+    }
 
 	/**
 	 * Add a friend into the database. To get a RepayID, use generateRepayID()
@@ -314,8 +337,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	/**
 	 * Remove a singular debt from the database
-	 * @param repayID ID of friend
-	 * @param date Date representation of date when debt was registered
 	 * @throws android.database.SQLException
 	 * @throws IndexOutOfBoundsException
 	 * @throws NullPointerException
@@ -350,7 +371,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	/**
 	 * @param debtID
-	 * @param repayID
 	 * @return The debt stored against the two given attributes
 	 * @throws android.database.SQLException
 	 * @throws IndexOutOfBoundsException
