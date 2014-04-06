@@ -121,7 +121,9 @@ public class SettingsFragment extends PreferenceFragment {
 	/**
 	 * @param c The Context to operate in
 	 * @return True if the GridView is to be used
+     * @deprecated GridView is now the only way of showing data
 	 */
+    @Deprecated
 	public static boolean useGridViewOnPhone(Context c){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		return prefs.getBoolean(PREF_KEY_USE_GRID_VIEW, true);
