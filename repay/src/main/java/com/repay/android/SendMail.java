@@ -1,12 +1,16 @@
 package com.repay.android;
 
+import java.io.File;
 import java.math.BigDecimal;
 
+import com.repay.android.database.DatabaseHandler;
 import com.repay.android.settings.SettingsFragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 
 /**
@@ -25,6 +29,7 @@ public class SendMail {
 	
 	/**
 	 * Start intent for sending an email to my email with a set subject.
+     * Will pass the database file from storage to the email client so a dump can be emailed (If possible)
 	 * @param c The Context to run in
 	 */
 	public static void sendFeedback(Context c){
@@ -32,6 +37,21 @@ public class SendMail {
 		intent.setType("message/rfc822");
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mattallen092@gmail.com"});
 		intent.putExtra(Intent.EXTRA_SUBJECT, "Repay Feedback");
+        String emailBody;
+        try{
+            DatabaseHandler db = new DatabaseHandler(c);
+            int people = db.getNumberOfPeople();
+            int debts = db.getNumberOfDebts();
+            emailBody = "API Level: "+Integer.toString(Build.VERSION.SDK_INT)+
+                    "\nManufacturer: "+Build.MANUFACTURER+"\nModel: "+ Build.MODEL+"\nDB:\nPeople="+
+                    Integer.toString(people)+"\nDebts="+Integer.toString(debts)+
+                    "\n\nMessage\n-----------------\n";
+        } catch (Exception e){
+            emailBody = "API Level: "+Integer.toString(Build.VERSION.SDK_INT)+
+                    "\nManufacturer: "+Build.MANUFACTURER+"\nModel: "+ Build.MODEL+"\n\nMessage\n-----------------\n";
+            Log.e(TAG, "Could not get number of people/debts in DB");
+        }
+        intent.putExtra(Intent.EXTRA_TEXT, emailBody);
 		Log.i(TAG, "Opening feedback email intent...");
 		c.startActivity(Intent.createChooser(intent, "Send Email"));
 		Log.i(TAG, "Successful.");

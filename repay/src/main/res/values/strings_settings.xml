@@ -68,7 +68,7 @@
     </string-array>
     
     <string name="settings_feedback">Feedback</string>
-    <string name="settings_feedback_title">Send Feedback</string>
-    <string name="settings_feedback_summary">If you have anything you want to tell me about my app then please, feel free.</string>
+    <string name="settings_feedback_title">Report a Problem</string>
+    <string name="settings_feedback_summary">If you\'ve run into a bug with Repay, please press here to let me know and i\'ll try and fix it</string>
     
 </resources>
