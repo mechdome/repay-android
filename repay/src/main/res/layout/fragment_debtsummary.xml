@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_foreground" >
+    android:layout_height="match_parent" >
 
     <com.repay.android.RoundedImageView
         android:id="@+id/fragment_debtsummary_headerPic"
@@ -70,8 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_inclMe"
         android:layout_marginTop="5dp"
-        android:fontFamily="sans-serif-thin"
-        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="top|center_horizontal"
+        android:textColor="@color/emphasised_text"
         android:textSize="60sp" />
 
     <Button

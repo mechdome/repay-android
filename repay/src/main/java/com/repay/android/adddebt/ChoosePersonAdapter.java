@@ -32,8 +32,8 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 	private int 						mLayoutID;
 	private ArrayList<Friend> 			mFriends, mSelectedFriends;
 	private Context 					mContext;
-	public static final int 			SELECTED_COLOUR = Color.parseColor("#703399ff");
-	public static final int 			DESELECTED_COLOUR = Color.parseColor("#00FFFFFF");
+	public static final int 			SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
+	public static final int 			DESELECTED_COLOUR = Color.parseColor("#00FFFFFF"); // Invisible
 
 	public ChoosePersonAdapter(Context context, int layoutId, 
 			ArrayList<Friend> friends, ArrayList<Friend> selectedFriends) {
