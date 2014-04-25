@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:baselineAligned="false"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@color/main_foreground" >
+    android:orientation="horizontal" >
 
     <FrameLayout
         android:id="@+id/activity_frienddetails_frame1"

@@ -111,7 +111,14 @@ public class AddDebtActivity extends FragmentActivity {
 		}
 		// Show the first fragment
 		mFragMan = getSupportFragmentManager().beginTransaction();
-		mFragMan.add(mFrameLayoutRes, mChoosePerson);
+        if(savedInstanceState!=null){
+            // If there's a saved state then it's an orientation
+            // change and replace needs to be called rather than
+            // add to stop the fragments from overlapping.
+            mFragMan.replace(mFrameLayoutRes, mChoosePerson);
+        } else {
+            mFragMan.add(mFrameLayoutRes, mChoosePerson);
+        }
 		mFragMan.commit();
 	}
 

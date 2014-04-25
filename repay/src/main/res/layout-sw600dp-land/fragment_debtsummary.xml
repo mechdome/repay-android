@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_foreground" >
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:id="@+id/fragment_debtsummary_header"
         android:layout_width="350dp"
         android:layout_height="fill_parent"
-        android:background="@color/main_foreground"
         android:minHeight="130dp"
         android:padding="10dp" >
 
@@ -40,7 +38,6 @@
         android:layout_width="fill_parent"
         android:layout_height="70dp"
         android:layout_toRightOf="@id/fragment_debtsummary_header"
-        android:background="@color/main_background"
         android:orientation="horizontal" >
 
         <TextView
@@ -123,8 +120,9 @@
         android:layout_below="@id/fragment_debtsummary_inclMe"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/fragment_debtsummary_header"
-        android:fontFamily="sans-serif-thin"
-        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="top|center_horizontal"
+        android:textColor="@color/emphasised_text"
         android:textSize="60sp" />
 
     <Button
