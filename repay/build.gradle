@@ -7,13 +7,25 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 21
-        versionName "1.4.3"
+        versionCode 22
+        versionName "1.4.4"
     }
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        debug{
+            packageNameSuffix ".debug"
+        }
+    }
+    signingConfigs{
+        debug{
+            storeFile file("debug.keystore")
+        }
+        release{
+            storeFile file("repay.keystore")
+            keyAlias "repay"
         }
     }
 }
