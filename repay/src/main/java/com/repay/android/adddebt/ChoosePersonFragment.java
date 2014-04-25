@@ -70,7 +70,11 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 	@Override
 	public void onCreateOptionsMenu(Menu menu,MenuInflater inf){
 		super.onCreateOptionsMenu(menu, inf);
-		inf.inflate(R.menu.chooseperson, menu);
+        if(menu.size()<=1){
+            // Stops Activity from receiving duplicate MenuItems
+            // Solves GitHub bug #2
+            inf.inflate(R.menu.chooseperson, menu);
+        }
 	}
 	
 	private void showAddFriendDialog(){
