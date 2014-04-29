@@ -2,30 +2,36 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
-
+    buildToolsVersion '19.0.3'
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 22
-        versionName "1.4.4"
     }
     buildTypes {
+    }
+    signingConfigs {
         release {
-            runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-        debug{
-            packageNameSuffix ".debug"
+            storeFile file('repay.keystore')
+            keyAlias 'release'
+            keyPassword 'android.Repay0028562'
+            storePassword 'android.Repay0028562'
         }
     }
-    signingConfigs{
-        debug{
-            storeFile file("debug.keystore")
+    productFlavors {
+        stage {
+            minSdkVersion 14
+            packageName 'com.repay.android.debug'
+            targetSdkVersion 19
+            versionCode 1
+            versionName 'debug'
         }
-        release{
-            storeFile file("repay.keystore")
-            keyAlias "repay"
+        prod {
+            minSdkVersion 14
+            packageName 'com.repay.android'
+            signingConfig signingConfigs.release
+            targetSdkVersion 19
+            versionCode 22
+            versionName '1.4.4'
         }
     }
 }
