@@ -72,6 +72,7 @@ public class EnterAmountFragment extends Fragment implements OnClickListener {
 		getView().findViewById(R.id.fragment_enterdebtamount_nine).setOnClickListener(this);
 		getView().findViewById(R.id.fragment_enterdebtamount_zero).setOnClickListener(this);
 		getView().findViewById(R.id.fragment_enterdebtamount_doublezero).setOnClickListener(this);
+        getView().findViewById(R.id.fragment_enterdebtamount_clear).setOnClickListener(this);
 		if(getActivity().getClass()==EditDebtActivity.class){
 			setAmount(((EditDebtActivity)getActivity()).getAmount().toString());
 		}
