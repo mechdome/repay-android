@@ -30,8 +30,8 @@ android {
             packageName 'com.repay.android'
             signingConfig signingConfigs.release
             targetSdkVersion 19
-            versionCode 22
-            versionName '1.4.4'
+            versionCode 23
+            versionName '1.5'
         }
     }
 }
