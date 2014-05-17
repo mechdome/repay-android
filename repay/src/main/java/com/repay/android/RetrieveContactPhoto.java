@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -42,14 +43,14 @@ public class RetrieveContactPhoto extends AsyncTask<Void, Void, Bitmap> {
 	
 	@Override
 	protected void onPreExecute(){
-		imageView.setImageResource(R.drawable.friend_image_light);
+		imageView.setImageResource(backup);
 	}
 	
 	@Override
 	protected Bitmap doInBackground(Void... params) {
 		Bitmap image;
 		try {
-			image = ContactLookup.getContactPhoto(contactUri, c, true);
+            image = ((ImageCache) c.getApplicationContext()).getImage(contactUri);
 		} catch (IOException e) {
 			image = null;
 		} catch (SQLException e){

@@ -28,14 +28,20 @@ public class ContactLookup {
 
 	private static final String TAG = ContactLookup.class.getName();
 
+    private Context mContext;
+
 	private static int[] typesPhone = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN, 
 		ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
 	private static int[] typesEmail = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, 
 		ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
 
-	public static Bitmap getContactPhoto(final Uri lookupUri, final Context c, boolean preferHighRes) throws IOException{
+    public ContactLookup(Context c){
+        mContext = c;
+    }
+
+	public Bitmap getContactPhoto(final Uri lookupUri, boolean preferHighRes) throws IOException{
 		try{
-			Cursor cursor = c.getContentResolver().query(ContactsContract.Data.CONTENT_URI,
+			Cursor cursor = mContext.getContentResolver().query(ContactsContract.Data.CONTENT_URI,
 					null, ContactsContract.Data.CONTACT_ID + "=" + lookupUri.getLastPathSegment() + " AND "
 							+ ContactsContract.Data.MIMETYPE + "='"
 							+ ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE
@@ -46,11 +52,11 @@ public class ContactLookup {
 						cursor.close();
 						return null; // No photo stored
 					}
-					InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(c.getContentResolver(), 
+					InputStream photoStream = ContactsContract.Contacts.openContactPhotoInputStream(mContext.getContentResolver(),
 							lookupUri, preferHighRes);
-					Bitmap contactImg = null;
+					Bitmap contactImg;
 					try{
-						BufferedInputStream input = new BufferedInputStream(photo_stream);
+						BufferedInputStream input = new BufferedInputStream(photoStream);
 						contactImg = BitmapFactory.decodeStream(input);
 						input.close();
 					} catch (IOException e){
@@ -152,7 +158,7 @@ public class ContactLookup {
 	/**
 	 * Get the main email address of the contact
 	 * @param contactID The last known ContactID of the contact
-	 * @param context The context to run in
+	 * @param c The context to run in
 	 * @return String representation of their email address
 	 * @throws android.database.CursorIndexOutOfBoundsException
 	 */
