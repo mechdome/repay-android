@@ -248,9 +248,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public ArrayList<Debt> getDebtsByRepayID(final String repayID) throws SQLException, ParseException,
 	CursorIndexOutOfBoundsException, NullPointerException {
 		ArrayList<Debt> debts = null;
-		Cursor c = null;
 		SQLiteDatabase db = this.getReadableDatabase();
-		c = db.query(Names.D_TABLENAME, new String[]{Names.D_DEBTID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION},
+		Cursor c = db.query(Names.D_TABLENAME, new String[]{Names.D_DEBTID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION},
 				Names.D_REPAYID+"=?", new String[]{repayID}, null, null, null);
 
 		if(c!=null){
@@ -258,10 +257,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			debts = new ArrayList<Debt>();
 			do{
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-				Date date;
-				date = sdf.parse(c.getString(1));
-				debts.add(new Debt(c.getInt(0), repayID, date, new BigDecimal(c.getString(2)), c.getString(3)));
-			}while(c.moveToNext());
+                String description, dateString;
+                Date date;
+                // Try and catch errors to stop this failing silently
+                try{
+                    dateString = c.getString(1);
+                    date = sdf.parse(dateString);
+                } catch (Exception e){
+                    date = new Date();
+                }
+                try{
+                    description = c.getString(3);
+                } catch (Exception e){
+                    description = "";
+                }
+				debts.add(new Debt(c.getInt(0), repayID, date, new BigDecimal(c.getString(2)), description));
+			} while(c.moveToNext());
 		}
 		db.close();
 		return debts;
