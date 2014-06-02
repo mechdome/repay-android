@@ -1,6 +1,5 @@
 package com.repay.android;
 
-import com.repay.android.R;
 import com.repay.android.adddebt.*;
 import com.repay.android.settings.SettingsActivity;
 

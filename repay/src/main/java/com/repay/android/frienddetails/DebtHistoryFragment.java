@@ -67,10 +67,10 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 	public void onStart(){
 		super.onStart();
 		mContext = getActivity();
-		mDB = new DatabaseHandler(getActivity());
+		mDB = new DatabaseHandler(mContext);
 		mList = (ListView)getView().findViewById(R.id.fragment_debtHistory_list);
 		mList.setOnItemLongClickListener(this);
-		mFriend = ((FriendDetailsActivity) getActivity()).getFriend();
+		mFriend = ((FriendDetailsActivity)mContext).getFriend();
 		mNoDebtsMsg = (TextView)getView().findViewById(R.id.fragment_debtHistory_noDebts);
 		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_debtHistory_progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
@@ -164,7 +164,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 		@Override
 		protected void onPostExecute(ArrayList<Debt> result){
 			mProgressBar.setVisibility(ProgressBar.GONE);
-			if (result!=null) {
+			if (result!=null && result.size() > 0) {
 				mAdapter = new DebtHistoryAdapter(mContext,
 						R.layout.fragment_debthistory_listitem, result);
 				mList.setAdapter(mAdapter);
@@ -212,6 +212,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 			mDB.updateFriendRecord(mFriend);
 			// Trigger callback to activity
 			onDebtTotalUpdated(mFriend);
+            // Leave and don't look back
 		}
 	}
 }
