@@ -57,7 +57,6 @@ public class AddDebtActivity extends FragmentActivity {
 	public static final String REPAY_ID = "repay_id";
 	public static final String NO_OF_FRIENDS_SELECTED = "friendsSelected";
 	public static final String AMOUNT = "amount";
-	public static final String DATE = "date";
 	public static final String DESC_FIELD = "description";
 	public static final String IOWETHEM_FIELD = "iOweThem";
 	public static final String CURRENT_FRAGMENT = "fragment";

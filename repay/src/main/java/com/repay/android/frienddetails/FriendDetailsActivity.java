@@ -103,8 +103,13 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			mFragMan = getSupportFragmentManager().beginTransaction();
 			mOverViewFrag = new FriendOverviewFragment();
 			mDebtHistoryFrag = new DebtHistoryFragment();
-			mFragMan.add(R.id.activity_frienddetails_frame1, mOverViewFrag);
-			mFragMan.add(R.id.activity_frienddetails_frame2, mDebtHistoryFrag);
+            if(savedInstanceState != null){
+                mFragMan.replace(R.id.activity_frienddetails_frame1, mOverViewFrag);
+                mFragMan.replace(R.id.activity_frienddetails_frame2, mDebtHistoryFrag);
+            } else {
+                mFragMan.add(R.id.activity_frienddetails_frame1, mOverViewFrag);
+                mFragMan.add(R.id.activity_frienddetails_frame2, mDebtHistoryFrag);
+            }
 			mFragMan.commit();
 
 		} else {
@@ -131,20 +136,17 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 
 				@Override
-				public void onTabReselected(Tab tab,
-						android.app.FragmentTransaction ft) {
+				public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
 					// Not needed
 				}
 
 				@Override
-				public void onTabSelected(Tab tab,
-						android.app.FragmentTransaction ft) {
+				public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
 					mTabView.setCurrentItem(tab.getPosition());
 				}
 
 				@Override
-				public void onTabUnselected(Tab tab,
-						android.app.FragmentTransaction ft) {
+				public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
 					// Not needed
 				}
 			};

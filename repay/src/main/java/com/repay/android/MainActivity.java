@@ -1,6 +1,5 @@
 package com.repay.android;
 
-import com.repay.android.R;
 import com.repay.android.adddebt.*;
 import com.repay.android.settings.SettingsActivity;
 
@@ -46,7 +45,11 @@ public class MainActivity extends FragmentActivity {
 		mStartFr = new StartFragment();
 		getActionBar().setDisplayShowTitleEnabled(false);
 		mFragMan = getSupportFragmentManager().beginTransaction();
-		mFragMan.add(mFrameLayout, mStartFr);
+        if(savedInstanceState != null){
+            mFragMan.replace(mFrameLayout, mStartFr);
+        } else {
+            mFragMan.add(mFrameLayout, mStartFr);
+        }
 		mFragMan.commit();
 	}
 
