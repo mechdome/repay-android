@@ -46,7 +46,11 @@ public class MainActivity extends FragmentActivity {
 		mStartFr = new StartFragment();
 		getActionBar().setDisplayShowTitleEnabled(false);
 		mFragMan = getSupportFragmentManager().beginTransaction();
-		mFragMan.add(mFrameLayout, mStartFr);
+        if(savedInstanceState != null){
+            mFragMan.replace(mFrameLayout, mStartFr);
+        } else {
+            mFragMan.add(mFrameLayout, mStartFr);
+        }
 		mFragMan.commit();
 	}
 
