@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Repay.iml" filepath="$PROJECT_DIR$/Repay.iml" />
       <module fileurl="file://$PROJECT_DIR$/repay/repay.iml" filepath="$PROJECT_DIR$/repay/repay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/repay-android.iml" filepath="$PROJECT_DIR$/repay-android.iml" />
     </modules>
   </component>
 </project>
