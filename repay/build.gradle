@@ -20,14 +20,14 @@ android {
     productFlavors {
         stage {
             minSdkVersion 14
-            packageName 'com.repay.android.debug'
+            applicationId 'com.repay.android.debug'
             targetSdkVersion 19
             versionCode 1
             versionName 'debug'
         }
         prod {
             minSdkVersion 14
-            packageName 'com.repay.android'
+            applicationId 'com.repay.android'
             signingConfig signingConfigs.release
             targetSdkVersion 19
             versionCode 23

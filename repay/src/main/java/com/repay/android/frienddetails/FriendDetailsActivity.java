@@ -9,6 +9,7 @@ import com.repay.android.R;
 import com.repay.android.adddebt.*;
 import com.repay.android.database.DatabaseHandler;
 import com.repay.android.settings.SettingsActivity;
+import com.repay.android.settings.SettingsFragment;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -288,7 +289,11 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 					mDB.addDebt(mFriend.getRepayID(), debtRepayed, "Repaid");
 					mFriend.setDebt(mFriend.getDebt().add(debtRepayed));
 					mDB.updateFriendRecord(mFriend);
-					Toast.makeText(getApplicationContext(), "Debt of \u00A3"+debtRepayed.toString()+" cleared", Toast.LENGTH_SHORT).show();
+					Toast.makeText(
+                            getApplicationContext(),
+                            "Debt of "+ SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString()+" cleared",
+                            Toast.LENGTH_SHORT
+                    ).show();
 					requestBackup();
 					finish();
 				} catch (Throwable e){
