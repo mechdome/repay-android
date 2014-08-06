@@ -1,14 +1,21 @@
 package com.repay.android.adddebt;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.repay.android.Application;
+import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
-import com.repay.android.RetrieveContactPhoto;
 import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -113,8 +120,9 @@ public class DebtSummaryFragment extends Fragment implements OnClickListener, On
 	public void setSelectedFriends(ArrayList<Friend> friends){
 		this.mSelectedFriends = friends;
 		if(mSelectedFriends!=null && mSelectedFriends.size()>=1){
-			new RetrieveContactPhoto(mSelectedFriends.get(0).getLookupURI(), mHeaderPic, 
-					getActivity(), R.drawable.friend_image_dark).execute();
+
+			ImageLoader.getInstance().displayImage(mSelectedFriends.get(0).getLookupURI().toString(), mHeaderPic, Application.getImageOptions());
+
 			if(mSelectedFriends.size()==1){
 				mNamesTxt.setText(mSelectedFriends.get(0).getName());
 				mSplitEvenly.setText("Split amount evenly between us");

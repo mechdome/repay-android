@@ -1,15 +1,20 @@
 package com.repay.android.frienddetails;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.repay.android.Application;
 import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
-import com.repay.android.RetrieveContactPhoto;
 import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,7 +42,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 
 	private RoundedImageView 	mFriendPic, mFriendPicBg;
 	private TextView 			mTotalOwed, mTotalOwedPrefix;
-	private Friend 				friend;
+	private Friend				mFriend;
 	private int 				mTheyOweMeColour, mIOweThemColour;
 	private Button 				mShareBtn;
 
@@ -71,11 +76,11 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 	@Override
 	public void onResume(){
 		super.onResume();
-		friend = ((FriendDetailsActivity)getActivity()).getFriend();
+		mFriend = ((FriendDetailsActivity)getActivity()).getFriend();
 		showFriend();
-		if (friend.getLookupURI()!=null) {
+		if (mFriend.getLookupURI()!=null) {
 			Log.i(TAG, "Now looking for contact information in database");
-			if (!ContactLookup.hasContactData(getActivity(), friend
+			if (!ContactLookup.hasContactData(getActivity(), mFriend
 					.getLookupURI().getLastPathSegment())) {
 				mShareBtn.setEnabled(false);
 				Log.i(TAG,
@@ -88,19 +93,21 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 
 	private void showFriend(){
 		// Get image
-		new RetrieveContactPhoto(friend.getLookupURI(), mFriendPic, getActivity(), R.drawable.friend_image_light).execute();
-		if(friend.getDebt().compareTo(BigDecimal.ZERO)==0){
+		ImageLoader.getInstance().displayImage(mFriend.getLookupURI().toString(), mFriendPic, Application.getImageOptions());
+
+
+		if(mFriend.getDebt().compareTo(BigDecimal.ZERO)==0){
 			mTotalOwedPrefix.setText(""); // Set it null
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
 			mFriendPicBg.setImageResource(mTheyOweMeColour);
-		} else if (friend.getDebt().compareTo(BigDecimal.ZERO)<0){
+		} else if (mFriend.getDebt().compareTo(BigDecimal.ZERO)<0){
 			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_iowe);
-			String amount = SettingsFragment.getFormattedAmount(friend.getDebt().negate());
+			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPicBg.setImageResource(mIOweThemColour);
-		} else if(friend.getDebt().compareTo(BigDecimal.ZERO)>0){
+		} else if(mFriend.getDebt().compareTo(BigDecimal.ZERO)>0){
 			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_theyowe);
-			String amount = SettingsFragment.getFormattedAmount(friend.getDebt());
+			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPicBg.setImageResource(mTheyOweMeColour);
 		}
@@ -115,7 +122,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 	}
 
 	public void updateFriendInfo(){
-		friend = ((FriendDetailsActivity) getActivity()).getFriend();
+		mFriend = ((FriendDetailsActivity) getActivity()).getFriend();
 		showFriend();
 	}
 
@@ -123,8 +130,8 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fragment_frienddetails_share:
-			if(friend.getDebt().compareTo(BigDecimal.ZERO)!=0){
-				AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), friend);
+			if(mFriend.getDebt().compareTo(BigDecimal.ZERO)!=0){
+				AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), mFriend);
 				shareDialog.show();
 			} else {
 				Toast.makeText(getActivity(), "There's no debt between you?", Toast.LENGTH_SHORT).show();

@@ -1,13 +1,20 @@
 package com.repay.android;
 
+import java.io.IOError;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
 import com.repay.android.view.RoundedImageView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,19 +64,22 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 		}
 		Friend friend = friends.get(position);
 		if(friend!=null){
+			// TODO Implement View holder pattern
 			TextView name = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_name);
 			TextView amount = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_amount);
-			RoundedImageView pic = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_pic);
+			final RoundedImageView pic = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_pic);
 			RoundedImageView indicator = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_bg);
 
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
+
 			Log.i(TAG,"Now retrieving contact image");
-			new RetrieveContactPhoto(friend.getLookupURI(), pic, mContext, R.drawable.friend_image_light).execute();
+			ImageLoader.getInstance().displayImage(friend.getLookupURI().toString(), pic, Application.getImageOptions());
 
 			name.setText(friend.getName());
 			// Determine the number of decimal places
 			amount.setText(SettingsFragment.getCurrencySymbol(mContext)+
 					SettingsFragment.getFormattedAmount(friend.getDebt()));
+
 			if (friend.getDebt().compareTo(BigDecimal.ZERO)<0){
 				indicator.setImageResource(mIOweThemColour);
 			} else {

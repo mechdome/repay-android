@@ -28,57 +28,10 @@ public class ContactLookup {
 
 	private static final String TAG = ContactLookup.class.getName();
 
-    private Context mContext;
-
 	private static int[] typesPhone = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN, 
 		ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
 	private static int[] typesEmail = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, 
 		ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
-
-    public ContactLookup(Context c){
-        mContext = c;
-    }
-
-	public Bitmap getContactPhoto(final Uri lookupUri, boolean preferHighRes) throws IOException{
-		try{
-			Cursor cursor = mContext.getContentResolver().query(ContactsContract.Data.CONTENT_URI,
-					null, ContactsContract.Data.CONTACT_ID + "=" + lookupUri.getLastPathSegment() + " AND "
-							+ ContactsContract.Data.MIMETYPE + "='"
-							+ ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE
-							+ "'", null, null);
-			if (cursor != null) {
-				if (cursor.moveToFirst()) {
-					if(cursor.getString(68)==null){ // Column 68 is photoID - should return an int on a String
-						cursor.close();
-						return null; // No photo stored
-					}
-					InputStream photoStream = ContactsContract.Contacts.openContactPhotoInputStream(mContext.getContentResolver(),
-							lookupUri, preferHighRes);
-					Bitmap contactImg;
-					try{
-						BufferedInputStream input = new BufferedInputStream(photoStream);
-						contactImg = BitmapFactory.decodeStream(input);
-						input.close();
-					} catch (IOException e){
-						Log.e(TAG, e.getMessage());
-						contactImg = null;
-					}
-					cursor.close();
-					return contactImg;
-				} else {
-					cursor.close();
-					return null; // No entry
-				}
-			} else {
-				return null; // Error in cursor process
-			}
-
-		} catch (Exception e) {
-			Log.i(TAG, e.getMessage());
-			return null;
-		}
-
-	}
 
 	/**
 	 * @param c

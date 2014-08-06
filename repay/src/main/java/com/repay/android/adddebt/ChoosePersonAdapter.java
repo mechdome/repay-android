@@ -1,13 +1,19 @@
 package com.repay.android.adddebt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.repay.android.Application;
+import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
-import com.repay.android.RetrieveContactPhoto;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +59,7 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 		}
 		Friend friend = mFriends.get(position);
 		TextView name = (TextView)v.findViewById(R.id.activity_friendchooser_name);
-		ImageView pic = (ImageView)v.findViewById(R.id.activity_friendchooser_pic);
+		final ImageView pic = (ImageView)v.findViewById(R.id.activity_friendchooser_pic);
 		if(friend!=null){
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
@@ -63,7 +69,9 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 				Log.i(TAG,"Highlighting "+friend.getName());
 			}
 		}
-		new RetrieveContactPhoto(friend.getLookupURI(), pic, mContext, R.drawable.friend_image_dark).execute();
+
+		ImageLoader.getInstance().displayImage(friend.getLookupURI().toString(), pic, Application.getImageOptions());
+
 		name.setText(friend.getName());
 		return v;
 	}
