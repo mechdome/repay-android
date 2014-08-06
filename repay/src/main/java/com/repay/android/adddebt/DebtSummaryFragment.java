@@ -3,10 +3,10 @@ package com.repay.android.adddebt;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.RetrieveContactPhoto;
-import com.repay.android.RoundedImageView;
+import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.os.Bundle;

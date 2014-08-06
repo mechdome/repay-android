@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.repay.android.RoundedImageView
+    <com.repay.android.view.RoundedImageView
         android:id="@+id/fragment_debtsummary_headerPic"
         style="@style/EnterDebt_Pic"
         android:layout_centerHorizontal="true"

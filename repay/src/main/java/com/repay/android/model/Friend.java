@@ -1,4 +1,4 @@
-package com.repay.android;
+package com.repay.android.model;
 
 import java.math.BigDecimal;
 

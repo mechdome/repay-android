@@ -3,7 +3,7 @@ package com.repay.android.frienddetails;
 import java.util.HashMap;
 
 import com.repay.android.ContactLookup;
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.SendMail;
 
 import android.app.AlertDialog.Builder;

@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.database.DatabaseHandler;
 

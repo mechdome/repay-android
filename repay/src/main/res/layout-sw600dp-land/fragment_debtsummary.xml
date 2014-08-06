@@ -10,7 +10,7 @@
         android:minHeight="130dp"
         android:padding="10dp" >
 
-        <com.repay.android.RoundedImageView
+        <com.repay.android.view.RoundedImageView
             android:id="@+id/fragment_debtsummary_headerPic"
             style="@style/EnterDebt_Pic"
             android:layout_centerHorizontal="true"

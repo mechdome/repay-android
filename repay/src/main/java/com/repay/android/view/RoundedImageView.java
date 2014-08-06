@@ -1,4 +1,4 @@
-package com.repay.android;
+package com.repay.android.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

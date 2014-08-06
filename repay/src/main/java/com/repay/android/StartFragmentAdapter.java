@@ -3,9 +3,9 @@ package com.repay.android;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import com.repay.android.Friend;
-import com.repay.android.R;
+import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
+import com.repay.android.view.RoundedImageView;
 
 import android.content.Context;
 import android.util.Log;

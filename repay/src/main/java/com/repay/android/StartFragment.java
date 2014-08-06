@@ -6,6 +6,8 @@ import java.util.Collections;
 
 import com.repay.android.database.DatabaseHandler;
 import com.repay.android.frienddetails.FriendDetailsActivity;
+import com.repay.android.model.Debt;
+import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.AlertDialog;

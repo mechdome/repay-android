@@ -1,6 +1,6 @@
 package com.repay.android.frienddetails;
 
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 
 /**
  * Property of Matt Allen

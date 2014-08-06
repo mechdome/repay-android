@@ -3,10 +3,10 @@ package com.repay.android.frienddetails;
 import java.math.BigDecimal;
 
 import com.repay.android.ContactLookup;
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.RetrieveContactPhoto;
-import com.repay.android.RoundedImageView;
+import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.AlertDialog;

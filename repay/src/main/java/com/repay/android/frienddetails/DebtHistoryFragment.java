@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.repay.android.Debt;
-import com.repay.android.Friend;
+import com.repay.android.model.Debt;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.adddebt.EditDebtActivity;
 import com.repay.android.database.DatabaseHandler;

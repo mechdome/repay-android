@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.adddebt.*;
 import com.repay.android.database.DatabaseHandler;

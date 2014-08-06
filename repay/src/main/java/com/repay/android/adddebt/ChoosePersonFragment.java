@@ -3,7 +3,7 @@ package com.repay.android.adddebt;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import com.repay.android.Friend;
+import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.database.DatabaseHandler;
 
