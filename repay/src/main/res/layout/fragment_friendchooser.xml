@@ -11,7 +11,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn_wide_red"
         android:fontFamily="sans-serif-condensed"
-        android:onClick="onNextBtn"
+        android:onClick="onNextButtonClick"
         android:text="@string/next" />
 
     <ListView

@@ -3,14 +3,14 @@ package com.repay.android.adddebt;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import android.app.ActionBar;
-import android.content.pm.ActivityInfo;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.database.DatabaseHandler;
@@ -29,64 +29,45 @@ import com.repay.android.database.DatabaseHandler;
  *
  */
 
-public class RepayDebtActivity extends DebtActivity {
-	
-	private static final String			TAG = RepayDebtActivity.class.getName();
-	
-	private BigDecimal					mAmount;
-	private final String				mDescription = "Repaid";
+public class RepayDebtActivity extends DebtActivity
+{
 	private Friend						mFriend;
-	private DatabaseHandler				mDB;
-	private FragmentTransaction			mFragMan;
-	private Fragment					mEnterAmount;
-	private ActionBar					mActionBar;
+	private DebtFragment				mEnterAmount;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_adddebt);
-		mDB = new DatabaseHandler(this);
-		// If the available screen size is that of an average tablet (as defined
-		// in the Android documentation) then allow the screen to rotate
-		if(getResources().getBoolean(R.bool.lock_orientation)){
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
 		
-		if(getIntent().getExtras()!=null){
-			Bundle bundle = getIntent().getExtras();
-			try{
-				mFriend = mDB.getFriendByRepayID(bundle.getString(AddDebtActivity.REPAY_ID));
-			} catch(Exception e){
-				Log.e(TAG,"Exception occurred when trying to retrieve friend details. Ending activity");
-				e.printStackTrace();
-				finish();
-			}
+		if(getIntent().hasExtra(FRIEND))
+		{
+			mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+			mBuilder.addSelectedFriend(mFriend);
 		}
-		
-		mActionBar = getActionBar();
-		mActionBar.setDisplayHomeAsUpEnabled(true);
-		mActionBar.setDisplayShowTitleEnabled(true);
-		mActionBar.setSubtitle(R.string.fragment_enteramount_subtitle);
-		mActionBar.setTitle(R.string.fragment_enteramount_title);
+		else
+		{
+			Toast.makeText(this, "Friend not found", Toast.LENGTH_SHORT).show();
+			finish();
+		}
+
+		mBuilder.setDescription(DEBT_REPAID_TEXT);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(true);
+
 		// Instantiate fragment
 		mEnterAmount = new EnterAmountFragment();
 		
-		mFragMan = getSupportFragmentManager().beginTransaction();
-		mFragMan.add(R.id.activity_adddebt_framelayout, mEnterAmount);
-		mFragMan.commit();
+		getFragmentManager().beginTransaction().replace(R.id.activity_adddebt_framelayout, mEnterAmount).commit();
 	}
 
 	@Override
-	public BigDecimal getAmount() {
-		return mAmount;
-	}
-
-	@Override
-	public void onNextBtn(View v) {
+	public void onNextButtonClick(View v) {
 		switch (v.getId()) {
 		case R.id.fragment_enterdebtamount_donebtn:
-			mAmount = ((EnterAmountFragment)mEnterAmount).getAmount();
-			submitToDB();
+			mEnterAmount.saveFields();
+			save();
 			break;
 
 		default:
@@ -95,31 +76,10 @@ public class RepayDebtActivity extends DebtActivity {
 	}
 
 	@Override
-	public ArrayList<Friend> getSelectedFriends() {
-		ArrayList<Friend> friends = new ArrayList<Friend>();
-		friends.add(mFriend);
-		return friends;
-	}
-
-	@Override
-	protected void submitToDB() {
-		if(mFriend.getDebt().compareTo(BigDecimal.ZERO)>0){
-			mAmount = mAmount.negate(); // Negate because I don't want add with a negative
+	public void save() {
+		if(mFriend.getDebt().compareTo(BigDecimal.ZERO) > 0){
+			mBuilder.setInDebtToMe(false); // Negate because I don't want add with a negative
 		}
-		mDB.addDebt(mFriend.getRepayID(), mAmount, mDescription);
-		mFriend.setDebt(mFriend.getDebt().add(mAmount)); // Add amount entered to what's stored
-		mDB.updateFriendRecord(mFriend); // Push changes to database
-		finish(); // Return to friend overview
+		super.save();
 	}
-
-	@Override
-	public void setAmount(BigDecimal amount) {
-		mAmount = amount;
-	}
-
-	@Override
-	public void setSelectedFriends(ArrayList<Friend> friends) {
-		Log.e(TAG,"setSelectedFriends() called. This should not be used in this activity");
-	}
-
 }

@@ -253,12 +253,8 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			return true;
 
 		case R.id.action_addDebt:
-			Intent i = new Intent();
-			i.setClass(this, AddDebtActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putInt(AddDebtActivity.NO_OF_FRIENDS_SELECTED, 1);
-			bundle.putString(AddDebtActivity.REPAY_ID+"1", mFriend.getRepayID());
-			i.putExtras(bundle);
+			Intent i = new Intent(this, AddDebtActivity.class);
+			i.putExtra(DebtActivity.FRIEND, mFriend);
 			startActivity(i);
 			return true;
 			
@@ -315,16 +311,14 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 	
 	private void clearPartialDebt(){
 		Intent i = new Intent(this, RepayDebtActivity.class);
-		Bundle b = new Bundle();
-		b.putString(AddDebtActivity.REPAY_ID, mFriend.getRepayID());
-		i.putExtras(b);
+		i.putExtra(DebtActivity.FRIEND, mFriend);
 		startActivity(i);
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
-		if(data!=null&&requestCode==PICK_CONTACT_REQUEST){
+		if(data != null && requestCode == PICK_CONTACT_REQUEST){
 			try{
 				Uri contactUri = data.getData();
 				String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
@@ -339,23 +333,6 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			} catch (SQLException e){
 				e.printStackTrace();
 				Toast.makeText(this, "Unable to add this person to the database", Toast.LENGTH_SHORT).show();
-			}
-		}
-		else if (data!=null&&requestCode==AMOUNT_ENTER_REQUEST){
-			try{
-				Bundle b = data.getExtras();
-				// Get the amount sent back from the activity
-				BigDecimal amount = new BigDecimal(b.getString(AddDebtActivity.AMOUNT));
-				// Make the amount negative if their debt is negative
-				if(mFriend.getDebt().compareTo(BigDecimal.ZERO)>0){
-					amount = amount.negate();
-				}
-				mDB.addDebt(mFriend.getRepayID(), amount, "Repaid");
-				mFriend.setDebt(mFriend.getDebt().add(amount));
-				mDB.updateFriendRecord(mFriend);
-				requestBackup();
-			} catch (Exception e){
-				
 			}
 		}
 	}

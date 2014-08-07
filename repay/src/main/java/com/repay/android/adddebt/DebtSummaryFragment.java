@@ -1,23 +1,17 @@
 package com.repay.android.adddebt;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.repay.android.Application;
-import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,31 +34,30 @@ import android.widget.TextView;
  *
  */
 
-public class DebtSummaryFragment extends Fragment implements OnClickListener, OnCheckedChangeListener {
-
-	private static final String 			TAG = DebtSummaryFragment.class.getName();
-
-	private ArrayList<Friend> 				mSelectedFriends;
+public class DebtSummaryFragment extends DebtFragment implements OnClickListener, OnCheckedChangeListener
+{
 	private RoundedImageView				mHeaderPic;
-	private BigDecimal 						mAmount;
-	private TextView 						mNamesTxt, mIOweThem, mTheyOweMe, mAmountTxt;
-	private EditText						mDescriptionField;
-	private ProgressBar 					mProgress;
+	private TextView 						mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem;
+	private EditText						mDescription;
 	private CheckBox 						mSplitEvenly, mInclMe;
-	private boolean 						isNegative = false;
 	private int 							mTheyOweMeColour, mIOweThemColour;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		super.onCreateView(inflater, container, savedInstanceState);
+
 		return inflater.inflate(R.layout.fragment_debtsummary, container, false);
 	}
 
 	@Override
-	public void onStart(){
-		super.onStart();
-		mProgress = (ProgressBar)getView().findViewById(R.id.fragment_debtsummary_headerLoading);
-		mDescriptionField = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+
+		getActivity().getActionBar().setTitle(R.string.fragment_debtsummary_title);
+
+		mDescription = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
 		mSplitEvenly = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_splitAmount);
 		mIOweThem = (TextView)getView().findViewById(R.id.fragment_debtsummary_iOweThem);
 		mTheyOweMe = (TextView)getView().findViewById(R.id.fragment_debtsummary_theyOweMe);
@@ -72,12 +65,12 @@ public class DebtSummaryFragment extends Fragment implements OnClickListener, On
 		mHeaderPic = (RoundedImageView)getView().findViewById(R.id.fragment_debtsummary_headerPic);
 		mNamesTxt = (TextView)getView().findViewById(R.id.fragment_debtsummary_headerName);
 		mInclMe = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_inclMe);
+		mInclMe.setVisibility(CheckBox.INVISIBLE);
 
-		mProgress.setVisibility(ProgressBar.INVISIBLE); // Not needed yet
-		mInclMe.setVisibility(CheckBox.INVISIBLE); 		// Hide all of the things
 		mSplitEvenly.setOnCheckedChangeListener(this);
 		mTheyOweMe.setOnClickListener(this);
 		mIOweThem.setOnClickListener(this);
+
 		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
 			mTheyOweMeColour = R.color.green_debt;
 			mIOweThemColour = R.color.darkred_debt;
@@ -86,14 +79,14 @@ public class DebtSummaryFragment extends Fragment implements OnClickListener, On
 			mIOweThemColour = R.color.blue_debt;
 		}
 
-		if(getActivity().getClass()==AddDebtActivity.class){
-			setAmount(((AddDebtActivity)getActivity()).getAmount());
-			setSelectedFriends(((AddDebtActivity)getActivity()).getSelectedFriends());
-		} else {
-			setAmount(((EditDebtActivity)getActivity()).getAmount());
-			setSelectedFriends(((EditDebtActivity)getActivity()).getSelectedFriends());
+		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size() < 2)
+		{
 			mSplitEvenly.setVisibility(CheckBox.INVISIBLE);
 		}
+		// TODO Change this to the bool stored in resources
+		mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(true));
+		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getImageUri(), mHeaderPic, Application.getImageOptions());
+		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString());
 	}
 
 	private void setOweStatusColour(boolean isNegative){
@@ -106,88 +99,44 @@ public class DebtSummaryFragment extends Fragment implements OnClickListener, On
 		}
 	}
 
-	public void setAmount(BigDecimal amount){
-		this.mAmount = amount;
-		if(mAmount.compareTo(BigDecimal.ZERO)<0){
-			isNegative = true;
-		} else {
-			isNegative = false;
-		}
-		setOweStatusColour(isNegative);
-		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity())+mAmount.toString());
-	}
-
-	public void setSelectedFriends(ArrayList<Friend> friends){
-		this.mSelectedFriends = friends;
-		if(mSelectedFriends!=null && mSelectedFriends.size()>=1){
-
-			ImageLoader.getInstance().displayImage(mSelectedFriends.get(0).getLookupURI().toString(), mHeaderPic, Application.getImageOptions());
-
-			if(mSelectedFriends.size()==1){
-				mNamesTxt.setText(mSelectedFriends.get(0).getName());
-				mSplitEvenly.setText("Split amount evenly between us");
-			}
-			else if(mSelectedFriends.size()==2){
-				mSplitEvenly.setVisibility(CheckBox.VISIBLE);
-				mNamesTxt.setText(mSelectedFriends.get(0).getName()+
-						",\n"+mSelectedFriends.get(1).getName());
-				mSplitEvenly.setText("Split amount evenly between everyone");
-			} else {
-				mSplitEvenly.setVisibility(CheckBox.VISIBLE);
-				mNamesTxt.setText(mSelectedFriends.get(0).getName()+
-						",\nand "+Integer.toString(mSelectedFriends.size()-1)+" more");
-				mSplitEvenly.setText("Split amount evenly between everyone");
-			}
-		}
-	}
-
-	public boolean isSplitEvenly(){
-		return mSplitEvenly.isChecked();
-	}
-
-	public boolean isIncludingMe(){
-		return mInclMe.isChecked();
-	}
-
-	/**
-	 * @return true if the user specifies that they owe the other party(s)
-	 */
-	public boolean isNegative(){
-		return isNegative;
-	}
-
-	public String getDescription(){
-		return mDescriptionField.getText().toString();
-	}
-
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.fragment_debtsummary_iOweThem:
-			isNegative = true;
-			Log.i(TAG,"I-Owe-Them button pressed");
-			setOweStatusColour(isNegative);
-			break;
+		switch (v.getId())
+		{
+			case R.id.fragment_debtsummary_iOweThem:
+				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(false);
+				setOweStatusColour(false);
+				break;
 
-		case R.id.fragment_debtsummary_theyOweMe:
-			isNegative = false;
-			Log.i(TAG,"They-Owe-Me button pressed");
-			setOweStatusColour(isNegative);
-			break;
+			case R.id.fragment_debtsummary_theyOweMe:
+				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(true);
+				setOweStatusColour(true);
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if(buttonView.getId()==R.id.fragment_debtsummary_splitAmount && mSelectedFriends.size()>1){
+		if(buttonView.getId() == R.id.fragment_debtsummary_splitAmount)
+		{
+			((DebtActivity) getActivity()).getDebtBuilder().setDistributedEvenly(isChecked);
 			if(isChecked){
 				mInclMe.setVisibility(CheckBox.VISIBLE);
 			} else {
 				mInclMe.setVisibility(CheckBox.INVISIBLE);
 			}
 		}
+		else if (buttonView.getId() == R.id.fragment_debtsummary_inclMe)
+		{
+			((DebtActivity) getActivity()).getDebtBuilder().setIncludingMe(isChecked);
+		}
+	}
+
+	@Override
+	public void saveFields() {
+		((DebtActivity) getActivity()).getDebtBuilder().setDescription(mDescription.getText().toString());
 	}
 }

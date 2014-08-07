@@ -1,10 +1,8 @@
 package com.repay.android.frienddetails;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.repay.android.Application;
 import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
@@ -13,8 +11,6 @@ import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.AlertDialog;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;

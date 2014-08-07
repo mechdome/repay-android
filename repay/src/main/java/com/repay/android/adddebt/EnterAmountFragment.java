@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import com.repay.android.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +25,7 @@ import android.widget.Toast;
  *
  */
 
-public class EnterAmountFragment extends Fragment implements OnClickListener {
+public class EnterAmountFragment extends DebtFragment implements OnClickListener {
 	
 	private static final String 	TAG = EnterAmountFragment.class.getName();
 	private static final String 	NUMBER_DEC = "numDec", NUMBER_INT = "numInt"; // For Saved State
@@ -38,7 +38,7 @@ public class EnterAmountFragment extends Fragment implements OnClickListener {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_enterdebtamount, container, false);
 		
-		if(savedInstanceState!=null){
+		if(savedInstanceState != null){
 			try{
 				mAmountDec = savedInstanceState.getString(NUMBER_DEC);
 			} catch (Exception e){
@@ -54,8 +54,12 @@ public class EnterAmountFragment extends Fragment implements OnClickListener {
 	}
 	
 	@Override
-	public void onStart(){
-		super.onStart();
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+
+		getActivity().getActionBar().setSubtitle(R.string.fragment_enteramount_subtitle);
+		getActivity().getActionBar().setTitle(R.string.fragment_enteramount_title);
+
 		mAmountDisplay = (TextView)getView().findViewById(R.id.fragment_enterdebtamount_amount);
 		mDoneBtn = (Button)getView().findViewById(R.id.fragment_enterdebtamount_donebtn);
 		mAmountDisplay.setText(mAmountInt + "." + mAmountDec);
@@ -73,9 +77,6 @@ public class EnterAmountFragment extends Fragment implements OnClickListener {
 		getView().findViewById(R.id.fragment_enterdebtamount_zero).setOnClickListener(this);
 		getView().findViewById(R.id.fragment_enterdebtamount_doublezero).setOnClickListener(this);
         getView().findViewById(R.id.fragment_enterdebtamount_clear).setOnClickListener(this);
-		if(getActivity().getClass()==EditDebtActivity.class){
-			setAmount(((EditDebtActivity)getActivity()).getAmount().toString());
-		}
 		if(getActivity().getClass()==RepayDebtActivity.class){
 			mDoneBtn.setText("Done"); // Give it a more appropriate message
 		}
@@ -193,5 +194,10 @@ public class EnterAmountFragment extends Fragment implements OnClickListener {
 	 */
 	public BigDecimal getAmount(){
 		return new BigDecimal(mAmountInt+"."+mAmountDec);
+	}
+
+	@Override
+	public void saveFields() {
+		((DebtActivity) getActivity()).getDebtBuilder().setAmount(getAmount());
 	}
 }

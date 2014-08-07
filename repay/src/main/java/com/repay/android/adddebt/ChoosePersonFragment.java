@@ -7,15 +7,19 @@ import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.database.DatabaseHandler;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +31,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -43,7 +46,7 @@ import android.widget.Toast;
  *
  */
 
-public class ChoosePersonFragment extends Fragment implements OnItemClickListener, OnClickListener {
+public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener, OnClickListener {
 
 	private static final String 		TAG = ChoosePersonFragment.class.getName();
 	public static final int 			PICK_CONTACT_REQUEST = 1;
@@ -52,9 +55,7 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 	private int 						mListResource = R.layout.fragment_adddebt_friendslist_item;
 	private ListView 					mListView;
 	private RelativeLayout 				mEmptyState;
-	private Context 					mContext;
 	private ArrayList<Friend> 			mSelectedFriends;
-	private DatabaseHandler 			mDB;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -108,20 +109,50 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 			public void onClick(DialogInterface dialog, int which) {
 				String name = nameEntry.getText().toString();
 				try {
-					if(name==null || name.equals("")){
-						throw new NullPointerException();
+					if(!TextUtils.isEmpty(nameEntry.getText().toString())){
+						Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
+						((DebtActivity) getActivity()).getDBHandler().addFriend(newFriend);
 					}
-					Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
-					mDB.addFriend(newFriend);
-					dataSetChanged();
 				} catch (SQLException e) {
 					Toast.makeText(getActivity(), "Friend could not be added", Toast.LENGTH_SHORT).show();
-				} catch (NullPointerException e){
-					Toast.makeText(getActivity(), "No name entered, please try again", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 		dialog.show();
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+		if (data != null && requestCode == Activity.RESULT_OK){
+			try{
+				Log.i(TAG,"Closing contact picker");
+				Uri contactUri = data.getData();
+
+				String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
+				Cursor cursor = getActivity().getContentResolver().query(contactUri, cols, null, null, null);
+				cursor.moveToFirst();
+
+				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
+				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, result, new BigDecimal("0"));
+
+				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
+			}
+			catch (IndexOutOfBoundsException e)
+			{
+				Toast.makeText(getActivity(), "Problem in getting result from your contacts", Toast.LENGTH_SHORT).show();
+			}
+			catch (SQLException e)
+			{
+				// TODO Change this. It's pretty crap.
+				e.printStackTrace();
+				AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
+				alert.setMessage("This person already exists in Repay");
+				alert.setTitle("Person Already Exists");
+				Log.i(TAG, "Person already exists within app database");
+				alert.show();
+			}
+		}
 	}
 	
 	@Override
@@ -146,39 +177,35 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 	}
 
 	@Override
-	public void onStart(){
-		super.onStart();
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 		mListView = (ListView)getView().findViewById(R.id.activity_friendchooser_list);
 		mListView.setOnItemClickListener(this);
-		mContext = getActivity();
+
 		mEmptyState = (RelativeLayout)getView().findViewById(R.id.activity_friendchooser_emptystate);
-		Button emptyBtn = (Button)getView().findViewById(R.id.activity_friendchooser_helpbtn);
-		emptyBtn.setOnClickListener(this);
-		mDB = ((AddDebtActivity)getActivity()).getDB();
-		new GetFriendsFromDB().execute(mDB);
+
+		(getView().findViewById(R.id.activity_friendchooser_helpbtn)).setOnClickListener(this);
+
+		new GetFriendsFromDB().execute();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Friend selectedFriend = (Friend)arg1.getTag();
 		Log.i(TAG, selectedFriend.getName()+ " selected ("+ selectedFriend.getRepayID() +")");
-		if(mSelectedFriends.contains(selectedFriend)){
-			mSelectedFriends.remove(selectedFriend);
+		if(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().contains(selectedFriend)){
+			((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().remove(selectedFriend);
 			arg1.setBackgroundColor(ChoosePersonAdapter.DESELECTED_COLOUR);
 		} else {
-			mSelectedFriends.add(selectedFriend);
+			((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().add(selectedFriend);
 			arg1.setBackgroundColor(ChoosePersonAdapter.SELECTED_COLOUR);
 		}
 	}
-	
-	public void onResume(){
-		super.onResume();
-		// Empty all the previously selected people - otherwise they'll stack up
-		mSelectedFriends = new ArrayList<Friend>();
-	}
 
-	public void dataSetChanged(){
-		new GetFriendsFromDB().execute(mDB);
+	@Override
+	public void saveFields() {
+		// No need to do anything here. This fragment uses the DebtBuilder object as storage.
 	}
 
 	private class GetFriendsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>> {
@@ -192,7 +219,7 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 		@Override
 		protected ArrayList<Friend> doInBackground(DatabaseHandler... params) {
 			try{
-				ArrayList<Friend> friends = params[0].getAllFriends();
+				ArrayList<Friend> friends = ((DebtActivity) getActivity()).getDBHandler().getAllFriends();
 				return friends;
 			} catch (Throwable e){
 				return null;
@@ -201,9 +228,9 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 
 		@Override
 		protected void onPostExecute(ArrayList<Friend> result){
-			if (result!=null) {
+			if (result != null) {
 				mListView.setVisibility(ListView.VISIBLE);
-				mAdapter = new ChoosePersonAdapter(mContext, mListResource, result, mSelectedFriends);
+				mAdapter = new ChoosePersonAdapter(getActivity(), mListResource, result, mSelectedFriends);
 				mListView.setAdapter(mAdapter);
 			} else {
 				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
@@ -213,12 +240,9 @@ public class ChoosePersonFragment extends Fragment implements OnItemClickListene
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId()==R.id.activity_friendchooser_donebtn || v.getId()==R.id.activity_friendchooser_helpbtn){
+		if (v.getId()==R.id.activity_friendchooser_helpbtn)
+		{
 			showAddFriendDialog();
 		}
-	}
-
-	public ArrayList<Friend> getSelectedFriends(){
-		return mSelectedFriends;
 	}
 }

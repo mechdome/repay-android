@@ -1,11 +1,12 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Debt;
+import com.repay.android.model.DebtBuilder;
 import com.repay.android.model.Friend;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 
 /**
@@ -15,20 +16,52 @@ import android.view.View;
  *
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public abstract class DebtActivity extends FragmentActivity {
+public abstract class DebtActivity extends Activity
+{
+	public static final String FRIEND = "friend";
+	public static final String DEBT = "debt";
+	public static final String DEBT_REPAID_TEXT = "Repaid";
 
-	public abstract BigDecimal getAmount();
-	
-	public abstract void onNextBtn(View v);
-	
-	public abstract ArrayList<Friend> getSelectedFriends();
-	
-	protected abstract void submitToDB();
-	
-	public abstract void setAmount(BigDecimal amount);
-	
-	public abstract void setSelectedFriends(ArrayList<Friend> friends);
+	protected DatabaseHandler mDB;
+
+	protected DebtBuilder mBuilder;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		// Do some instantiation here
+		mBuilder = new DebtBuilder();
+		mDB = new DatabaseHandler(this);
+	}
+
+	public DebtBuilder getDebtBuilder()
+	{
+		return mBuilder;
+	}
+
+	public DatabaseHandler getDBHandler()
+	{
+		return mDB;
+	}
+
+	public void save()
+	{
+		// Add the debts into the DB
+		for (Debt debt : mBuilder.getNewDebts())
+		{
+			mDB.addDebt(debt.getRepayID(), debt.getAmount(), debt.getDescription());
+		}
+		// Then update the friend objects
+		for (Friend friend : mBuilder.getUpdatedFriends())
+		{
+			mDB.updateFriendRecord(friend);
+		}
+
+		finish(); // Return to friend overview
+	}
+
+	public abstract void onNextButtonClick(View v);
 }

@@ -1,5 +1,6 @@
 package com.repay.android.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  *
  */
 
-public class Debt implements Comparable<Debt> {
+public class Debt implements Comparable<Debt>, Serializable {
 	
 	private Date date;
 	private BigDecimal amount;

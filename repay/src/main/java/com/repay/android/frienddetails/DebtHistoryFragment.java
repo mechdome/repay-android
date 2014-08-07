@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.repay.android.adddebt.DebtActivity;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
@@ -85,16 +86,10 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 		chooseDialog.setItems(R.array.fragment_friendoverview_chooseDialog_items, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if(which==0){
-					Bundle b = new Bundle();
-					b.putInt(EditDebtActivity.DEBT_ID, debt.getDebtID());
-					if (debt.getAmount().compareTo(BigDecimal.ZERO)<0){
-						b.putBoolean(EditDebtActivity.IOWETHEM_FIELD, true);
-					} else {
-						b.putBoolean(EditDebtActivity.IOWETHEM_FIELD, false);
-					}
+				if(which == 0){
 					Intent i = new Intent(getActivity(), EditDebtActivity.class);
-					i.putExtras(b);
+					i.putExtra(DebtActivity.DEBT, debt);
+					i.putExtra(DebtActivity.FRIEND, mFriend);
 					getActivity().startActivity(i);
 				}
 				else if(which==1){

@@ -37,7 +37,6 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 	private static final String 		TAG = ChoosePersonAdapter.class.getName();
 	private int 						mLayoutID;
 	private ArrayList<Friend> 			mFriends, mSelectedFriends;
-	private Context 					mContext;
 	public static final int 			SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
 	public static final int 			DESELECTED_COLOUR = Color.parseColor("#00FFFFFF"); // Invisible
 
@@ -46,14 +45,13 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 		super(context, layoutId, friends);
 		this.mLayoutID = layoutId;
 		this.mFriends = friends;
-		this.mContext = context;
 		this.mSelectedFriends = selectedFriends;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		View v = convertView;
-		if(v==null){
+		if(v == null){
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(mLayoutID, null);
 		}

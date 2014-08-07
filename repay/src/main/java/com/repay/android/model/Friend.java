@@ -1,5 +1,6 @@
 package com.repay.android.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import android.net.Uri;
@@ -14,7 +15,7 @@ import android.net.Uri;
  *
  */
 
-public class Friend implements Comparable<Friend> {
+public class Friend implements Comparable<Friend>, Serializable {
 	
 	public static final String REPAYID = "repayID";
 	public static final String LOOKUPURI = "lookupUri";
