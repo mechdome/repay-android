@@ -47,11 +47,11 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 		this.friends = friends;
 		this.mContext = context;
 		if(SettingsFragment.getDebtHistoryColourPreference(mContext)==SettingsFragment.DEBTHISTORY_GREEN_RED){
-			mTheyOweMeColour = R.drawable.debt_ind_green;
-			mIOweThemColour = R.drawable.debt_ind_red;
+			mTheyOweMeColour = context.getResources().getColor(R.color.green_debt);
+			mIOweThemColour = context.getResources().getColor(R.color.red_debt);
 		} else {
-			mTheyOweMeColour = R.drawable.debt_ind_green;
-			mIOweThemColour = R.drawable.debt_ind_blue;
+			mTheyOweMeColour = context.getResources().getColor(R.color.green_debt);
+			mIOweThemColour = context.getResources().getColor(R.color.blue_debt);
 		}
 	}
 
@@ -68,7 +68,6 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 			TextView name = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_name);
 			TextView amount = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_amount);
 			final RoundedImageView pic = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_pic);
-			RoundedImageView indicator = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_bg);
 
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
@@ -81,9 +80,9 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 					SettingsFragment.getFormattedAmount(friend.getDebt()));
 
 			if (friend.getDebt().compareTo(BigDecimal.ZERO)<0){
-				indicator.setImageResource(mIOweThemColour);
+				pic.setOuterColor(mIOweThemColour);
 			} else {
-				indicator.setImageResource(mTheyOweMeColour);
+				pic.setOuterColor(mTheyOweMeColour);
 			}
 		}
 

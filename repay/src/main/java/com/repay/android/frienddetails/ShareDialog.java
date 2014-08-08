@@ -10,6 +10,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,9 +37,9 @@ public class ShareDialog extends Builder implements OnClickListener {
 		mContext = context;
 		mFriend = friend;
 		Log.d(TAG, "Getting emails from contacts");
-		mEmails = ContactLookup.getContactsEmailAddress(mFriend.getLookupURI().getLastPathSegment(), context);
+		mEmails = ContactLookup.getContactsEmailAddress(Uri.parse(mFriend.getLookupURI()).getLastPathSegment(), context);
 		Log.d(TAG, "Getting phone numbers from contacts");
-		mPhoneNums = ContactLookup.getContactPhoneNumber(context, mFriend.getLookupURI().getLastPathSegment());
+		mPhoneNums = ContactLookup.getContactPhoneNumber(context, Uri.parse(mFriend.getLookupURI()).getLastPathSegment());
 		String[] items = new String[]{"SMS", "Email"};
 		setTitle("Select Share Method");
 		setItems(items, this);

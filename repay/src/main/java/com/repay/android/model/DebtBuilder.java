@@ -152,6 +152,10 @@ public class DebtBuilder
 		return debts;
 	}
 
+	/**
+	 * Quickly get the amount that will be applied to each person
+	 * @return {@link java.math.BigDecimal} representation of the amount
+	 */
 	private BigDecimal getAmountToApply()
 	{
 		BigDecimal debtAmount;

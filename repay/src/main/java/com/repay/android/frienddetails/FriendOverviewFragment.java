@@ -11,6 +11,7 @@ import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -36,7 +37,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 
 	private static final String TAG = FriendOverviewFragment.class.getName();
 
-	private RoundedImageView 	mFriendPic, mFriendPicBg;
+	private RoundedImageView 	mFriendPic;
 	private TextView 			mTotalOwed, mTotalOwedPrefix;
 	private Friend				mFriend;
 	private int 				mTheyOweMeColour, mIOweThemColour;
@@ -54,7 +55,6 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 		super.onStart();
 		mShareBtn = (Button)getView().findViewById(R.id.fragment_frienddetails_share);
 		mFriendPic = (RoundedImageView)getView().findViewById(R.id.fragment_frienddetails_headerPic);
-		mFriendPicBg = (RoundedImageView)getView().findViewById(R.id.fragment_frienddetails_headerPicBG);
 		mTotalOwed = (TextView)getView().findViewById(R.id.fragment_frienddetails_debttotal);
 		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.fragment_frienddetails_debttotal_prefix);
 
@@ -76,8 +76,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 		showFriend();
 		if (mFriend.getLookupURI()!=null) {
 			Log.i(TAG, "Now looking for contact information in database");
-			if (!ContactLookup.hasContactData(getActivity(), mFriend
-					.getLookupURI().getLastPathSegment())) {
+			if (!ContactLookup.hasContactData(getActivity(), Uri.parse(mFriend.getLookupURI()).getLastPathSegment())) {
 				mShareBtn.setEnabled(false);
 				Log.i(TAG,
 						"No contact information found - disabling share button");
@@ -95,17 +94,17 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 		if(mFriend.getDebt().compareTo(BigDecimal.ZERO)==0){
 			mTotalOwedPrefix.setText(""); // Set it null
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
-			mFriendPicBg.setImageResource(mTheyOweMeColour);
+			mFriendPic.setOuterColor(mTheyOweMeColour);
 		} else if (mFriend.getDebt().compareTo(BigDecimal.ZERO)<0){
 			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_iowe);
 			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
-			mFriendPicBg.setImageResource(mIOweThemColour);
+			mFriendPic.setOuterColor(mIOweThemColour);
 		} else if(mFriend.getDebt().compareTo(BigDecimal.ZERO)>0){
 			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_theyowe);
 			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
-			mFriendPicBg.setImageResource(mTheyOweMeColour);
+			mFriendPic.setOuterColor(mTheyOweMeColour);
 		}
 	}
 

@@ -9,11 +9,6 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/contentDesc" />
 
-    <ProgressBar
-        android:id="@+id/fragment_debtsummary_headerLoading"
-        style="@style/EnterDebt_Pic"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:id="@+id/fragment_debtsummary_headerName"
         style="@style/EnterDebt_NamesText"

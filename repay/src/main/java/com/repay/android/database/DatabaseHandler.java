@@ -150,7 +150,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			friends = new ArrayList<Friend>();
 			do{
 				try{
-					friends.add(new Friend(c.getString(0), Uri.parse(c.getString(1)), c.getString(2), new BigDecimal(c.getString(3))));
+					friends.add(new Friend(c.getString(0), c.getString(1), c.getString(2), new BigDecimal(c.getString(3))));
 				} catch (NullPointerException e){
 					friends.add(new Friend(c.getString(0), null, c.getString(2), new BigDecimal(c.getString(3))));
 				} catch (CursorIndexOutOfBoundsException e){
@@ -194,7 +194,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(Names.F_REPAYID, friend.getRepayID());
 		try {
-			values.put(Names.F_LOOKUPURI, friend.getLookupURI().toString());
+			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
 		} catch (NullPointerException e) {
 			Log.i(TAG, "Added by name, Null for lookupUri");
 			values.putNull(Names.F_LOOKUPURI);
@@ -213,8 +213,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @throws android.database.SQLException
 	 * @throws NullPointerException
 	 */
-	public void addDebt(final String repayID, final BigDecimal amount, 
-		String description) throws SQLException, NullPointerException{
+	public void addDebt(final String repayID, final BigDecimal amount, String description)
+			throws SQLException, NullPointerException
+	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(Names.D_REPAYID, repayID);
@@ -292,7 +293,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Names.F_REPAYID+"=?", new String[]{repayID}, null, null, null);
 		c.moveToFirst();
 		try {
-			friend = new Friend(repayID, Uri.parse(c.getString(1)), c.getString(2), new BigDecimal(c.getString(3)));
+			friend = new Friend(repayID, c.getString(1), c.getString(2), new BigDecimal(c.getString(3)));
 		} catch (NullPointerException e) {
 			Log.i(TAG, "No ContactURI present, passing null");
 			friend = new Friend(repayID, null, c.getString(2), new BigDecimal(c.getString(3)));
@@ -309,7 +310,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(Names.F_REPAYID, friend.getRepayID());
 		if(friend.getLookupURI()!=null){
-			values.put(Names.F_LOOKUPURI, friend.getLookupURI().toString());
+			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
 		}
 		else{
 			values.putNull(Names.F_LOOKUPURI);
@@ -338,7 +339,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 */
 	public int removeFriend(String repayID) throws SQLException, NullPointerException{
 		SQLiteDatabase db = this.getWritableDatabase();
-		int count = 0;
+		int count;
 		count = db.delete(Names.F_TABLENAME, Names.F_REPAYID+"=?", new String[]{repayID});
 		count += db.delete(Names.D_TABLENAME, Names.F_REPAYID+"=?", new String[]{repayID});
 		db.close();

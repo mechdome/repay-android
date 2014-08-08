@@ -56,6 +56,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		super.onActivityCreated(savedInstanceState);
 
 		getActivity().getActionBar().setTitle(R.string.fragment_debtsummary_title);
+		getActivity().getActionBar().setSubtitle("");
 
 		mDescription = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
 		mSplitEvenly = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_splitAmount);
@@ -87,10 +88,11 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(true));
 		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getImageUri(), mHeaderPic, Application.getImageOptions());
 		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString());
+		setOweStatusColour(((DebtActivity) getActivity()).getDebtBuilder().isInDebtToMe());
 	}
 
-	private void setOweStatusColour(boolean isNegative){
-		if(!isNegative){
+	private void setOweStatusColour(boolean isInDebtToMe){
+		if(isInDebtToMe){
 			mTheyOweMe.setBackgroundColor(getActivity().getResources().getColor(mTheyOweMeColour));
 			mIOweThem.setBackgroundColor(getActivity().getResources().getColor(R.color.main_background_slightlyDarker));
 		} else {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="fragment_debthistory_noDebts">There\'s no recorded debts between you.</string>
+    <string name="fragment_debthistory_noDebts">There\'s no debts between you</string>
     <string name="activity_debtHistoryInfoDialog_title">Info</string>
     
     

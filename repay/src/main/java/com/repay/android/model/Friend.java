@@ -24,9 +24,9 @@ public class Friend implements Comparable<Friend>, Serializable {
 
 	private String name, repayID;
 	private BigDecimal debt;
-	private Uri lookupURI;
+	private String lookupURI;
 	
-	public Friend(String repayID, Uri lookupURI, String name, BigDecimal debt) {
+	public Friend(String repayID, String lookupURI, String name, BigDecimal debt) {
 		super();
 		this.lookupURI = lookupURI;
 		this.name = name;
@@ -46,7 +46,7 @@ public class Friend implements Comparable<Friend>, Serializable {
 		return repayID;
 	}
 
-	public Uri getLookupURI() {
+	public String getLookupURI() {
 		return lookupURI;
 	}
 

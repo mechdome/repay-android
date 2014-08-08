@@ -77,7 +77,7 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 		try{
 			if (bundle != null) {
 				mFriend = new Friend(bundle.getString(Friend.REPAYID),
-						Uri.parse(bundle.getString(Friend.LOOKUPURI)), bundle.getString(Friend.NAME),
+						bundle.getString(Friend.LOOKUPURI), bundle.getString(Friend.NAME),
 						new BigDecimal(bundle.getString(Friend.AMOUNT)));
 			}
 		} catch (NullPointerException e){
@@ -265,7 +265,7 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			return true;
 			
 		case R.id.action_unLinkContact:
-			mFriend = new Friend(mFriend.getRepayID(), Uri.parse(""), mFriend.getName(), mFriend.getDebt());
+			mFriend = new Friend(mFriend.getRepayID(), null, mFriend.getName(), mFriend.getDebt());
 			mDB.updateFriendRecord(mFriend);
 			return true;
 		}
@@ -325,7 +325,7 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 				Cursor cursor = getContentResolver().query(contactUri, cols, null, null, null);
 				cursor.moveToFirst();
 				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
-				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri, result, mFriend.getDebt());
+				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri.toString(), result, mFriend.getDebt());
 				mDB.updateFriendRecord(pickerResult);
 				requestBackup();
 			} catch (IndexOutOfBoundsException e){

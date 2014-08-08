@@ -134,7 +134,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				cursor.moveToFirst();
 
 				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
-				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, result, new BigDecimal("0"));
+				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri.toString(), result, new BigDecimal("0"));
 
 				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
 			}
