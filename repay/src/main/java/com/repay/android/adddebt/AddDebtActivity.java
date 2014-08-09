@@ -9,7 +9,6 @@ import com.repay.android.settings.SettingsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +39,7 @@ public class AddDebtActivity extends DebtActivity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
-		getActionBar().setSubtitle(R.string.fragment_choosefriend_subtitle);
+		getActionBar().setSubtitle(R.string.choose_people);
 		setContentView(R.layout.activity_adddebt);
 		mDB = new DatabaseHandler(this);
 

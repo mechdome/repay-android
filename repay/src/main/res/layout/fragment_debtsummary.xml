@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_headerPic"
         android:layout_margin="16dp"
-        android:hint="@string/fragment_enterdebt_enterdescription"
+        android:hint="@string/description_hint"
         android:padding="10dp" />
 
     <CheckBox
@@ -30,7 +30,7 @@
         android:layout_marginLeft="20dp"
         android:checked="false"
         android:padding="10dp"
-        android:text="@string/fragment_enterdebt_splitAmount" />
+        android:text="@string/split_amount" />
 
     <CheckBox
         android:id="@+id/fragment_debtsummary_inclMe"
@@ -41,7 +41,7 @@
         android:layout_marginLeft="20dp"
         android:checked="false"
         android:padding="10dp"
-        android:text="@string/fragment_debtsummary_inclme" />
+        android:text="@string/including_me" />
 
     <TextView
         android:id="@+id/fragment_debtsummary_amount"
@@ -83,7 +83,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/fragment_enterdebt_theyoweme"
+            android:text="@string/they_owe_me"
             android:textAllCaps="true"
             android:textColor="@color/main_foreground"
             android:textSize="18sp"
@@ -99,7 +99,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="@string/fragment_enterdebt_iowethem"
+            android:text="@string/i_owe_them"
             android:textAllCaps="true"
             android:textColor="@color/main_foreground"
             android:textSize="18sp"

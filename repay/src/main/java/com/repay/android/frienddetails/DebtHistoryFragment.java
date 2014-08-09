@@ -83,7 +83,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 		final Debt debt = (Debt)view.getTag();
 		AlertDialog.Builder chooseDialog = new AlertDialog.Builder(getActivity());
 		chooseDialog.setTitle("Edit Or Delete?");
-		chooseDialog.setItems(R.array.fragment_friendoverview_chooseDialog_items, new DialogInterface.OnClickListener() {
+		chooseDialog.setItems(R.array.debtselected_items, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(which == 0){
@@ -103,9 +103,9 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 	
 	private void deleteDebt(final Debt debt){
 		AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
-		deleteDialog.setTitle(R.string.activity_friendoverview_deletedialog_title);
-		deleteDialog.setMessage(R.string.activity_friendoverview_deletedialog_deleteDebtMessage);
-		deleteDialog.setPositiveButton(R.string.activity_friendoverview_deletedialog_yes, new AlertDialog.OnClickListener() {
+		deleteDialog.setTitle(R.string.delete);
+		deleteDialog.setMessage(R.string.confirm_remove_debt);
+		deleteDialog.setPositiveButton(R.string.delete, new AlertDialog.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				deleteDebtFromDatabase(debt);
@@ -115,7 +115,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 			}
 		});
 
-		deleteDialog.setNegativeButton(R.string.activity_friendoverview_deletedialog_no, new AlertDialog.OnClickListener() {
+		deleteDialog.setNegativeButton(R.string.cancel, new AlertDialog.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();

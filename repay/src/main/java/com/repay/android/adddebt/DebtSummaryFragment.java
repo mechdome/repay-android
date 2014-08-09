@@ -1,18 +1,12 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.repay.android.Application;
-import com.repay.android.model.Friend;
 import com.repay.android.R;
 import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +15,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -55,7 +48,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		getActivity().getActionBar().setTitle(R.string.fragment_debtsummary_title);
+		getActivity().getActionBar().setTitle(R.string.summary);
 		getActivity().getActionBar().setSubtitle(null);
 
 		mDescription = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);

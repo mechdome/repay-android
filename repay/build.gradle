@@ -6,8 +6,9 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-    }
-    buildTypes {
+		versionCode 25
+		versionName '1.6'
+		applicationId 'com.repay.android'
     }
     signingConfigs {
         release {
@@ -17,16 +18,17 @@ android {
             storePassword 'android.Repay0028562'
         }
     }
-    productFlavors {
-        repay {
-            minSdkVersion 14
-            applicationId 'com.repay.android'
-            signingConfig signingConfigs.release
-            targetSdkVersion 19
-            versionCode 24
-            versionName '1.5.1'
-        }
-    }
+	buildTypes {
+		debug {
+			applicationIdSuffix '.debug'
+			versionNameSuffix 'd'
+			debuggable true
+		}
+		release {
+			signingConfig signingConfigs.release
+			debuggable false
+		}
+	}
 }
 
 dependencies {

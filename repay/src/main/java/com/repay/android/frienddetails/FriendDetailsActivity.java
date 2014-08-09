@@ -1,8 +1,6 @@
 package com.repay.android.frienddetails;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.repay.android.model.Friend;
 import com.repay.android.R;
@@ -16,7 +14,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
-import android.app.backup.BackupManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -27,7 +24,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +42,6 @@ import android.widget.Toast;
 public class FriendDetailsActivity extends Activity implements View.OnClickListener
 {
 	public static final String		FRIEND = "friend";
-	public static final int			AMOUNT_ENTER_REQUEST = 15;
 	private static final int 		PICK_CONTACT_REQUEST = 1;
 	private Friend 					mFriend;
 	private ViewPager 				mTabView;
@@ -69,7 +64,7 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 		mDebtHistoryFrag = new DebtHistoryFragment();
 
 		// Set the message for the info dialog
-		mInfoMessage = R.string.activity_debtHistoryInfoDialog_message_debtHistoryInfo;
+		mInfoMessage = R.string.info_dialog_text;
 
 		if (findViewById(R.id.activity_frienddetails_tabView) != null)
 		{
@@ -147,10 +142,10 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 
 		case R.id.action_delete:
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setTitle(R.string.activity_friendoverview_deletedialog_title);
-			dialog.setMessage(R.string.activity_friendoverview_deletedialog_message);
+			dialog.setTitle(R.string.delete);
+			dialog.setMessage(R.string.confirm_remove_person);
 
-			dialog.setPositiveButton(R.string.activity_friendoverview_deletedialog_yes, new OnClickListener() {
+			dialog.setPositiveButton(R.string.delete, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					try{
@@ -164,7 +159,7 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 				}
 			});
 
-			dialog.setNegativeButton(R.string.activity_friendoverview_deletedialog_no, new OnClickListener() {
+			dialog.setNegativeButton(R.string.cancel, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -175,9 +170,9 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 
 		case R.id.action_info:
 			AlertDialog.Builder infoDialog = new AlertDialog.Builder(this);
-			infoDialog.setTitle(R.string.activity_debtHistoryInfoDialog_title);
+			infoDialog.setTitle(R.string.info);
 			infoDialog.setMessage(mInfoMessage);
-			infoDialog.setPositiveButton(R.string.activity_debtHistoryInfoDialog_okayBtn, new OnClickListener() {
+			infoDialog.setPositiveButton(R.string.okay, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -209,9 +204,9 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 	
 	private void clearAllDebts(){
 		AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
-		clearDebtDialog.setTitle(R.string.activity_friendoverview_clearDebtDialog_title);
-		clearDebtDialog.setMessage(R.string.activity_friendoverview_clearDebtDialog_message);
-		clearDebtDialog.setPositiveButton(R.string.activity_friendoverview_clearDebtDialog_yes, new OnClickListener() {
+		clearDebtDialog.setTitle(R.string.clear_debt);
+		clearDebtDialog.setMessage(R.string.are_you_sure);
+		clearDebtDialog.setPositiveButton(R.string.clear_debt, new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				try{
@@ -224,7 +219,6 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
                             "Debt of "+ SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString()+" cleared",
                             Toast.LENGTH_SHORT
                     ).show();
-					requestBackup();
 					finish();
 				} catch (Throwable e){
 					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -232,7 +226,7 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 				}
 			}
 		});
-		clearDebtDialog.setNegativeButton(R.string.activity_friendoverview_clearDebtDialog_no, new OnClickListener() {
+		clearDebtDialog.setNegativeButton(R.string.cancel, new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -260,7 +254,6 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
 				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri.toString(), result, mFriend.getDebt());
 				mDB.updateFriendRecord(pickerResult);
-				requestBackup();
 			} catch (IndexOutOfBoundsException e){
 				Toast.makeText(this, "Problem in getting result from your contacts", Toast.LENGTH_SHORT).show();
 			} catch (SQLException e){
@@ -307,11 +300,6 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 			}
 		}
 	}
-	
-	public void requestBackup() {
-		BackupManager bm = new BackupManager(this);
-		bm.dataChanged();
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -319,8 +307,8 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 		case R.id.fragment_frienddetails_repaid:
 			if(mFriend.getDebt().compareTo(BigDecimal.ZERO)!=0){
 				AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
-				clearDebtDialog.setTitle(R.string.fragment_friendoverview_repayDebtDialog_title);
-				clearDebtDialog.setItems(R.array.fragment_friendoverview_repayDebtDialog_items, new OnClickListener() {
+				clearDebtDialog.setTitle(R.string.debt_repaid_title);
+				clearDebtDialog.setItems(R.array.debt_repaid_items, new OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

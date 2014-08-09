@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fragment_enterdebt_enteramount"> Enter Amount</string>
-    <string name="fragment_enterdebt_enterdescription">Description (Optional)</string>
-    <string name="fragment_enterdebt_noamount_title">No Amount Entered</string>
-    <string name="fragment_enterdebt_noamount_message">Please enter an amount to proceed</string>
-    <string name="fragment_enterdebt_noamount_button">Okay</string>
-    <string name="fragment_enterdebt_theyoweme">They Owe Me</string>
-    <string name="fragment_enterdebt_iowethem">I Owe Them</string>
-    <string name="fragment_addfriend_addfriend">Add Friend</string>
-    <string name="fragment_addfriend_dialogtitle">Enter Friend\'s Name</string>
-    <string name="fragment_addfriend_dialogokay">Add</string>
-    <string name="fragment_addfriend_dialogcancel">Cancel</string>
-    <string name="fragment_addfriend_badentry">You didn\'t enter a name or it was not accepted. Try again.</string>
-    <string name="activity_adddebt_debtentered">Debt has been saved</string>
-    <string name="fragment_enterdebt_splitAmount">Split Amount Between Everyone</string>
-    <string name="fragment_debtsummary_inclme">Including Me</string>
-    <string name="fragment_choosefriend_subtitle">Choose one or more people</string>
-    <string name="fragment_enteramount_title">Enter Amount</string>
-    <string name="fragment_enteramount_subtitle">What\'s the debt amount</string>
-    <string name="fragment_debtsummary_title">Summary</string>
+
+    <string name="description_hint">Description (Optional)</string>
+    <string name="no_amount_entered">No Amount Entered</string>
+    <string name="please_enter_amount">Please enter an amount to proceed</string>
+
+    <string name="they_owe_me">They Owe Me</string>
+    <string name="i_owe_them">I Owe Them</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="enter_friends_name">Enter Friend\'s Name</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="invalid_name_entry">You didn\'t enter a name or it was not accepted. Try again.</string>
+    <string name="debt_saved">Debt has been saved</string>
+    <string name="split_amount">Split Amount Between Everyone</string>
+    <string name="including_me">Including Me</string>
+    <string name="choose_people">Choose one or more people</string>
+    <string name="whats_debt_amount">What\'s the debt amount</string>
+    <string name="summary">Summary</string>
     
-    <string name="fragment_enterdebtamount_one">1</string>
-    <string name="fragment_enterdebtamount_two">2</string>
-    <string name="fragment_enterdebtamount_three">3</string>
-    <string name="fragment_enterdebtamount_four">4</string>
-    <string name="fragment_enterdebtamount_five">5</string>
-    <string name="fragment_enterdebtamount_six">6</string>
-    <string name="fragment_enterdebtamount_seven">7</string>
-    <string name="fragment_enterdebtamount_eight">8</string>
-    <string name="fragment_enterdebtamount_nine">9</string>
-    <string name="fragment_enterdebtamount_doublezero">00</string>
-    <string name="fragment_enterdebtamount_zero">0</string>
-    <string name="fragment_enterdebtamount_clear">C</string>
-    <string name="fragment_enterdebtamount_startAmount">0.00</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero_zero">00</string>
+    <string name="zero">0</string>
+    <string name="clear">C</string>
     
-    <string name="activity_friendchooser_helptxt">You haven\'t got anyone here yet?</string>
-    <string name="activity_friendchooser_helpbtn_txt">Add Someone</string>
+    <string name="nobody_here">You haven\'t got anyone here yet?</string>
+    <string name="add_someone">Add Someone</string>
 </resources>

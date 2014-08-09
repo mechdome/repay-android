@@ -96,12 +96,12 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
 			mFriendPic.setOuterColor(mTheyOweMeColour);
 		} else if (mFriend.getDebt().compareTo(BigDecimal.ZERO)<0){
-			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_iowe);
+			mTotalOwedPrefix.setText(R.string.i_owe);
 			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPic.setOuterColor(mIOweThemColour);
 		} else if(mFriend.getDebt().compareTo(BigDecimal.ZERO)>0){
-			mTotalOwedPrefix.setText(R.string.fragment_friendoverview_prefix_theyowe);
+			mTotalOwedPrefix.setText(R.string.they_owe);
 			String amount = SettingsFragment.getFormattedAmount(mFriend.getDebt());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPic.setOuterColor(mTheyOweMeColour);

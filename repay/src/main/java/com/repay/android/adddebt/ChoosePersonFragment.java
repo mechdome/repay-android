@@ -9,7 +9,6 @@ import com.repay.android.database.DatabaseHandler;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +17,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,7 +78,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	
 	private void showAddFriendDialog(){
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-		dialog.setTitle(R.string.fragment_addfriend_dialogtitle);
+		dialog.setTitle(R.string.enter_friends_name);
 		dialog.setItems(new CharSequence[]{"Add From Contacts", "Add A Name"}, new DialogInterface.OnClickListener() {
 
 			@Override
@@ -100,10 +98,10 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	
 	public void addFriendByName(){
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-		dialog.setTitle(R.string.fragment_addfriend_dialogtitle);
+		dialog.setTitle(R.string.enter_friends_name);
 		final EditText nameEntry = new EditText(getActivity());
 		dialog.setView(nameEntry);
-		dialog.setPositiveButton(R.string.fragment_addfriend_dialogokay, new DialogInterface.OnClickListener() {
+		dialog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

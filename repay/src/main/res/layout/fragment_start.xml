@@ -19,7 +19,7 @@
             android:layout_marginBottom="30dp"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_horizontal"
-            android:text="@string/fragment_start_nofriendsadded" />
+            android:text="@string/havent_added_anyone" />
         
     </RelativeLayout>
 

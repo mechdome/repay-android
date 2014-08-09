@@ -3,9 +3,7 @@ package com.repay.android.settings;
 import com.repay.android.R;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
@@ -19,31 +17,18 @@ import android.preference.PreferenceFragment;
  *
  */
 
-public class SettingsActivity extends Activity implements OnSharedPreferenceChangeListener {
-
-	@SuppressWarnings("unused")
-	private static final String TAG = SettingsActivity.class.getName();
-	private android.app.FragmentTransaction mFragMan;
-	private final int mFrameLayout = R.id.settings_FrameLayout;
-	private PreferenceFragment mPrefsFrag;
-
+public class SettingsActivity extends Activity
+{
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		super.onCreate(savedInstanceState);
+
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.settings_activity);
 
-		mPrefsFrag = new SettingsFragment();
-
-		mFragMan = getFragmentManager().beginTransaction();
-		mFragMan.add(mFrameLayout, mPrefsFrag);
-		mFragMan.commit();
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+		getFragmentManager().beginTransaction().replace(R.id.settings_FrameLayout, new SettingsFragment()).commit();
 	}
 }

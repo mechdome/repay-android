@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import com.repay.android.R;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,8 +56,8 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 
-		getActivity().getActionBar().setSubtitle(R.string.fragment_enteramount_subtitle);
-		getActivity().getActionBar().setTitle(R.string.fragment_enteramount_title);
+		getActivity().getActionBar().setSubtitle(R.string.whats_debt_amount);
+		getActivity().getActionBar().setTitle(R.string.enter_amount);
 
 		mAmountDisplay = (TextView)getView().findViewById(R.id.fragment_enterdebtamount_amount);
 		mDoneBtn = (Button)getView().findViewById(R.id.fragment_enterdebtamount_donebtn);
