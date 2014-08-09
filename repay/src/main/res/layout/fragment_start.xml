@@ -33,7 +33,9 @@
         android:stretchMode="columnWidth"
         android:listSelector="@color/selected_tint"
 		android:numColumns="@integer/mainactivity_cols"
-        android:verticalSpacing="5dp" >
+        android:verticalSpacing="8dp"
+		android:padding="8dp"
+		android:clipToPadding="true">
     </GridView>
 
     <ProgressBar
