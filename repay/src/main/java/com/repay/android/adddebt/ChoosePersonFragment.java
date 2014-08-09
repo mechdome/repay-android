@@ -49,11 +49,9 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	private static final String 		TAG = ChoosePersonFragment.class.getName();
 	public static final int 			PICK_CONTACT_REQUEST = 1;
 	
-	private ArrayAdapter<Friend> 		mAdapter;
-	private int 						mListResource = R.layout.fragment_adddebt_friendslist_item;
+	private ChoosePersonAdapter			mAdapter;
 	private ListView 					mListView;
 	private RelativeLayout 				mEmptyState;
-	private ArrayList<Friend> 			mSelectedFriends;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -147,7 +145,6 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
 				alert.setMessage("This person already exists in Repay");
 				alert.setTitle("Person Already Exists");
-				Log.i(TAG, "Person already exists within app database");
 				alert.show();
 			}
 		}
@@ -170,7 +167,6 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_friendchooser, container, false);
-		mSelectedFriends = new ArrayList<Friend>();
 		return view;
 	}
 
@@ -193,7 +189,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		Friend selectedFriend = (Friend)arg1.getTag();
 		Log.i(TAG, selectedFriend.getName()+ " selected ("+ selectedFriend.getRepayID() +")");
 		if(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().contains(selectedFriend)){
-			((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().remove(selectedFriend);
+			((DebtActivity) getActivity()).getDebtBuilder().removeSelectedFriend(selectedFriend);
 			arg1.setBackgroundColor(ChoosePersonAdapter.DESELECTED_COLOUR);
 		} else {
 			((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().add(selectedFriend);
@@ -228,8 +224,10 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		protected void onPostExecute(ArrayList<Friend> result){
 			if (result != null) {
 				mListView.setVisibility(ListView.VISIBLE);
-				mAdapter = new ChoosePersonAdapter(getActivity(), mListResource, result, mSelectedFriends);
+				mAdapter = new ChoosePersonAdapter(getActivity(), R.layout.fragment_adddebt_friendslist_item,
+						result, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
 				mListView.setAdapter(mAdapter);
+				mAdapter.setSelectedFriends(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
 			} else {
 				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
 			}

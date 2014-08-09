@@ -52,7 +52,7 @@
                 android:value="com.repay.android.MainActivity" />
         </activity>
         <activity
-            android:name="com.repay.android.frienddetails.FriendDetailsActivity"
+            android:name=".frienddetails.FriendActivity"
             android:label="@string/title_activity_frienddetails"
             android:parentActivityName="com.repay.android.MainActivity" >
             <meta-data

@@ -14,7 +14,6 @@ import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,10 +32,8 @@ import android.widget.Toast;
  *
  */
 
-public class FriendOverviewFragment extends Fragment implements OnClickListener {
-
-	private static final String TAG = FriendOverviewFragment.class.getName();
-
+public class FriendOverviewFragment extends Fragment implements OnClickListener
+{
 	private RoundedImageView 	mFriendPic;
 	private TextView 			mTotalOwed, mTotalOwedPrefix;
 	private Friend				mFriend;
@@ -53,33 +50,30 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 	@Override
 	public void onStart(){
 		super.onStart();
-		mShareBtn = (Button)getView().findViewById(R.id.fragment_frienddetails_share);
-		mFriendPic = (RoundedImageView)getView().findViewById(R.id.fragment_frienddetails_headerPic);
-		mTotalOwed = (TextView)getView().findViewById(R.id.fragment_frienddetails_debttotal);
-		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.fragment_frienddetails_debttotal_prefix);
+		mShareBtn = (Button)getView().findViewById(R.id.share);
+		mFriendPic = (RoundedImageView)getView().findViewById(R.id.friend_image);
+		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
+		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
 
 		mShareBtn.setOnClickListener(this);
 
 		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
-			mTheyOweMeColour = R.drawable.debt_ind_green;
-			mIOweThemColour = R.drawable.debt_ind_red;
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.red_debt);
 		} else {
-			mTheyOweMeColour = R.drawable.debt_ind_green;
-			mIOweThemColour = R.drawable.debt_ind_blue;
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
 		}
 	}
 
 	@Override
 	public void onResume(){
 		super.onResume();
-		mFriend = ((FriendDetailsActivity)getActivity()).getFriend();
+		mFriend = ((FriendActivity)getActivity()).getFriend();
 		showFriend();
-		if (mFriend.getLookupURI()!=null) {
-			Log.i(TAG, "Now looking for contact information in database");
+		if (mFriend.getLookupURI() != null) {
 			if (!ContactLookup.hasContactData(getActivity(), Uri.parse(mFriend.getLookupURI()).getLastPathSegment())) {
 				mShareBtn.setEnabled(false);
-				Log.i(TAG,
-						"No contact information found - disabling share button");
 			}
 		} else {
 			mShareBtn.setEnabled(false);
@@ -91,7 +85,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 		ImageLoader.getInstance().displayImage(mFriend.getLookupURI(), mFriendPic, Application.getImageOptions());
 
 
-		if(mFriend.getDebt().compareTo(BigDecimal.ZERO)==0){
+		if(mFriend.getDebt().compareTo(BigDecimal.ZERO) == 0){
 			mTotalOwedPrefix.setText(""); // Set it null
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
 			mFriendPic.setOuterColor(mTheyOweMeColour);
@@ -109,14 +103,14 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 	}
 
 	public void updateFriendInfo(){
-		mFriend = ((FriendDetailsActivity) getActivity()).getFriend();
+		mFriend = ((FriendActivity) getActivity()).getFriend();
 		showFriend();
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.fragment_frienddetails_share:
+		case R.id.share:
 			if(mFriend.getDebt().compareTo(BigDecimal.ZERO)!=0){
 				AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), mFriend);
 				shareDialog.show();

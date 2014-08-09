@@ -35,6 +35,18 @@ public abstract class DebtActivity extends Activity
 		// Do some instantiation here
 		mBuilder = new DebtBuilder();
 		mDB = new DatabaseHandler(this);
+		if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
+		{
+			mBuilder.addSelectedFriend((Friend) getIntent().getExtras().get(FRIEND));
+		}
+
+		if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
+		{
+			Debt debt = (Debt) getIntent().getExtras().get(DEBT);
+			mBuilder.setAmount(debt.getAmount());
+			mBuilder.setDescription(debt.getDescription());
+			mBuilder.setDate(debt.getDate());
+		}
 	}
 
 	public DebtBuilder getDebtBuilder()

@@ -20,6 +20,7 @@ public class DebtBuilder
 	private boolean owesMe = true, distributeEvenly = false, includingMe = false;
 	private ArrayList<Friend> mSelectedFriends;
 	private BigDecimal mAmount;
+	private Date mDate;
 
 	public DebtBuilder()
 	{
@@ -52,6 +53,17 @@ public class DebtBuilder
 		this.distributeEvenly = distributeEvenly;
 	}
 
+	public Date getDate()
+	{
+		if (mDate == null) mDate = new Date();
+		return mDate;
+	}
+
+	public void setDate(Date date)
+	{
+		mDate = date;
+	}
+
 	public boolean isIncludingMe() {
 		return includingMe;
 	}
@@ -60,7 +72,7 @@ public class DebtBuilder
 		this.includingMe = includingMe;
 	}
 
-	public List<Friend> getSelectedFriends() {
+	public ArrayList<Friend> getSelectedFriends() {
 		return mSelectedFriends;
 	}
 
@@ -70,7 +82,12 @@ public class DebtBuilder
 
 	public void addSelectedFriend(Friend friend)
 	{
-		mSelectedFriends.add(friend);
+		if (!mSelectedFriends.contains(friend)) mSelectedFriends.add(friend);
+	}
+
+	public void removeSelectedFriend(Friend friend)
+	{
+		mSelectedFriends.remove(friend);
 	}
 
 	public BigDecimal getAmount() {
@@ -147,7 +164,7 @@ public class DebtBuilder
 		List<Debt> debts = new ArrayList<Debt>();
 		for (Friend friend : mSelectedFriends)
 		{
-			debts.add(new Debt(0, friend.getRepayID(), new Date(), debtAmount, mDescription));
+			debts.add(new Debt(0, friend.getRepayID(), getDate(), debtAmount, mDescription));
 		}
 		return debts;
 	}

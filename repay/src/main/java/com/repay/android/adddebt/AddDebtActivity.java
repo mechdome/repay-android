@@ -49,16 +49,6 @@ public class AddDebtActivity extends DebtActivity {
 		mSummary = new DebtSummaryFragment();
 		mFrame = R.id.activity_adddebt_framelayout;
 
-		// Check Intent first
-		if(getIntent().hasExtra(FRIEND))
-		{
-			mBuilder.addSelectedFriend((Friend) getIntent().getExtras().get(FRIEND));
-		}
-
-		// Then check the Bundle
-		if(savedInstanceState != null){
-
-		}
 		// Show the first fragment
 		getFragmentManager().beginTransaction().replace(mFrame, mChoosePerson).commit();
 	}

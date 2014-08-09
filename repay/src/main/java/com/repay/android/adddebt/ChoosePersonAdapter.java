@@ -69,7 +69,7 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 		if(friend!=null){
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
-			// Colour the list item based on whether it is in the map
+			// Colour the list item based on whether it is in the 'selected' list
 			if (mSelectedFriends.contains(friend))
 			{
 				v.setBackgroundColor(SELECTED_COLOUR);

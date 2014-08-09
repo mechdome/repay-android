@@ -39,7 +39,7 @@ import android.widget.Toast;
  *
  */
 
-public class FriendDetailsActivity extends Activity implements View.OnClickListener
+public class FriendActivity extends Activity implements View.OnClickListener
 {
 	public static final String		FRIEND = "friend";
 	private static final int 		PICK_CONTACT_REQUEST = 1;
@@ -48,7 +48,6 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 	private FragmentPagerAdapter	mPageAdapter;
 	private DatabaseHandler 		mDB;
 	private Fragment 				mOverViewFrag, mDebtHistoryFrag;
-	private int 					mInfoMessage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +62,12 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 		mOverViewFrag = new FriendOverviewFragment();
 		mDebtHistoryFrag = new DebtHistoryFragment();
 
-		// Set the message for the info dialog
-		mInfoMessage = R.string.info_dialog_text;
-
 		if (findViewById(R.id.activity_frienddetails_tabView) != null)
 		{
 			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
 			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new Fragment[]{mOverViewFrag, mDebtHistoryFrag});
 			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			mTabView.setAdapter(mPageAdapter);
 
 			mTabView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 
@@ -79,6 +76,7 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 					super.onPageSelected(position);
 					// Find the ViewPager Position
 					getActionBar().setSelectedNavigationItem(position);
+					mTabView.setCurrentItem(position, true);
 				}
 			});
 			// Set the ViewPager animation
@@ -169,16 +167,13 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 			return true;
 
 		case R.id.action_info:
-			AlertDialog.Builder infoDialog = new AlertDialog.Builder(this);
-			infoDialog.setTitle(R.string.info);
-			infoDialog.setMessage(mInfoMessage);
-			infoDialog.setPositiveButton(R.string.okay, new OnClickListener() {
+			new AlertDialog.Builder(this).setTitle(R.string.info).setMessage(R.string.info_dialog_text)
+			.setPositiveButton(R.string.okay, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 				}
-			});
-			infoDialog.show();
+			}).show();
 			return true;
 
 		case R.id.action_addDebt:
@@ -304,7 +299,7 @@ public class FriendDetailsActivity extends Activity implements View.OnClickListe
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.fragment_frienddetails_repaid:
+		case R.id.repaid:
 			if(mFriend.getDebt().compareTo(BigDecimal.ZERO)!=0){
 				AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
 				clearDebtDialog.setTitle(R.string.debt_repaid_title);

@@ -71,7 +71,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 		mDB = new DatabaseHandler(mContext);
 		mList = (ListView)getView().findViewById(R.id.fragment_debtHistory_list);
 		mList.setOnItemLongClickListener(this);
-		mFriend = ((FriendDetailsActivity)mContext).getFriend();
+		mFriend = ((FriendActivity)mContext).getFriend();
 		mNoDebtsMsg = (TextView)getView().findViewById(R.id.fragment_debtHistory_noDebts);
 		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_debtHistory_progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
@@ -173,7 +173,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 	public void deleteDebtFromDatabase(Debt debtToDelete){
 		try{
 			// Get latest info first
-			mFriend = ((FriendDetailsActivity) getActivity()).getFriend();
+			mFriend = ((FriendActivity) getActivity()).getFriend();
 			// Remove debt from the debts table of DB
 			mDB.removeDebt(debtToDelete.getDebtID());
 		} catch (Exception e){

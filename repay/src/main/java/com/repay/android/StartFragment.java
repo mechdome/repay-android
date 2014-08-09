@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.repay.android.database.DatabaseHandler;
-import com.repay.android.frienddetails.FriendDetailsActivity;
+import com.repay.android.frienddetails.FriendActivity;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
@@ -76,12 +76,12 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		mDB = new DatabaseHandler(getActivity());
 		mGrid.setOnItemClickListener(this); // THE GRID. A DIGITAL FRONTIER.
 		mSortOrder = SettingsFragment.getSortOrder(getActivity());
-		updateList();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		updateList();
 	}
 
 	@Override
@@ -93,17 +93,13 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// Retrieve Friend object and continue with navigation
 		Friend selectedFriend = (Friend)arg1.getTag();
-		Intent overview = new Intent(getActivity(), FriendDetailsActivity.class);
-		overview.putExtra(FriendDetailsActivity.FRIEND, selectedFriend);
+		Intent overview = new Intent(getActivity(), FriendActivity.class);
+		overview.putExtra(FriendActivity.FRIEND, selectedFriend);
 		startActivity(overview);
 	}
 
 	public void updateList(){
-		if (mDB!=null) {
-			new GetFriendsFromDB().execute(mDB);
-		} else {
-			mGrid.setVisibility(GridView.GONE);
-		}
+		new GetFriendsFromDB().execute(mDB);
 	}
 
 	private BigDecimal calculateTotalDebt(){
@@ -132,7 +128,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			try{
 				ArrayList<Friend> friends = params[0].getAllFriends();
 				Collections.sort(friends);
-				if(mSortOrder==SettingsFragment.SORTORDER_OWETHEM){
+				if(SettingsFragment.getSortOrder(getActivity()) == SettingsFragment.SORTORDER_OWETHEM){
 					Collections.reverse(friends);
 				}
 				return friends;
@@ -171,10 +167,6 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			}
 		});
 		dialog.show();
-	}
-
-	public void recalculateTotals(){
-		new RecalculateTotalDebts().execute(mDB);
 	}
 
 	private class RecalculateTotalDebts extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>> {

@@ -9,8 +9,6 @@
     <string name="i_owe_them">I Owe Them</string>
     <string name="add_friend">Add Friend</string>
     <string name="enter_friends_name">Enter Friend\'s Name</string>
-    <string name="add">Add</string>
-    <string name="cancel">Cancel</string>
     <string name="invalid_name_entry">You didn\'t enter a name or it was not accepted. Try again.</string>
     <string name="debt_saved">Debt has been saved</string>
     <string name="split_amount">Split Amount Between Everyone</string>
