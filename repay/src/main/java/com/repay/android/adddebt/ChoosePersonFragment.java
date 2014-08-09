@@ -84,7 +84,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				if (which==0){
 					Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
 					pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
-					getActivity().startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+					startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 				}
 				else if(which==1){
 					addFriendByName();
@@ -120,7 +120,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
-		if (data != null && requestCode == Activity.RESULT_OK){
+		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST){
 			try{
 				Log.i(TAG,"Closing contact picker");
 				Uri contactUri = data.getData();
@@ -142,10 +142,9 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			{
 				// TODO Change this. It's pretty crap.
 				e.printStackTrace();
-				AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
-				alert.setMessage("This person already exists in Repay");
-				alert.setTitle("Person Already Exists");
-				alert.show();
+				new AlertDialog.Builder(getActivity())
+						.setMessage("This person already exists in Repay")
+						.setTitle("Person Already Exists").show();
 			}
 		}
 	}
