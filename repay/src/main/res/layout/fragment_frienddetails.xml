@@ -3,20 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout
+    <View
         android:id="@+id/fragment_frienddetails_header"
         android:layout_width="fill_parent"
-        android:layout_height="220dp" >
+        android:layout_height="120dp"
+		android:background="#CCC"/>
 
-        <com.repay.android.view.RoundedImageView
-            android:id="@+id/fragment_frienddetails_headerPic"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="7dp"
-            android:contentDescription="@string/contentDesc"
-            android:scaleType="centerCrop" />
-    </RelativeLayout>
+	<com.repay.android.view.RoundedImageView
+		android:id="@+id/fragment_frienddetails_headerPic"
+		android:layout_width="200dp"
+		android:layout_height="200dp"
+		android:layout_margin="16dp"
+		android:layout_centerHorizontal="true"
+		android:contentDescription="@string/contentDesc"
+		android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/fragment_frienddetails_debttotal_prefix"

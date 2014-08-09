@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <com.repay.android.view.RoundedImageView
         android:id="@+id/fragment_debtsummary_headerPic"
-        style="@style/EnterDebt_Pic"
+        android:layout_width="140dp"
+		android:layout_height="140dp"
+		android:layout_margin="16dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/contentDesc" />
-
-    <TextView
-        android:id="@+id/fragment_debtsummary_headerName"
-        style="@style/EnterDebt_NamesText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_debtsummary_headerPic"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_horizontal"
-        android:textColor="@color/text" />
 
     <EditText
         android:id="@+id/fragment_debtsummary_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_debtsummary_headerName"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_below="@id/fragment_debtsummary_headerPic"
+        android:layout_margin="16dp"
         android:hint="@string/fragment_enterdebt_enterdescription"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="15dp" />
+        android:padding="10dp" />
 
     <CheckBox
         android:id="@+id/fragment_debtsummary_splitAmount"
@@ -42,8 +29,7 @@
         android:layout_below="@id/fragment_debtsummary_description"
         android:layout_marginLeft="20dp"
         android:checked="false"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:padding="10dp"
         android:text="@string/fragment_enterdebt_splitAmount" />
 
     <CheckBox
@@ -52,10 +38,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_splitAmount"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="20dp"
         android:checked="false"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:padding="10dp"
         android:text="@string/fragment_debtsummary_inclme" />
 
     <TextView
@@ -63,9 +48,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_inclMe"
-        android:layout_marginTop="5dp"
+		android:padding="8dp"
         android:fontFamily="sans-serif-condensed"
-        android:gravity="top|center_horizontal"
+        android:gravity="center_horizontal"
         android:textColor="@color/emphasised_text"
         android:textSize="60sp" />
 

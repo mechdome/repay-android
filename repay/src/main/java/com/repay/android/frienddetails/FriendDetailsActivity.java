@@ -12,21 +12,20 @@ import com.repay.android.settings.SettingsActivity;
 import com.repay.android.settings.SettingsFragment;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
+import android.app.Fragment;
 import android.app.backup.BackupManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -44,93 +43,49 @@ import android.widget.Toast;
  *
  */
 
-public class FriendDetailsActivity extends FragmentActivity implements View.OnClickListener {
-
-	public static final String 		TAG = "FriendDetailsActivity";
+public class FriendDetailsActivity extends Activity implements View.OnClickListener
+{
+	public static final String		FRIEND = "friend";
 	public static final int			AMOUNT_ENTER_REQUEST = 15;
 	private static final int 		PICK_CONTACT_REQUEST = 1;
 	private Friend 					mFriend;
 	private ViewPager 				mTabView;
-	private boolean 				mUseTabs=true;
-	private TabViewAdapter 			mTabAdapter;
-	private List<Fragment> 			mFragments;
-	private ActionBar 				mActionBar;
+	private FragmentPagerAdapter	mPageAdapter;
 	private DatabaseHandler 		mDB;
-	private FragmentTransaction		mFragMan;
 	private Fragment 				mOverViewFrag, mDebtHistoryFrag;
 	private int 					mInfoMessage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// If the available screen size is that of an average tablet (as defined
-		// in the Android documentation) then allow the screen to rotate
-		if(getResources().getBoolean(R.bool.lock_orientation)){
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_frienddetails);
 		mDB = new DatabaseHandler(this);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		Bundle bundle = getIntent().getExtras();
-		try{
-			if (bundle != null) {
-				mFriend = new Friend(bundle.getString(Friend.REPAYID),
-						bundle.getString(Friend.LOOKUPURI), bundle.getString(Friend.NAME),
-						new BigDecimal(bundle.getString(Friend.AMOUNT)));
-			}
-		} catch (NullPointerException e){
-			Log.i(TAG, "Person added by name, not from contacts list");
-			if (bundle != null) {
-				mFriend = new Friend(bundle.getString(Friend.REPAYID),
-						null, bundle.getString(Friend.NAME),
-						new BigDecimal(bundle.getString(Friend.AMOUNT)));
-			}
-		}
+
+		mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+
+		mOverViewFrag = new FriendOverviewFragment();
+		mDebtHistoryFrag = new DebtHistoryFragment();
 
 		// Set the message for the info dialog
 		mInfoMessage = R.string.activity_debtHistoryInfoDialog_message_debtHistoryInfo;
 
-		// See if we need to use a tab view or just a 2 fragment layout,
-		// this boolean is stored in XML, this way I can use the SDK
-		// size qualifiers to determine phone or tablet
-		mUseTabs = getResources().getBoolean(R.bool.use_tabView);
-
-		// Determine whether this is a tablet or not so
-		// we know if we need the tab view or just a couple
-		// of FrameLayouts
-		if(!mUseTabs){
-			mFragMan = getSupportFragmentManager().beginTransaction();
-			mOverViewFrag = new FriendOverviewFragment();
-			mDebtHistoryFrag = new DebtHistoryFragment();
-            if(savedInstanceState != null){
-                mFragMan.replace(R.id.activity_frienddetails_frame1, mOverViewFrag);
-                mFragMan.replace(R.id.activity_frienddetails_frame2, mDebtHistoryFrag);
-            } else {
-                mFragMan.add(R.id.activity_frienddetails_frame1, mOverViewFrag);
-                mFragMan.add(R.id.activity_frienddetails_frame2, mDebtHistoryFrag);
-            }
-			mFragMan.commit();
-
-		} else {
+		if (findViewById(R.id.activity_frienddetails_tabView) != null)
+		{
 			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
-			// Get the friend from the bundle passed in the intent
+			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new Fragment[]{mOverViewFrag, mDebtHistoryFrag});
+			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-			// Produce the Tab bar
-			mActionBar = getActionBar();
-			if (mActionBar != null) {
-				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			}
-			ViewPager.SimpleOnPageChangeListener mViewPagerListener = new ViewPager.SimpleOnPageChangeListener() {
+			mTabView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+
 				@Override
 				public void onPageSelected(int position) {
 					super.onPageSelected(position);
 					// Find the ViewPager Position
-					mActionBar.setSelectedNavigationItem(position);
+					getActionBar().setSelectedNavigationItem(position);
 				}
-			};
-			mTabView.setOnPageChangeListener(mViewPagerListener);
+			});
 			// Set the ViewPager animation
 			mTabView.setPageTransformer(true, new DepthPageTransformer());
 			// Capture tab button clicks
@@ -152,22 +107,15 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 				}
 			};
 
-			// Create first Tab
-			Tab mTab1 = mActionBar.newTab().setText(mFriend.getName()).setTabListener(tabListener);
-			mActionBar.addTab(mTab1);
-
-			// Create second Tab
-			Tab mTab2 = mActionBar.newTab().setText("Debts").setTabListener(tabListener);
-			mActionBar.addTab(mTab2);
-
-			// Add Tabs to ViewPager
-			mFragments = new ArrayList<Fragment>();
-			mFragments.add(FriendOverviewFragment.newInstance("Friend Details"));
-			mFragments.add(DebtHistoryFragment.newInstance("Debt History"));
-
-			// Instantiate adapter and add it to ViewPager
-			mTabAdapter = new TabViewAdapter(getSupportFragmentManager(), mFragments);
-			mTabView.setAdapter(mTabAdapter);
+			// Create tabs
+			getActionBar().addTab(getActionBar().newTab().setText(mFriend.getName()).setTabListener(tabListener));
+			getActionBar().addTab(getActionBar().newTab().setText("Debts").setTabListener(tabListener));
+		}
+		else
+		{
+			// Just show the fragments otherwise
+			getFragmentManager().beginTransaction().replace(R.id.activity_frienddetails_frame1, mOverViewFrag).commit();
+			getFragmentManager().beginTransaction().replace(R.id.activity_frienddetails_frame2, mDebtHistoryFrag).commit();
 		}
 	}
 
@@ -177,7 +125,7 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 		mFriend = mDB.getFriendByRepayID(mFriend.getRepayID());
 	}
 
-	protected Friend getFriend(){
+	public Friend getFriend(){
 		return mFriend;
 	}
 
@@ -186,27 +134,6 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.frienddetails, menu);
 		return true;
-	}
-
-	private void deleteFriend(){
-		try{
-			if(mDB!=null){
-				mDB.removeFriend(mFriend.getRepayID());
-				finish();
-			}
-		} catch (Throwable e){
-			e.printStackTrace();
-		}
-	}
-
-	public void onDebtTotalUpdated(Friend friend) {
-		this.mFriend = friend;
-		if(mUseTabs){
-			mOverViewFrag = new FriendOverviewFragment();
-			mTabAdapter.setItem(0, mOverViewFrag);
-		} else {
-			((FriendOverviewFragment)mOverViewFrag).updateFriendInfo();
-		}
 	}
 
 	@Override
@@ -226,7 +153,14 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 			dialog.setPositiveButton(R.string.activity_friendoverview_deletedialog_yes, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					deleteFriend();
+					try{
+						if(mDB!=null){
+							mDB.removeFriend(mFriend.getRepayID());
+							finish();
+						}
+					} catch (Exception e){
+						e.printStackTrace();
+					}
 				}
 			});
 
@@ -294,7 +228,6 @@ public class FriendDetailsActivity extends FragmentActivity implements View.OnCl
 					finish();
 				} catch (Throwable e){
 					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-					Log.e(TAG, e.getMessage());
 					e.printStackTrace();
 				}
 			}

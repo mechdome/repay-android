@@ -17,7 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +38,7 @@ import android.widget.Toast;
  *
  */
 
-public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemLongClickListener, AmountUpdatedCallback {
+public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemLongClickListener {
 
 	private static final String 		TAG = DebtHistoryFragment.class.getName();
 
@@ -125,11 +125,6 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 		deleteDialog.show();
 	}
 
-	@Override
-	public void onDebtTotalUpdated(Friend friend) {
-		((FriendDetailsActivity)getActivity()).onDebtTotalUpdated(friend);
-	}
-
 	private class GetDebtsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Debt>> {
 
 		/* 
@@ -203,11 +198,7 @@ public class DebtHistoryFragment extends Fragment implements AdapterView.OnItemL
 			// Either way set this user's total debts as 0
 			mFriend.setDebt(new BigDecimal("0"));
 		} finally {
-			// Plug this new data into the matrix
 			mDB.updateFriendRecord(mFriend);
-			// Trigger callback to activity
-			onDebtTotalUpdated(mFriend);
-            // Leave and don't look back
 		}
 	}
 }

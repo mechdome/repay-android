@@ -28,12 +28,8 @@ public class SettingsActivity extends Activity implements OnSharedPreferenceChan
 	private PreferenceFragment mPrefsFrag;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// If the available screen size is that of an average tablet (as defined
-		// in the Android documentation) then allow the screen to rotate
-		if(getResources().getBoolean(R.bool.lock_orientation)){
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		super.onCreate(savedInstanceState);

@@ -17,7 +17,7 @@ import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -93,19 +93,9 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// Retrieve Friend object and continue with navigation
 		Friend selectedFriend = (Friend)arg1.getTag();
-		Bundle bundle = new Bundle();
-		bundle.putString(Friend.REPAYID, selectedFriend.getRepayID());
-		try {
-			bundle.putString(Friend.LOOKUPURI, selectedFriend.getLookupURI().toString());
-		} catch (NullPointerException e) {
-			Log.i(TAG, "Not added from contacts. LookupUri is Null");
-		}
-		bundle.putString(Friend.AMOUNT, selectedFriend.getDebt().toString());
-		bundle.putString(Friend.NAME, selectedFriend.getName());
-		Intent i = new Intent();
-		i.putExtras(bundle);
-		i.setClass(getActivity(), FriendDetailsActivity.class);
-		startActivity(i);
+		Intent overview = new Intent(getActivity(), FriendDetailsActivity.class);
+		overview.putExtra(FriendDetailsActivity.FRIEND, selectedFriend);
+		startActivity(overview);
 	}
 
 	public void updateList(){

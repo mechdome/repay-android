@@ -92,9 +92,9 @@ public class DebtBuilder
 		{
 			for (Friend friend : mSelectedFriends)
 			{
-				if (!TextUtils.isEmpty(friend.getLookupURI().toString()))
+				if (!TextUtils.isEmpty(friend.getLookupURI()))
 				{
-					return friend.getLookupURI().toString();
+					return friend.getLookupURI();
 				}
 			}
 		}

@@ -48,7 +48,7 @@ public class ShareDialog extends Builder implements OnClickListener {
 	/* (non-Javadoc)
 	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
 	 * It seems to work well with just presuming you want to use the first number;
-	 * Android does a reverse lookup in the contacts book automtically
+	 * Android does a reverse lookup in the contacts book automatically
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

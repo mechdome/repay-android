@@ -16,11 +16,6 @@
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/contentDesc" />
 
-        <ProgressBar
-            android:id="@+id/fragment_debtsummary_headerLoading"
-            style="@style/EnterDebt_Pic"
-            android:layout_centerHorizontal="true" />
-
         <TextView
             android:id="@+id/fragment_debtsummary_headerName"
             style="@style/EnterDebt_NamesText"
@@ -31,6 +26,7 @@
             android:gravity="center_horizontal"
             android:lineSpacingExtra="4dp"
             android:textColor="@color/text" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -78,14 +74,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_radioGroup"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         android:layout_toRightOf="@id/fragment_debtsummary_header"
         android:hint="@string/fragment_enterdebt_enterdescription"
-        android:lines="2"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp" />
+        android:lines="2" />
 
     <CheckBox
         android:id="@+id/fragment_debtsummary_splitAmount"
@@ -96,7 +88,7 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/fragment_debtsummary_header"
         android:checked="false"
-        android:paddingTop="5dp"
+        android:padding="10dp"
         android:text="@string/fragment_enterdebt_splitAmount" />
 
     <CheckBox
@@ -105,12 +97,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_debtsummary_splitAmount"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/fragment_debtsummary_header"
         android:checked="false"
-        android:paddingBottom="15dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
+        android:padding="10dp"
         android:text="@string/fragment_debtsummary_inclme" />
 
     <TextView

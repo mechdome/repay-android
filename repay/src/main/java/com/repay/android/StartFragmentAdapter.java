@@ -72,7 +72,7 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
 			Log.i(TAG,"Now retrieving contact image");
-			ImageLoader.getInstance().displayImage(friend.getLookupURI().toString(), pic, Application.getImageOptions());
+			ImageLoader.getInstance().displayImage(friend.getLookupURI(), pic, Application.getImageOptions());
 
 			name.setText(friend.getName());
 			// Determine the number of decimal places

@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
-    android:paddingTop="5dp">
+	android:layout_margin="5dp" >
     
     <com.repay.android.view.RoundedImageView
         android:id="@+id/fragment_start_friendslist_item_pic"
@@ -15,10 +15,8 @@
 
     <LinearLayout
         android:id="@+id/fragment_start_friendslist_item_textBg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="3dp"
 		android:layout_below="@id/fragment_start_friendslist_item_pic"
 		android:layout_alignParentBottom="true"
         android:orientation="vertical" >
@@ -27,7 +25,7 @@
             android:id="@+id/fragment_start_friendslist_item_name"
             style="@style/FriendsList.Text"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -39,7 +37,7 @@
             android:id="@+id/fragment_start_friendslist_item_amount"
             style="@style/FriendsList.Text"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"

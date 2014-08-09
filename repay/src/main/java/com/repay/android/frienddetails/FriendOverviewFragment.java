@@ -13,7 +13,7 @@ import com.repay.android.settings.SettingsFragment;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +88,7 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 
 	private void showFriend(){
 		// Get image
-		ImageLoader.getInstance().displayImage(mFriend.getLookupURI().toString(), mFriendPic, Application.getImageOptions());
+		ImageLoader.getInstance().displayImage(mFriend.getLookupURI(), mFriendPic, Application.getImageOptions());
 
 
 		if(mFriend.getDebt().compareTo(BigDecimal.ZERO)==0){
@@ -106,14 +106,6 @@ public class FriendOverviewFragment extends Fragment implements OnClickListener 
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPic.setOuterColor(mTheyOweMeColour);
 		}
-	}
-
-	public static final FriendOverviewFragment newInstance(String message){
-		FriendOverviewFragment f = new FriendOverviewFragment();
-		Bundle bd1 = new Bundle(1);
-		bd1.putString(TAG, message);
-		f.setArguments(bd1);
-		return f;
 	}
 
 	public void updateFriendInfo(){

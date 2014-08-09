@@ -40,7 +40,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	private TextView 						mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem;
 	private EditText						mDescription;
 	private CheckBox 						mSplitEvenly, mInclMe;
-	private int 							mTheyOweMeColour, mIOweThemColour;
+	private int 							mTheyOweMeColour, mIOweThemColour, mNeutralColor;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -56,7 +56,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		super.onActivityCreated(savedInstanceState);
 
 		getActivity().getActionBar().setTitle(R.string.fragment_debtsummary_title);
-		getActivity().getActionBar().setSubtitle("");
+		getActivity().getActionBar().setSubtitle(null);
 
 		mDescription = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
 		mSplitEvenly = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_splitAmount);
@@ -73,19 +73,19 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		mIOweThem.setOnClickListener(this);
 
 		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
-			mTheyOweMeColour = R.color.green_debt;
-			mIOweThemColour = R.color.darkred_debt;
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.darkred_debt);
 		} else {
-			mTheyOweMeColour = R.color.green_debt;
-			mIOweThemColour = R.color.blue_debt;
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
 		}
+		mNeutralColor = getActivity().getResources().getColor(R.color.main_background_slightlyDarker);
 
 		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size() < 2)
 		{
 			mSplitEvenly.setVisibility(CheckBox.INVISIBLE);
 		}
-		// TODO Change this to the bool stored in resources
-		mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(true));
+		if (mNamesTxt != null) mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(false).trim());
 		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getImageUri(), mHeaderPic, Application.getImageOptions());
 		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString());
 		setOweStatusColour(((DebtActivity) getActivity()).getDebtBuilder().isInDebtToMe());
@@ -93,11 +93,11 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 
 	private void setOweStatusColour(boolean isInDebtToMe){
 		if(isInDebtToMe){
-			mTheyOweMe.setBackgroundColor(getActivity().getResources().getColor(mTheyOweMeColour));
-			mIOweThem.setBackgroundColor(getActivity().getResources().getColor(R.color.main_background_slightlyDarker));
+			mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
+			mIOweThem.setBackgroundColor(mNeutralColor);
 		} else {
-			mTheyOweMe.setBackgroundColor(getActivity().getResources().getColor(R.color.main_background_slightlyDarker));
-			mIOweThem.setBackgroundColor(getActivity().getResources().getColor(mIOweThemColour));
+			mTheyOweMe.setBackgroundColor(mNeutralColor);
+			mIOweThem.setBackgroundColor(mIOweThemColour);
 		}
 	}
 

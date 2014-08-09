@@ -32,9 +32,8 @@ import android.widget.TextView;
  *
  */
 
-public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
-
-	private static final String 		TAG = ChoosePersonAdapter.class.getName();
+public class ChoosePersonAdapter extends ArrayAdapter<Friend>
+{
 	private int 						mLayoutID;
 	private ArrayList<Friend> 			mFriends, mSelectedFriends;
 	public static final int 			SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
@@ -48,10 +47,19 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 		this.mSelectedFriends = selectedFriends;
 	}
 
+	public void setSelectedFriends(ArrayList<Friend> selected)
+	{
+		mSelectedFriends = selected;
+		notifyDataSetChanged();
+	}
+
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		View v = convertView;
-		if(v == null){
+
+		if(v == null)
+		{
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(mLayoutID, null);
 		}
@@ -62,15 +70,18 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend> {
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
 			// Colour the list item based on whether it is in the map
-			if (mSelectedFriends.contains(friend)) {
+			if (mSelectedFriends.contains(friend))
+			{
 				v.setBackgroundColor(SELECTED_COLOUR);
-				Log.i(TAG,"Highlighting "+friend.getName());
+			}
+			else
+			{
+				v.setBackgroundColor(DESELECTED_COLOUR);
 			}
 		}
-
-		ImageLoader.getInstance().displayImage(friend.getLookupURI().toString(), pic, Application.getImageOptions());
-
+		ImageLoader.getInstance().displayImage(friend.getLookupURI(), pic, Application.getImageOptions());
 		name.setText(friend.getName());
+
 		return v;
 	}
 }
