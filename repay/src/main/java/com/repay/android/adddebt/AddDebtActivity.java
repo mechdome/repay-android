@@ -48,8 +48,11 @@ public class AddDebtActivity extends DebtActivity {
 		mSummary = new DebtSummaryFragment();
 		mFrame = R.id.activity_adddebt_framelayout;
 
-		// Show the first fragment
-		getFragmentManager().beginTransaction().replace(mFrame, mChoosePerson).commit();
+		if (getFragmentManager().findFragmentById(mFrame) == null)
+		{
+			// Show the first fragment
+			getFragmentManager().beginTransaction().replace(mFrame, mChoosePerson).commit();
+		}
 	}
 
 	@Override

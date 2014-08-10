@@ -20,9 +20,10 @@ import android.view.View;
 
 public abstract class DebtActivity extends Activity
 {
-	public static final String FRIEND = "friend";
-	public static final String DEBT = "debt";
-	public static final String DEBT_REPAID_TEXT = "Repaid";
+	public static final String		FRIEND = "friend";
+	public static final String		DEBT = "debt";
+	public static final String		DEBT_REPAID_TEXT = "Repaid";
+	private static final String		DEBT_BUILDER = "builder";
 
 	protected DatabaseHandler mDB;
 
@@ -33,20 +34,30 @@ public abstract class DebtActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		// Do some instantiation here
-		mBuilder = new DebtBuilder();
-		mDB = new DatabaseHandler(this);
-		if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
+
+		if (savedInstanceState != null && savedInstanceState.get(DEBT_BUILDER) != null)
 		{
-			mBuilder.addSelectedFriend((Friend) getIntent().getExtras().get(FRIEND));
+			mBuilder = (DebtBuilder) savedInstanceState.get(DEBT_BUILDER);
+		}
+		else
+		{
+			mBuilder = new DebtBuilder();
+
+			if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
+			{
+				mBuilder.addSelectedFriend((Friend) getIntent().getExtras().get(FRIEND));
+			}
+
+			if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
+			{
+				Debt debt = (Debt) getIntent().getExtras().get(DEBT);
+				mBuilder.setAmount(debt.getAmount());
+				mBuilder.setDescription(debt.getDescription());
+				mBuilder.setDate(debt.getDate());
+			}
 		}
 
-		if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
-		{
-			Debt debt = (Debt) getIntent().getExtras().get(DEBT);
-			mBuilder.setAmount(debt.getAmount());
-			mBuilder.setDescription(debt.getDescription());
-			mBuilder.setDate(debt.getDate());
-		}
+		mDB = new DatabaseHandler(this);
 	}
 
 	public DebtBuilder getDebtBuilder()
@@ -76,4 +87,11 @@ public abstract class DebtActivity extends Activity
 	}
 
 	public abstract void onNextButtonClick(View v);
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(DEBT_BUILDER, mBuilder);
+	}
 }

@@ -128,7 +128,8 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			try{
 				ArrayList<Friend> friends = mDB.getAllFriends();
 				Collections.sort(friends);
-				if(SettingsFragment.getSortOrder(getActivity()) == SettingsFragment.SORTORDER_OWETHEM){
+				if(SettingsFragment.getSortOrder(getActivity()) == SettingsFragment.SORTORDER_OWETHEM)
+				{
 					Collections.reverse(friends);
 				}
 				return friends;

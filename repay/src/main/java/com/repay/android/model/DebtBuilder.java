@@ -2,6 +2,7 @@ package com.repay.android.model;
 
 import android.text.TextUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.List;
  * <p/>
  * 07/08/2014.
  */
-public class DebtBuilder
+public class DebtBuilder implements Serializable
 {
 	private String mDescription;
 	private boolean owesMe = true, distributeEvenly = false, includingMe = false;
