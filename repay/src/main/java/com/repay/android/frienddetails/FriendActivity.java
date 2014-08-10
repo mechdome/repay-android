@@ -13,7 +13,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,9 +43,9 @@ public class FriendActivity extends Activity implements View.OnClickListener
 	private static final int 		PICK_CONTACT_REQUEST = 1;
 	private Friend 					mFriend;
 	private ViewPager 				mTabView;
-	private FragmentPagerAdapter	mPageAdapter;
+	private TabPagerAdapter			mPageAdapter;
 	private DatabaseHandler 		mDB;
-	private Fragment 				mOverViewFrag, mDebtHistoryFrag;
+	private FriendFragment 			mOverViewFrag, mDebtHistoryFrag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +63,10 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		if (findViewById(R.id.activity_frienddetails_tabView) != null)
 		{
 			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
-			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new Fragment[]{mOverViewFrag, mDebtHistoryFrag});
+			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new FriendFragment[]{mOverViewFrag, mDebtHistoryFrag});
 			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			mTabView.setAdapter(mPageAdapter);
 
+			mTabView.setAdapter(mPageAdapter);
 			mTabView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 
 				@Override
@@ -84,19 +82,11 @@ public class FriendActivity extends Activity implements View.OnClickListener
 			// Capture tab button clicks
 			ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 
-				@Override
-				public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
-					// Not needed
-				}
-
+				@Override public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {}
+				@Override public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {}
 				@Override
 				public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
 					mTabView.setCurrentItem(tab.getPosition());
-				}
-
-				@Override
-				public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
-					// Not needed
 				}
 			};
 
@@ -112,10 +102,32 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		}
 	}
 
+	public DatabaseHandler getDB()
+	{
+		return mDB;
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		mFriend = mDB.getFriendByRepayID(mFriend.getRepayID());
+	}
+
+	private void updateFragments()
+	{
+		if (mPageAdapter != null)
+		{
+			// Iterate through them and update them
+			for (int i=0; i < mPageAdapter.getCount(); i++)
+			{
+				mPageAdapter.getItem(i).updateUI();
+			}
+		}
+		else
+		{
+			mOverViewFrag.updateUI();
+			mDebtHistoryFrag.updateUI();
+		}
 	}
 
 	public Friend getFriend(){

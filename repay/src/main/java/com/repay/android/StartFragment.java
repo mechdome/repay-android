@@ -47,7 +47,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 
 	private DatabaseHandler 		mDB;
 	private GridView 				mGrid;
-	private RelativeLayout			mEmptyState;
+	private TextView				mEmptyState;
 	private StartFragmentAdapter 	mAdapter;
 	private ArrayList<Friend> 		mFriends;
 	private ProgressBar 			mProgressBar;
@@ -70,7 +70,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		super.onStart();
 		mGrid = (GridView)getView().findViewById(R.id.fragment_start_friendsgrid);
 		mContext = getActivity();
-		mEmptyState = (RelativeLayout)getView().findViewById(R.id.fragment_start_emptystate);
+		mEmptyState = (TextView)getView().findViewById(R.id.fragment_start_nofriendsadded);
 		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_start_progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
 		mDB = new DatabaseHandler(getActivity());
@@ -119,7 +119,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		protected void onPreExecute() {
 			mGrid.setAdapter(null);
 			mGrid.setVisibility(ListView.GONE);
-			mEmptyState.setVisibility(RelativeLayout.GONE);
+			mEmptyState.setVisibility(TextView.GONE);
 			mProgressBar.setVisibility(ProgressBar.VISIBLE);
 		}
 
@@ -146,7 +146,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 				mGrid.setVisibility(ListView.VISIBLE);
 				mGrid.setAdapter(mAdapter);
 			} else {
-				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
+				mEmptyState.setVisibility(TextView.VISIBLE);
 			}
 			mProgressBar.setVisibility(ProgressBar.GONE);
 		}

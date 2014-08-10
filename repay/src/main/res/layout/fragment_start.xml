@@ -1,13 +1,12 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".MainActivity" >
 
-    <RelativeLayout
-        android:id="@+id/fragment_start_emptystate"
-        android:layout_width="fill_parent"
+	<RelativeLayout
+		android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical" >
 
@@ -20,7 +19,7 @@
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_horizontal"
             android:text="@string/havent_added_anyone" />
-        
+
     </RelativeLayout>
 
     <GridView
@@ -36,11 +35,11 @@
         android:verticalSpacing="12dp" >
     </GridView>
 
-    <ProgressBar
-        android:id="@+id/fragment_start_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
-    </ProgressBar>
+	<ProgressBar
+		android:id="@+id/fragment_start_progress"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true" >
+	</ProgressBar>
 
 </RelativeLayout>
