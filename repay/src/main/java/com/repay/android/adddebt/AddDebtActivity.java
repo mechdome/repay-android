@@ -41,7 +41,6 @@ public class AddDebtActivity extends DebtActivity {
 		getActionBar().setDisplayShowTitleEnabled(true);
 		getActionBar().setSubtitle(R.string.choose_people);
 		setContentView(R.layout.activity_adddebt);
-		mDB = new DatabaseHandler(this);
 
 		// Instantiate Fragments
 		mChoosePerson = new ChoosePersonFragment();

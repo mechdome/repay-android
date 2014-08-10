@@ -126,7 +126,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		@Override
 		protected ArrayList<Friend> doInBackground(DatabaseHandler... params) {
 			try{
-				ArrayList<Friend> friends = params[0].getAllFriends();
+				ArrayList<Friend> friends = mDB.getAllFriends();
 				Collections.sort(friends);
 				if(SettingsFragment.getSortOrder(getActivity()) == SettingsFragment.SORTORDER_OWETHEM){
 					Collections.reverse(friends);
@@ -140,6 +140,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		@Override
 		protected void onPostExecute(ArrayList<Friend> result){
 			if (result!=null) {
+				Log.d(TAG, Integer.toString(result.size())+ " friends found");
 				setFriendsArray(result);
 				mAdapter = new StartFragmentAdapter(mContext, mListItem, result);
 				mGrid.setVisibility(ListView.VISIBLE);

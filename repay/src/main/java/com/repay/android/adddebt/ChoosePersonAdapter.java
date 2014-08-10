@@ -1,20 +1,14 @@
 package com.repay.android.adddebt;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.repay.android.Application;
-import com.repay.android.ContactLookup;
 import com.repay.android.model.Friend;
 import com.repay.android.R;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

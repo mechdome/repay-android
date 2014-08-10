@@ -62,4 +62,9 @@ public class Friend implements Comparable<Friend>, Serializable {
 	public int compareTo(Friend another) {
 		return another.getDebt().compareTo(debt);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return (o.getClass() == Friend.class && ((Friend) o).getRepayID().equals(repayID));
+	}
 }
