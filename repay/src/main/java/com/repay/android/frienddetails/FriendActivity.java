@@ -1,24 +1,13 @@
 package com.repay.android.frienddetails;
 
-import java.math.BigDecimal;
-
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-import com.repay.android.adddebt.*;
-import com.repay.android.database.DatabaseHandler;
-import com.repay.android.settings.SettingsActivity;
-import com.repay.android.settings.SettingsFragment;
-
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ActionBar.Tab;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
@@ -26,6 +15,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.repay.android.ContactsContractHelper;
+import com.repay.android.R;
+import com.repay.android.adddebt.AddDebtActivity;
+import com.repay.android.adddebt.DebtActivity;
+import com.repay.android.adddebt.RepayDebtActivity;
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Friend;
+import com.repay.android.settings.SettingsActivity;
+import com.repay.android.settings.SettingsFragment;
+
+import java.math.BigDecimal;
 
 /**
  * Property of Matt Allen
@@ -193,13 +194,13 @@ public class FriendActivity extends Activity implements View.OnClickListener
 			i.putExtra(DebtActivity.FRIEND, mFriend);
 			startActivity(i);
 			return true;
-			
+
 		case R.id.action_reLinkContact:
 				Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
 				pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
 				startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 			return true;
-			
+
 		case R.id.action_unLinkContact:
 			mFriend = new Friend(mFriend.getRepayID(), null, mFriend.getName(), mFriend.getDebt());
 			mDB.updateFriendRecord(mFriend);
@@ -208,7 +209,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 
 		return false;
 	}
-	
+
 	private void clearAllDebts(){
 		AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
 		clearDebtDialog.setTitle(R.string.clear_debt);
@@ -242,26 +243,26 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		});
 		clearDebtDialog.show();
 	}
-	
+
 	private void clearPartialDebt(){
 		Intent i = new Intent(this, RepayDebtActivity.class);
 		i.putExtra(DebtActivity.FRIEND, mFriend);
 		startActivity(i);
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		if(data != null && requestCode == PICK_CONTACT_REQUEST){
 			try{
-				Uri contactUri = data.getData();
-				String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
-				Cursor cursor = getContentResolver().query(contactUri, cols, null, null, null);
-				cursor.moveToFirst();
-				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
-				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri.toString(), result, mFriend.getDebt());
+				String contactUri = data.getData().toString();
+				String displayName = ContactsContractHelper.getNameForContact(this, contactUri);
+
+				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri, displayName, mFriend.getDebt());
+
 				mDB.updateFriendRecord(pickerResult);
 			} catch (IndexOutOfBoundsException e){
+				e.printStackTrace();
 				Toast.makeText(this, "Problem in getting result from your contacts", Toast.LENGTH_SHORT).show();
 			} catch (SQLException e){
 				e.printStackTrace();
@@ -316,7 +317,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 				AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
 				clearDebtDialog.setTitle(R.string.debt_repaid_title);
 				clearDebtDialog.setItems(R.array.debt_repaid_items, new OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if(which==0){
@@ -336,6 +337,6 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		default:
 			break;
 		}
-		
+
 	}
 }

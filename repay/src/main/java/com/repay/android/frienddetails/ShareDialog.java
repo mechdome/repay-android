@@ -2,7 +2,7 @@ package com.repay.android.frienddetails;
 
 import java.util.HashMap;
 
-import com.repay.android.ContactLookup;
+import com.repay.android.ContactsContractHelper;
 import com.repay.android.model.Friend;
 import com.repay.android.SendMail;
 
@@ -25,9 +25,9 @@ import android.widget.Toast;
  */
 
 public class ShareDialog extends Builder implements OnClickListener {
-	
+
 	private static final String					TAG = ShareDialog.class.getName();
-	
+
 	private HashMap<String, String> 			mEmails, mPhoneNums;
 	private Friend								mFriend;
 	private Context								mContext;
@@ -37,9 +37,9 @@ public class ShareDialog extends Builder implements OnClickListener {
 		mContext = context;
 		mFriend = friend;
 		Log.d(TAG, "Getting emails from contacts");
-		mEmails = ContactLookup.getContactsEmailAddress(Uri.parse(mFriend.getLookupURI()).getLastPathSegment(), context);
+		mEmails = ContactsContractHelper.getContactsEmailAddress(Uri.parse(mFriend.getLookupURI()).getLastPathSegment(), context);
 		Log.d(TAG, "Getting phone numbers from contacts");
-		mPhoneNums = ContactLookup.getContactPhoneNumber(context, Uri.parse(mFriend.getLookupURI()).getLastPathSegment());
+		mPhoneNums = ContactsContractHelper.getContactPhoneNumber(context, Uri.parse(mFriend.getLookupURI()).getLastPathSegment());
 		String[] items = new String[]{"SMS", "Email"};
 		setTitle("Select Share Method");
 		setItems(items, this);

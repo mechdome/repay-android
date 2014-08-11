@@ -1,19 +1,10 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-import com.repay.android.database.DatabaseHandler;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -26,13 +17,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.repay.android.ContactsContractHelper;
+import com.repay.android.R;
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Friend;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Property of Matt Allen
@@ -48,17 +46,17 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 
 	private static final String 		TAG = ChoosePersonFragment.class.getName();
 	public static final int 			PICK_CONTACT_REQUEST = 1;
-	
+
 	private ChoosePersonAdapter			mAdapter;
 	private ListView 					mListView;
 	private RelativeLayout 				mEmptyState;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true); // Tell the activity that we have ActionBar items
 	}
-	
+
 	/*
 	 * Here we add the extra menu items needed into the ActionBar. Even with
 	 * implementing this method, we still need to tell the Activity that we
@@ -73,7 +71,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
             inf.inflate(R.menu.chooseperson, menu);
         }
 	}
-	
+
 	private void showAddFriendDialog(){
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
@@ -93,7 +91,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		});
 		dialog.show();
 	}
-	
+
 	public void addFriendByName(){
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
@@ -122,33 +120,28 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		super.onActivityResult(requestCode, resultCode, data);
 		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST){
 			try{
-				Log.i(TAG,"Closing contact picker");
-				Uri contactUri = data.getData();
+				Log.i(TAG,"Closing contact picker and adding to SQLite");
+				String contactUri = data.getData().toString();
 
-				String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
-				Cursor cursor = getActivity().getContentResolver().query(contactUri, cols, null, null, null);
-				cursor.moveToFirst();
+				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
-				String result = cursor.getString(0).replaceAll("[-+.^:,']","");
-				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri.toString(), result, new BigDecimal("0"));
+				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
 
 				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
 			}
 			catch (IndexOutOfBoundsException e)
 			{
-				Toast.makeText(getActivity(), "Problem in getting result from your contacts", Toast.LENGTH_SHORT).show();
+				e.printStackTrace();
+				Toast.makeText(getActivity(), "Problem in getting result from your contacts", Toast.LENGTH_LONG).show();
 			}
 			catch (SQLException e)
 			{
-				// TODO Change this. It's pretty crap.
 				e.printStackTrace();
-				new AlertDialog.Builder(getActivity())
-						.setMessage("This person already exists in Repay")
-						.setTitle("Person Already Exists").show();
+				Toast.makeText(getActivity(), "There was a problem in adding this person to Repay", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		super.onOptionsItemSelected(item);

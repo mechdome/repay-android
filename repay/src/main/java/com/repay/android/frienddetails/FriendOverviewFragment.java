@@ -1,19 +1,8 @@
 package com.repay.android.frienddetails;
 
-import java.math.BigDecimal;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
-import com.repay.android.ContactLookup;
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-import com.repay.android.view.RoundedImageView;
-import com.repay.android.settings.SettingsFragment;
-
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.repay.android.Application;
+import com.repay.android.ContactsContractHelper;
+import com.repay.android.R;
+import com.repay.android.settings.SettingsFragment;
+import com.repay.android.view.RoundedImageView;
+
+import java.math.BigDecimal;
 
 /**
  * Property of Matt Allen
@@ -76,7 +74,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		}
 
 		if (((FriendActivity)getActivity()).getFriend().getLookupURI() != null) {
-			if (!ContactLookup.hasContactData(getActivity(), Uri.parse(((FriendActivity)getActivity()).getFriend().getLookupURI()).getLastPathSegment())) {
+			if (!ContactsContractHelper.hasContactData(getActivity(), Uri.parse(((FriendActivity)getActivity()).getFriend().getLookupURI()).getLastPathSegment())) {
 				mShareBtn.setEnabled(false);
 			}
 		} else {

@@ -1,18 +1,13 @@
 package com.repay.android;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+
+import java.util.HashMap;
 
 /**
  * Property of Matt Allen
@@ -24,13 +19,13 @@ import android.util.Log;
  *
  */
 
-public class ContactLookup {
+public class ContactsContractHelper
+{
+	private static final String TAG = ContactsContractHelper.class.getName();
 
-	private static final String TAG = ContactLookup.class.getName();
-
-	private static int[] typesPhone = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN, 
+	private static int[] typesPhone = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
 		ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
-	private static int[] typesEmail = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, 
+	private static int[] typesEmail = new int[]{ContactsContract.CommonDataKinds.Phone.TYPE_HOME, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
 		ContactsContract.CommonDataKinds.Phone.TYPE_WORK};
 
 	/**
@@ -88,20 +83,15 @@ public class ContactLookup {
 		String phoneNumber = null;
 		Cursor cursor = c.getContentResolver().query(
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-				ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? and " + ContactsContract.CommonDataKinds.Phone.TYPE + " = ?", 
+				ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? and " + ContactsContract.CommonDataKinds.Phone.TYPE + " = ?",
 				whereArgs, null);
 
 		int phoneNumberIndex = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-		if (cursor != null) {
-			Log.d(TAG, "Returned contact count: "+cursor.getCount());
-			try {
-				if (cursor.moveToFirst()) {
-					phoneNumber = cursor.getString(phoneNumberIndex);
-				}
-			} finally {
-				cursor.close();
-			}
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			phoneNumber = cursor.getString(phoneNumberIndex);
+			cursor.close();
 		}
 		Log.i(TAG, "Returning phone number: " + phoneNumber);
 		return phoneNumber;
@@ -115,7 +105,8 @@ public class ContactLookup {
 	 * @return String representation of their email address
 	 * @throws android.database.CursorIndexOutOfBoundsException
 	 */
-	public static HashMap<String,String> getContactsEmailAddress(final String contactID, final Context c) throws CursorIndexOutOfBoundsException{
+	public static HashMap<String,String> getContactsEmailAddress(String contactID, Context c) throws CursorIndexOutOfBoundsException
+	{
 		/*
 		 * For some shitting reason, using ContactsContract.CommonDataKinds.Phone works instead of Email?
 		 * Leaving it anyway, might just be some stupid HTC Sense 5 bug
@@ -139,26 +130,40 @@ public class ContactLookup {
 		return emails;
 	}
 
-	private static String queryContactForEmail(Context c, String[] whereArgs){
+	private static String queryContactForEmail(Context c, String[] whereArgs)
+	{
 		String phoneNumber = null;
 		Cursor cursor = c.getContentResolver().query(
 				ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-				ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ? and " + ContactsContract.CommonDataKinds.Email.TYPE + " = ?", 
+				ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ? and " + ContactsContract.CommonDataKinds.Email.TYPE + " = ?",
 				whereArgs, null);
 
 		int phoneNumberIndex = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Email.ADDRESS);
 
-		if (cursor != null) {
-			Log.d(TAG, "Returned contact count: "+cursor.getCount());
-			try {
-				if (cursor.moveToFirst()) {
-					phoneNumber = cursor.getString(phoneNumberIndex);
-				}
-			} finally {
-				cursor.close();
-			}
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			phoneNumber = cursor.getString(phoneNumberIndex);
+			cursor.close();
 		}
 		Log.i(TAG, "Returning email address: " + phoneNumber);
 		return phoneNumber;
+	}
+
+	/**
+	 * Lookup the name of a contact in the system contacts app
+	 * @param c For {@link android.content.ContentResolver}
+	 * @param lookuoURI The LOOKUP_URI for the contact
+	 * @return String reresentation for the contacts display name as set in the Contacts app
+	 */
+	public static String getNameForContact(Context c, String lookuoURI)
+	{
+		String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
+		Cursor cursor = c.getContentResolver().query(Uri.parse(lookuoURI), cols, null, null, null);
+		cursor.moveToFirst();
+
+		String result = cursor.getString(0).replaceAll("[-+.^:,']","");
+		cursor.close();
+
+		return result;
 	}
 }
