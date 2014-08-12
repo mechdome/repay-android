@@ -59,7 +59,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		mFriend = (Friend) getIntent().getExtras().get(FRIEND);
 
 		mOverViewFrag = new FriendOverviewFragment();
-		mDebtHistoryFrag = new DebtHistoryFragment();
+		mDebtHistoryFrag = new FriendHistoryFragment();
 
 		if (findViewById(R.id.activity_frienddetails_tabView) != null)
 		{
@@ -160,7 +160,8 @@ public class FriendActivity extends Activity implements View.OnClickListener
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					try{
-						if(mDB!=null){
+						if(mDB!=null)
+						{
 							mDB.removeFriend(mFriend.getRepayID());
 							finish();
 						}
@@ -196,9 +197,9 @@ public class FriendActivity extends Activity implements View.OnClickListener
 			return true;
 
 		case R.id.action_reLinkContact:
-				Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
-				pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
-				startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+			Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
+			pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+			startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 			return true;
 
 		case R.id.action_unLinkContact:
