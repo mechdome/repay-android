@@ -1,20 +1,19 @@
 package com.repay.android.frienddetails;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import com.repay.android.model.Debt;
-import com.repay.android.R;
-import com.repay.android.settings.SettingsFragment;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.repay.android.R;
+import com.repay.android.model.Debt;
+import com.repay.android.settings.SettingsFragment;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Property of Matt Allen
@@ -26,14 +25,14 @@ import android.widget.TextView;
  *
  */
 
-public class DebtHistoryAdapter extends ArrayAdapter<Debt> {
+public class FriendHistoryAdapter extends ArrayAdapter<Debt> {
 
-	private static final String TAG = DebtHistoryAdapter.class.getName();
+	private static final String TAG = FriendHistoryAdapter.class.getName();
 	private int layoutId;
 	private ArrayList<Debt> debts;
 	private Context context;
 
-	public DebtHistoryAdapter(Context context, int layoutId, ArrayList<Debt> debts) {
+	public FriendHistoryAdapter(Context context, int layoutId, ArrayList<Debt> debts) {
 		super(context, layoutId, debts);
 		this.layoutId = layoutId;
 		this.debts = debts;
@@ -43,12 +42,13 @@ public class DebtHistoryAdapter extends ArrayAdapter<Debt> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		View v = convertView;
-		if(v==null){
-			Log.i(TAG, "View is null, inflating new View");
+		if(v == null)
+		{
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(layoutId, null);
 		}
 		Debt debt = debts.get(position);
+
 		if(debt!=null){
 			v.setTag(debt);
 			TextView description = (TextView)v.findViewById(R.id.fragment_debthistory_list_description);

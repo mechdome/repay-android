@@ -1,23 +1,10 @@
 package com.repay.android.frienddetails;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import com.repay.android.adddebt.DebtActivity;
-import com.repay.android.model.Debt;
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-import com.repay.android.adddebt.EditDebtActivity;
-import com.repay.android.database.DatabaseHandler;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +15,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.repay.android.R;
+import com.repay.android.adddebt.DebtActivity;
+import com.repay.android.adddebt.EditDebtActivity;
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Debt;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Property of Matt Allen
  * mattallen092@gmail.com
@@ -37,11 +34,11 @@ import android.widget.Toast;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class DebtHistoryFragment extends FriendFragment implements AdapterView.OnItemLongClickListener
+public class FriendHistoryFragment extends FriendFragment implements AdapterView.OnItemLongClickListener
 {
-	private static final String 		TAG = DebtHistoryFragment.class.getName();
+	private static final String 		TAG = FriendHistoryFragment.class.getName();
 
-	private DebtHistoryAdapter			mAdapter;
+	private FriendHistoryAdapter		mAdapter;
 	private ListView					mList;
 	private TextView					mNoDebtsMsg;
 	private ProgressBar					mProgressBar;
@@ -60,7 +57,7 @@ public class DebtHistoryFragment extends FriendFragment implements AdapterView.O
 		mNoDebtsMsg = (TextView)getView().findViewById(R.id.fragment_debtHistory_noDebts);
 		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_debtHistory_progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
-		new GetDebtsFromDB().execute(((FriendActivity) getActivity()).getDB());
+		updateUI();
 	}
 
 	@Override
@@ -85,7 +82,7 @@ public class DebtHistoryFragment extends FriendFragment implements AdapterView.O
 		chooseDialog.show();
 		return true;
 	}
-	
+
 	private void deleteDebt(final Debt debt){
 		AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
 		deleteDialog.setTitle(R.string.delete);
@@ -95,7 +92,7 @@ public class DebtHistoryFragment extends FriendFragment implements AdapterView.O
 			public void onClick(DialogInterface dialog, int which) {
 				deleteDebtFromDatabase(debt);
 				Log.i(TAG, "Deleting debt from database");
-				new GetDebtsFromDB().execute(((FriendActivity) getActivity()).getDB());
+				updateUI();
 
 			}
 		});
@@ -112,12 +109,12 @@ public class DebtHistoryFragment extends FriendFragment implements AdapterView.O
 
 	@Override
 	public void updateUI() {
-
+		new GetDebtsFromDB().execute(((FriendActivity) getActivity()).getDB());
 	}
 
 	private class GetDebtsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Debt>> {
 
-		/* 
+		/*
 		 * Hide the TextView and ListView, then show the ProgressBar to show feedback
 		 * while the data is loaded from the database and presented by the ListView adapter
 		 */
@@ -145,7 +142,7 @@ public class DebtHistoryFragment extends FriendFragment implements AdapterView.O
 		protected void onPostExecute(ArrayList<Debt> result){
 			mProgressBar.setVisibility(ProgressBar.GONE);
 			if (result!=null && result.size() > 0) {
-				mAdapter = new DebtHistoryAdapter(getActivity(),
+				mAdapter = new FriendHistoryAdapter(getActivity(),
 						R.layout.fragment_debthistory_listitem, result);
 				mList.setAdapter(mAdapter);
 				mList.setVisibility(ListView.VISIBLE);
