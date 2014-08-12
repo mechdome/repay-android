@@ -1,9 +1,5 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-
-import com.repay.android.R;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.repay.android.R;
+
+import java.math.BigDecimal;
 
 /**
  * Property of Matt Allen
@@ -25,39 +25,36 @@ import android.widget.Toast;
  */
 
 public class EnterAmountFragment extends DebtFragment implements OnClickListener {
-	
+
 	private static final String 	TAG = EnterAmountFragment.class.getName();
 	private static final String 	NUMBER_DEC = "numDec", NUMBER_INT = "numInt"; // For Saved State
 	private TextView 				mAmountDisplay;
 	private String 					mAmountInt = "0", mAmountDec = "00"; //Instantiate it as this
 	private Button					mDoneBtn;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_enterdebtamount, container, false);
-		
-		if(savedInstanceState != null){
-			try{
-				mAmountDec = savedInstanceState.getString(NUMBER_DEC);
-			} catch (Exception e){
-				Log.i(TAG, "No Decimal amount stored on rotation");
-			}
-			try{
-				mAmountInt = savedInstanceState.getString(NUMBER_INT);
-			} catch (Exception e){
-				Log.i(TAG, "No Integer amount stored on rotation");
-			}
-		}
+
 		return view;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 
 		getActivity().getActionBar().setSubtitle(R.string.whats_debt_amount);
 		getActivity().getActionBar().setTitle(R.string.enter_amount);
+
+		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_DEC) != null)
+		{
+			mAmountDec = savedInstanceState.getString(NUMBER_DEC);
+		}
+		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_INT) != null)
+		{
+			mAmountInt = savedInstanceState.getString(NUMBER_INT);
+		}
 
 		mAmountDisplay = (TextView)getView().findViewById(R.id.fragment_enterdebtamount_amount);
 		mDoneBtn = (Button)getView().findViewById(R.id.fragment_enterdebtamount_donebtn);
@@ -76,7 +73,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 		getView().findViewById(R.id.fragment_enterdebtamount_zero).setOnClickListener(this);
 		getView().findViewById(R.id.fragment_enterdebtamount_doublezero).setOnClickListener(this);
         getView().findViewById(R.id.fragment_enterdebtamount_clear).setOnClickListener(this);
-		if(getActivity().getClass()==RepayDebtActivity.class){
+		if(getActivity().getClass() == RepayDebtActivity.class){
 			mDoneBtn.setText("Done"); // Give it a more appropriate message
 		}
 	}
@@ -87,7 +84,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 		outState.putString(NUMBER_INT, mAmountInt);
 		outState.putString(NUMBER_DEC, mAmountDec);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -154,7 +151,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 			break;
 		}
 	}
-	
+
 	public void setAmount(String amount){
 		try{
 			String[] splitAmount = amount.split("\\.");
