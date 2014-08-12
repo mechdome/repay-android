@@ -1,14 +1,12 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-
-import com.repay.android.model.Debt;
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.repay.android.R;
+
+import java.math.BigDecimal;
 
 /**
  * Property of Matt Allen
@@ -22,45 +20,34 @@ import android.widget.Toast;
 
 public class EditDebtActivity extends DebtActivity
 {
-	public static final String 			DEBT = "debt";
-	public static final String 			FRIEND = "friend";
-
-	private DebtFragment 				mEnterAmount, mSummary;
-	private int 						mFrame;
-	private Debt						mDebt;
-	private Friend						mFriend;
+	private int 				mFrame;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_adddebt);
 
+		isEditing = true;
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
 
-		// Instantiate Fragments
-		mEnterAmount = new EnterAmountFragment();
-		mSummary = new DebtSummaryFragment();
-
-		if (getIntent().hasExtra(DEBT) && getIntent().hasExtra(FRIEND))
-		{
-			mDebt = (Debt) getIntent().getExtras().get(DEBT);
-			mFriend = (Friend)  getIntent().getExtras().get(FRIEND);
-		}
-
 		mFrame = R.id.activity_adddebt_framelayout;
 
-		// Show fragment
-		getFragmentManager().beginTransaction().replace(mFrame, mEnterAmount).commit();
+		if (getFragmentManager().findFragmentById(mFrame) == null)
+		{
+			// Show fragment
+			getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).commit();
+		}
 	}
 
 	public void onNextButtonClick(View v){
 		switch (v.getId()) {
 		case R.id.fragment_enterdebtamount_donebtn:
-			mEnterAmount.saveFields();
+			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
 			{
-				getFragmentManager().beginTransaction().replace(mFrame, mSummary).addToBackStack(null).commit();
+				getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
 			}
 			else
 			{
@@ -69,17 +56,9 @@ public class EditDebtActivity extends DebtActivity
 			break;
 
 		case R.id.fragment_debtsummary_donebtn:
-			mSummary.saveFields();
+			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			save();
 			break;
 		}
-	}
-
-	@Override
-	public void save()
-	{
-		mDB.updateDebt(mDebt);
-		mDB.updateFriendRecord(mFriend);
-		finish();
 	}
 }
