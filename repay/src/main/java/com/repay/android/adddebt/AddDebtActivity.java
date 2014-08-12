@@ -1,12 +1,5 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-
-import com.repay.android.R;
-import com.repay.android.database.DatabaseHandler;
-import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.repay.android.R;
+import com.repay.android.settings.SettingsActivity;
+
+import java.math.BigDecimal;
 
 /**
  * Property of Matt Allen
@@ -29,7 +27,6 @@ public class AddDebtActivity extends DebtActivity {
 
 	private static final String 		TAG = AddDebtActivity.class.getName();
 
-	private DebtFragment 				mChoosePerson, mEnterAmount, mSummary;
 	private int 						mFrame;
 
 	@Override
@@ -42,16 +39,12 @@ public class AddDebtActivity extends DebtActivity {
 		getActionBar().setSubtitle(R.string.choose_people);
 		setContentView(R.layout.activity_adddebt);
 
-		// Instantiate Fragments
-		mChoosePerson = new ChoosePersonFragment();
-		mEnterAmount = new EnterAmountFragment();
-		mSummary = new DebtSummaryFragment();
 		mFrame = R.id.activity_adddebt_framelayout;
 
 		if (getFragmentManager().findFragmentById(mFrame) == null)
 		{
 			// Show the first fragment
-			getFragmentManager().beginTransaction().replace(mFrame, mChoosePerson).commit();
+			getFragmentManager().beginTransaction().replace(mFrame, new ChoosePersonFragment()).commit();
 		}
 	}
 
@@ -81,11 +74,11 @@ public class AddDebtActivity extends DebtActivity {
 	public void onNextButtonClick(View v){
 		switch (v.getId()) {
 		case R.id.activity_friendchooser_donebtn:
-			mChoosePerson.saveFields();
+			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			if(getDebtBuilder().getSelectedFriends() != null &&getDebtBuilder().getSelectedFriends().size() > 0)
 			{
 				Log.i(TAG, Integer.toString(getDebtBuilder().getSelectedFriends().size()) + " people selected");
-				getFragmentManager().beginTransaction().replace(mFrame, mEnterAmount).addToBackStack(null).commit();
+				getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
 			}
 			else
 			{
@@ -94,10 +87,10 @@ public class AddDebtActivity extends DebtActivity {
 			break;
 
 		case R.id.fragment_enterdebtamount_donebtn:
-			mEnterAmount.saveFields();
+			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			if(getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO)>0)
 			{
-				getFragmentManager().beginTransaction().replace(mFrame, mSummary).addToBackStack(null).commit();
+				getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
 			}
 			else
 			{
@@ -106,7 +99,7 @@ public class AddDebtActivity extends DebtActivity {
 			break;
 
 		case R.id.fragment_debtsummary_donebtn:
-			mSummary.saveFields();
+			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			save();
 			break;
 
