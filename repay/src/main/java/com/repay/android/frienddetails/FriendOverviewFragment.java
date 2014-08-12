@@ -52,6 +52,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
 		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
 		mShareBtn.setOnClickListener(this);
+		updateUI();
 	}
 
 	public void updateUI(){
