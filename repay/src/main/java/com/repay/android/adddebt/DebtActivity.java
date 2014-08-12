@@ -1,13 +1,13 @@
 package com.repay.android.adddebt;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+
 import com.repay.android.database.DatabaseHandler;
 import com.repay.android.model.Debt;
 import com.repay.android.model.DebtBuilder;
 import com.repay.android.model.Friend;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
 
 /**
  * Property of Matt Allen
@@ -28,6 +28,8 @@ public abstract class DebtActivity extends Activity
 	protected DatabaseHandler mDB;
 
 	protected DebtBuilder mBuilder;
+
+	protected boolean isEditing = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -72,15 +74,22 @@ public abstract class DebtActivity extends Activity
 
 	public void save()
 	{
-		// Add the debts into the DB
-		for (Debt debt : mBuilder.getNewDebts())
+		if (isEditing)
 		{
-			mDB.addDebt(debt.getRepayID(), debt.getAmount(), debt.getDescription());
+			// TODO Implement editing of debt
 		}
-		// Then update the friend objects
-		for (Friend friend : mBuilder.getUpdatedFriends())
+		else
 		{
-			mDB.updateFriendRecord(friend);
+			// Add the debts into the DB
+			for (Debt debt : mBuilder.getNewDebts())
+			{
+				mDB.addDebt(debt.getRepayID(), debt.getAmount(), debt.getDescription());
+			}
+			// Then update the friend objects
+			for (Friend friend : mBuilder.getUpdatedFriends())
+			{
+				mDB.updateFriendRecord(friend);
+			}
 		}
 
 		finish(); // Return to friend overview
