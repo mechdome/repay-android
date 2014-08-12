@@ -128,6 +128,8 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
 
 				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
+
+				new GetFriendsFromDB().execute();
 			}
 			catch (IndexOutOfBoundsException e)
 			{
