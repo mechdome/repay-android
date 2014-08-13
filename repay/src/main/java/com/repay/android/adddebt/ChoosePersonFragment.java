@@ -79,12 +79,14 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if (which==0){
+				if (which == 0)
+				{
 					Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
 					pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
 					startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 				}
-				else if(which==1){
+				else if (which == 1)
+				{
 					addFriendByName();
 				}
 			}
@@ -106,6 +108,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 					if(!TextUtils.isEmpty(nameEntry.getText().toString())){
 						Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
 						((DebtActivity) getActivity()).getDBHandler().addFriend(newFriend);
+						new GetFriendsFromDB().execute();
 					}
 				} catch (SQLException e) {
 					Toast.makeText(getActivity(), "Friend could not be added", Toast.LENGTH_SHORT).show();
