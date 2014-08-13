@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
-	android:layout_margin="5dp" >
-    
+	android:padding="8dp" >
+
     <com.repay.android.view.RoundedImageView
         android:id="@+id/fragment_start_friendslist_item_pic"
 		android:layout_height="140dp"
