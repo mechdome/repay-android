@@ -1,20 +1,6 @@
 package com.repay.android;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsFragment;
-import com.repay.android.view.RoundedImageView;
-
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +8,14 @@ import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.repay.android.model.Friend;
+import com.repay.android.settings.SettingsFragment;
+import com.repay.android.view.RoundedImageView;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Property of Matt Allen
@@ -92,11 +86,12 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend> {
 		// Finally, animate the View
 		ViewPropertyAnimator animate = v.animate();
 		// animate.setStartDelay(position*60);
-		// This will cause a problem when scrolling down a long 
+		// This will cause a problem when scrolling down a long
 		// list on the friends list. Best to not include it in prod
 		animate.scaleX(1f);
 		animate.scaleY(1f);
 		animate.alpha(1f);
+		animate.setDuration(500);
 		animate.start();
 		return v;
 	}

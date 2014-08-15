@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,8 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	private Button 				mShareBtn;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_frienddetails, container, false);
 		return view;
@@ -52,48 +54,71 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
 		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
 		mShareBtn.setOnClickListener(this);
+
+		// Animate the UI into view
+		mFriendPic.setScaleX(0f);
+		mFriendPic.setScaleY(0f);
+		ViewPropertyAnimator animator = mFriendPic.animate();
+		animator.scaleX(1f);
+		animator.scaleY(1f);
+		animator.setDuration(500);
+		animator.start();
+
 		updateUI();
 	}
 
 	public void updateUI(){
 		ImageLoader.getInstance().displayImage(((FriendActivity)getActivity()).getFriend().getLookupURI(), mFriendPic, Application.getImageOptions());
 
-		if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) == 0){
+		if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) == 0)
+		{
 			mTotalOwedPrefix.setText("You're Even");
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
 			mFriendPic.setOuterColor(mTheyOweMeColour);
-		} else if (((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)<0){
+		}
+		else if (((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)<0)
+		{
 			mTotalOwedPrefix.setText(R.string.i_owe);
 			String amount = SettingsFragment.getFormattedAmount(((FriendActivity)getActivity()).getFriend().getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPic.setOuterColor(mIOweThemColour);
-		} else if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)>0){
+		}
+		else if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)>0)
+		{
 			mTotalOwedPrefix.setText(R.string.they_owe);
 			String amount = SettingsFragment.getFormattedAmount(((FriendActivity)getActivity()).getFriend().getDebt());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
 			mFriendPic.setOuterColor(mTheyOweMeColour);
 		}
 
-		if (((FriendActivity)getActivity()).getFriend().getLookupURI() != null) {
-			if (!ContactsContractHelper.hasContactData(getActivity(), Uri.parse(((FriendActivity)getActivity()).getFriend().getLookupURI()).getLastPathSegment())) {
+		if (((FriendActivity)getActivity()).getFriend().getLookupURI() != null)
+		{
+			if (!ContactsContractHelper.hasContactData(getActivity(), Uri.parse(((FriendActivity)getActivity()).getFriend().getLookupURI()).getLastPathSegment()))
+			{
 				mShareBtn.setEnabled(false);
 			}
-		} else {
+		}
+		else
+		{
 			mShareBtn.setEnabled(false);
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.share:
-			if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)!=0){
-				AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity)getActivity()).getFriend());
-				shareDialog.show();
-			} else {
-				Toast.makeText(getActivity(), "There's no debt between you", Toast.LENGTH_SHORT).show(); // TODO Localise
-			}
-			break;
+		switch (v.getId())
+		{
+			case R.id.share:
+				if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)!=0)
+				{
+					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity)getActivity()).getFriend());
+					shareDialog.show();
+				}
+				else
+				{
+					Toast.makeText(getActivity(), "There's no debt between you", Toast.LENGTH_SHORT).show(); // TODO Localise
+				}
+				break;
 		}
 	}
 
