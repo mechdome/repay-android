@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  *
+ * Adapter for displaying the history of debts
  */
 
 public class FriendHistoryAdapter extends ArrayAdapter<Debt>
