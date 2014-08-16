@@ -1,15 +1,19 @@
 package com.repay.android;
 
-import com.repay.android.adddebt.*;
-import com.repay.android.settings.SettingsActivity;
-
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.repay.android.adddebt.AddDebtActivity;
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Friend;
+import com.repay.android.settings.SettingsActivity;
+import com.repay.android.settings.SettingsFragment;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Property of Matt Allen
@@ -24,6 +28,10 @@ import android.view.MenuItem;
 public class MainActivity extends Activity {
 
 	private static final String		TAG = MainActivity.class.getName();
+	private static final String		FRIENDS = "friends";
+
+	private DatabaseHandler			mDB;
+	private ArrayList<Friend>		mFriends;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -32,12 +40,33 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		getActionBar().setDisplayShowTitleEnabled(false);
+
+		mDB = new DatabaseHandler(this);
+
+		if (savedInstanceState != null &&
+			savedInstanceState.get(FRIENDS) != null &&
+			savedInstanceState.get(FRIENDS) instanceof ArrayList)
+		{
+			mFriends = (ArrayList<Friend>) savedInstanceState.get(FRIENDS);
+		}
+
+		if (mFriends == null) mFriends = mDB.getAllFriends();
+
+		// Sort the list
+		Collections.sort(mFriends);
+		if(SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
+		{
+			Collections.reverse(mFriends);
+		}
+
 		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new StartFragment()).commit();
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState)
+	{
 		super.onSaveInstanceState(outState);
+		outState.putSerializable(FRIENDS, mFriends);
 	}
 
 	@Override
@@ -51,18 +80,33 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 
-		case R.id.action_adddebt:
-			Intent intent = new Intent();
-			intent.setClass(this, AddDebtActivity.class);
-			startActivity(intent);
-			return true;
+			case R.id.action_adddebt:
+				Intent intent = new Intent();
+				intent.setClass(this, AddDebtActivity.class);
+				startActivity(intent);
+				return true;
 
-		case R.id.action_settings:
-			Intent intentSettings = new Intent();
-			intentSettings.setClass(this, SettingsActivity.class);
-			startActivity(intentSettings);
-			return true;
+			case R.id.action_settings:
+				Intent intentSettings = new Intent();
+				intentSettings.setClass(this, SettingsActivity.class);
+				startActivity(intentSettings);
+				return true;
+
+			default:
+				return false;
 		}
-		return false;
+	}
+
+	public ArrayList<Friend> getFriends()
+	{
+		return mFriends;
+	}
+
+	public void updateFriends()
+	{
+		for (Friend friend : mFriends)
+		{
+			mDB.updateFriendRecord(friend);
+		}
 	}
 }
