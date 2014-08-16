@@ -25,9 +25,8 @@ import java.util.ArrayList;
  *
  */
 
-public class FriendHistoryAdapter extends ArrayAdapter<Debt> {
-
-	private static final String TAG = FriendHistoryAdapter.class.getName();
+public class FriendHistoryAdapter extends ArrayAdapter<Debt>
+{
 	private int layoutId;
 	private ArrayList<Debt> debts;
 	private Context context;
@@ -49,29 +48,37 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt> {
 		}
 		Debt debt = debts.get(position);
 
-		if(debt!=null){
+		if(debt!=null)
+		{
 			v.setTag(debt);
 			TextView description = (TextView)v.findViewById(R.id.fragment_debthistory_list_description);
 			TextView amount = (TextView)v.findViewById(R.id.fragment_debthistory_list_amount);
 			TextView dateTxt = (TextView)v.findViewById(R.id.fragment_debthistory_list_date);
 			ImageView icon = (ImageView)v.findViewById(R.id.fragment_debthistory_list_icon);
 
-			if (debt.getAmount().compareTo(BigDecimal.ZERO)<0){
-				if(SettingsFragment.getDebtHistoryColourPreference(context)==SettingsFragment.DEBTHISTORY_GREEN_BLUE){
+			if (debt.getAmount().compareTo(BigDecimal.ZERO)<0)
+			{
+				if(SettingsFragment.getDebtHistoryColourPreference(context)==SettingsFragment.DEBTHISTORY_GREEN_BLUE)
+				{
 					icon.setImageResource(R.drawable.debt_ind_blue);
-				} else {
+				}
+				else
+				{
 					icon.setImageResource(R.drawable.debt_ind_red);
 				}
 				//debt.setAmount(debt.getAmount().negate()); // For it to show up without the minus in front of it **Makes Green on recycle. Substr instead**
 				StringBuilder sb = new StringBuilder(SettingsFragment.getCurrencySymbol(context)+SettingsFragment.getFormattedAmount(debt.getAmount()));
 				sb.deleteCharAt(1);
 				amount.setText(sb.toString());
-			} else if (debt.getAmount().compareTo(BigDecimal.ZERO)>=0) {
+			}
+			else if (debt.getAmount().compareTo(BigDecimal.ZERO)>=0)
+			{
 				amount.setText(SettingsFragment.getCurrencySymbol(context)+SettingsFragment.getFormattedAmount(debt.getAmount()));
 				icon.setImageResource(R.drawable.debt_ind_green);
 			}
 			description.setText(debt.getDescription());
-			if(debt.getDescription().equals("")){
+			if(debt.getDescription().equals(""))
+			{
 				description.setText("No Description");
 			}
 			dateTxt.setText(SettingsFragment.getFormattedDate(context, debt.getDate()));
