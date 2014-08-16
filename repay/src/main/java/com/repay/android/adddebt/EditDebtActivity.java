@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 
 public class EditDebtActivity extends DebtActivity
 {
-	private int 				mFrame;
+	private int mFrame;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class EditDebtActivity extends DebtActivity
 			}
 			break;
 
-		case R.id.fragment_debtsummary_donebtn:
+		case R.id.donebtn:
 			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			save();
 			break;
