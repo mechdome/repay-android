@@ -51,9 +51,26 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 		{
 			mAmountDec = savedInstanceState.getString(NUMBER_DEC);
 		}
+		else if (((DebtActivity) getActivity()).getDebtBuilder().getAmount() != null)
+		{
+			String[] string = ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString().split(".");
+			if (string.length > 1)
+			{
+				mAmountDec = string[1];
+			}
+		}
+
 		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_INT) != null)
 		{
 			mAmountInt = savedInstanceState.getString(NUMBER_INT);
+		}
+		else if (((DebtActivity) getActivity()).getDebtBuilder().getAmount() != null)
+		{
+			String[] string = ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString().split(".");
+			if (string.length > 0)
+			{
+				mAmountInt = string[0];
+			}
 		}
 
 		mAmountDisplay = (TextView)getView().findViewById(R.id.fragment_enterdebtamount_amount);
