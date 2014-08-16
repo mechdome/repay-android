@@ -1,13 +1,6 @@
 package com.repay.android.adddebt;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
-import com.repay.android.R;
-import com.repay.android.view.RoundedImageView;
-import com.repay.android.settings.SettingsFragment;
-
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +11,12 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.repay.android.Application;
+import com.repay.android.R;
+import com.repay.android.settings.SettingsFragment;
+import com.repay.android.view.RoundedImageView;
 
 import java.util.ArrayList;
 
@@ -101,7 +100,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		{
 			ImageLoader.getInstance().displayImage(availableImages.get(0), mHeaderPic, Application.getImageOptions());
 		}
-		catch (ArrayIndexOutOfBoundsException e)
+		catch (IndexOutOfBoundsException e)
 		{
 			mHeaderPic.setImageResource(R.drawable.friend_image_light);
 		}
@@ -112,7 +111,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 			{
 				ImageLoader.getInstance().displayImage(availableImages.get(1), mHeaderPic2, Application.getImageOptions());
 			}
-			catch (ArrayIndexOutOfBoundsException e)
+			catch (IndexOutOfBoundsException e)
 			{
 				mHeaderPic2.setImageResource(R.drawable.friend_image_light);
 			}
@@ -124,7 +123,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 			{
 				ImageLoader.getInstance().displayImage(availableImages.get(2), mHeaderPic3, Application.getImageOptions());
 			}
-			catch (ArrayIndexOutOfBoundsException e)
+			catch (IndexOutOfBoundsException e)
 			{
 				mHeaderPic3.setImageResource(R.drawable.friend_image_light);
 			}
