@@ -27,6 +27,9 @@ public abstract class DebtActivity extends Activity
 
 	protected DatabaseHandler mDB;
 
+	protected Friend mFriend;
+	protected Debt mDebt;
+
 	protected DebtBuilder mBuilder;
 
 	protected boolean isEditing = false;
@@ -47,15 +50,16 @@ public abstract class DebtActivity extends Activity
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
 			{
-				mBuilder.addSelectedFriend((Friend) getIntent().getExtras().get(FRIEND));
+				mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+				mBuilder.addSelectedFriend(mFriend);
 			}
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
 			{
-				Debt debt = (Debt) getIntent().getExtras().get(DEBT);
-				mBuilder.setAmount(debt.getAmount());
-				mBuilder.setDescription(debt.getDescription());
-				mBuilder.setDate(debt.getDate());
+				mDebt = (Debt) getIntent().getExtras().get(DEBT);
+				mBuilder.setAmount(mDebt.getAmount());
+				mBuilder.setDescription(mDebt.getDescription());
+				mBuilder.setDate(mDebt.getDate());
 			}
 		}
 
@@ -76,7 +80,12 @@ public abstract class DebtActivity extends Activity
 	{
 		if (isEditing)
 		{
-			// TODO Implement editing of debt
+			mDebt.setAmount(mBuilder.getAmountToApply());
+			mDebt.setDescription(mBuilder.getDescription());
+			mDB.updateDebt(mDebt);
+			mFriend.setDebt(mFriend.getDebt().add(mDebt.getAmount()));
+			mDB.updateFriendRecord(mFriend);
+			finish();
 		}
 		else
 		{
