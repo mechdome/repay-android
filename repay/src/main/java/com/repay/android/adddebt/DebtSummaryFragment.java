@@ -6,6 +6,8 @@ import com.repay.android.R;
 import com.repay.android.view.RoundedImageView;
 import com.repay.android.settings.SettingsFragment;
 
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Property of Matt Allen
@@ -29,8 +33,8 @@ import android.widget.TextView;
 
 public class DebtSummaryFragment extends DebtFragment implements OnClickListener, OnCheckedChangeListener
 {
-	private RoundedImageView				mHeaderPic;
-	private TextView 						mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem;
+	private RoundedImageView				mHeaderPic, mHeaderPic2, mHeaderPic3;
+	private TextView 						mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem, mOverflowText;
 	private EditText						mDescription;
 	private CheckBox 						mSplitEvenly, mInclMe;
 	private int 							mTheyOweMeColour, mIOweThemColour, mNeutralColor;
@@ -51,44 +55,99 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		getActivity().getActionBar().setTitle(R.string.summary);
 		getActivity().getActionBar().setSubtitle(null);
 
-		mDescription = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
-		mSplitEvenly = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_splitAmount);
-		mIOweThem = (TextView)getView().findViewById(R.id.fragment_debtsummary_iOweThem);
-		mTheyOweMe = (TextView)getView().findViewById(R.id.fragment_debtsummary_theyOweMe);
-		mAmountTxt = (TextView)getView().findViewById(R.id.fragment_debtsummary_amount);
-		mHeaderPic = (RoundedImageView)getView().findViewById(R.id.fragment_debtsummary_headerPic);
-		mNamesTxt = (TextView)getView().findViewById(R.id.fragment_debtsummary_headerName);
-		mInclMe = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_inclMe);
-		mInclMe.setVisibility(CheckBox.INVISIBLE);
+		mDescription = (EditText)getView().findViewById(R.id.description);
+		mSplitEvenly = (CheckBox)getView().findViewById(R.id.split_amount);
+		mIOweThem = (TextView)getView().findViewById(R.id.i_owe_them);
+		mTheyOweMe = (TextView)getView().findViewById(R.id.they_owe_me);
+		mAmountTxt = (TextView)getView().findViewById(R.id.amount);
+		mHeaderPic = (RoundedImageView)getView().findViewById(R.id.header_pic);
+		mHeaderPic2 = (RoundedImageView)getView().findViewById(R.id.header_pic2);
+		mHeaderPic3 = (RoundedImageView)getView().findViewById(R.id.header_pic3);
+		mNamesTxt = (TextView)getView().findViewById(R.id.header_names);
+		mInclMe = (CheckBox)getView().findViewById(R.id.incl_me);
+		mOverflowText = (TextView)getView().findViewById(R.id.overflow_text);
 
+		mHeaderPic.setOuterColor(Color.parseColor("#DDDDDD"));
+		mHeaderPic2.setOuterColor(Color.parseColor("#DDDDDD"));
+		mHeaderPic3.setOuterColor(Color.parseColor("#DDDDDD"));
+		mInclMe.setVisibility(CheckBox.INVISIBLE);
 		mSplitEvenly.setOnCheckedChangeListener(this);
 		mTheyOweMe.setOnClickListener(this);
 		mIOweThem.setOnClickListener(this);
 
-		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
+		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED)
+		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.darkred_debt);
-		} else {
+		}
+		else
+		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
 		}
 		mNeutralColor = getActivity().getResources().getColor(R.color.main_background_slightlyDarker);
 
-		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size() < 2)
+		int numberOfPeople = ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size();
+		if (numberOfPeople < 2)
 		{
 			mSplitEvenly.setVisibility(CheckBox.INVISIBLE);
 		}
 		if (mNamesTxt != null) mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(false).trim());
-		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getImageUri(), mHeaderPic, Application.getImageOptions());
+
+		// Set images for the contact photos
+		ArrayList<String> availableImages = ((DebtActivity) getActivity()).getDebtBuilder().getAvailableImageUris();
+
+		try
+		{
+			ImageLoader.getInstance().displayImage(availableImages.get(0), mHeaderPic, Application.getImageOptions());
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			mHeaderPic.setImageResource(R.drawable.friend_image_light);
+		}
+		if (numberOfPeople >= 2)
+		{
+			mHeaderPic2.setVisibility(View.VISIBLE);
+			try
+			{
+				ImageLoader.getInstance().displayImage(availableImages.get(1), mHeaderPic2, Application.getImageOptions());
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				mHeaderPic2.setImageResource(R.drawable.friend_image_light);
+			}
+		}
+		if (numberOfPeople >= 3)
+		{
+			mHeaderPic3.setVisibility(View.VISIBLE);
+			try
+			{
+				ImageLoader.getInstance().displayImage(availableImages.get(2), mHeaderPic3, Application.getImageOptions());
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				mHeaderPic3.setImageResource(R.drawable.friend_image_light);
+			}
+		}
+		if (numberOfPeople > 3)
+		{
+			mOverflowText.setVisibility(View.VISIBLE);
+			mOverflowText.setText("+"+Integer.toString(numberOfPeople-3)+"\nmore");
+		}
+
 		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString());
 		setOweStatusColour(((DebtActivity) getActivity()).getDebtBuilder().isInDebtToMe());
 	}
 
-	private void setOweStatusColour(boolean isInDebtToMe){
-		if(isInDebtToMe){
+	private void setOweStatusColour(boolean isInDebtToMe)
+	{
+		if(isInDebtToMe)
+		{
 			mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
 			mIOweThem.setBackgroundColor(mNeutralColor);
-		} else {
+		}
+		else
+		{
 			mTheyOweMe.setBackgroundColor(mNeutralColor);
 			mIOweThem.setBackgroundColor(mIOweThemColour);
 		}
@@ -98,12 +157,12 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId())
 		{
-			case R.id.fragment_debtsummary_iOweThem:
+			case R.id.i_owe_them:
 				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(false);
 				setOweStatusColour(false);
 				break;
 
-			case R.id.fragment_debtsummary_theyOweMe:
+			case R.id.they_owe_me:
 				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(true);
 				setOweStatusColour(true);
 				break;
@@ -115,7 +174,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if(buttonView.getId() == R.id.fragment_debtsummary_splitAmount)
+		if(buttonView.getId() == R.id.split_amount)
 		{
 			((DebtActivity) getActivity()).getDebtBuilder().setDistributedEvenly(isChecked);
 			if(isChecked){
@@ -124,7 +183,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 				mInclMe.setVisibility(CheckBox.INVISIBLE);
 			}
 		}
-		else if (buttonView.getId() == R.id.fragment_debtsummary_inclMe)
+		else if (buttonView.getId() == R.id.incl_me)
 		{
 			((DebtActivity) getActivity()).getDebtBuilder().setIncludingMe(isChecked);
 		}

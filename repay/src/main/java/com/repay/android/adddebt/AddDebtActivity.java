@@ -98,7 +98,7 @@ public class AddDebtActivity extends DebtActivity {
 			}
 			break;
 
-		case R.id.fragment_debtsummary_donebtn:
+		case R.id.donebtn:
 			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 			save();
 			break;

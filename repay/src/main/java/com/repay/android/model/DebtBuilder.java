@@ -99,22 +99,19 @@ public class DebtBuilder implements Serializable
 		this.mAmount = amount;
 	}
 
-	/**
-	 * If there are friends selected, choose the first one in the list and retrieve a usuable image Uri
-	 * @return The LookupUri for the user to passed to
-	 * {@link com.nostra13.universalimageloader.core.ImageLoader#displayImage(String, android.widget.ImageView)}
-	 */
-	public String getImageUri()
+	public ArrayList<String> getAvailableImageUris()
 	{
 		if (mSelectedFriends != null && mSelectedFriends.size() > 0)
 		{
+			ArrayList<String> uris = new ArrayList<String>();
 			for (Friend friend : mSelectedFriends)
 			{
 				if (!TextUtils.isEmpty(friend.getLookupURI()))
 				{
-					return friend.getLookupURI();
+					uris.add(friend.getLookupURI());
 				}
 			}
+			return uris;
 		}
 		return null;
 	}
@@ -174,7 +171,7 @@ public class DebtBuilder implements Serializable
 	 * Quickly get the amount that will be applied to each person
 	 * @return {@link java.math.BigDecimal} representation of the amount
 	 */
-	private BigDecimal getAmountToApply()
+	public BigDecimal getAmountToApply()
 	{
 		BigDecimal debtAmount;
 		if (distributeEvenly)
