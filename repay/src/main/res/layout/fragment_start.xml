@@ -24,7 +24,6 @@
 
     <GridView
         android:id="@+id/fragment_start_friendsgrid"
-        style="@style/GridView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_horizontal"

@@ -12,7 +12,8 @@
 
         <com.repay.android.view.RoundedImageView
             android:id="@+id/header_pic"
-            style="@style/EnterDebt_Pic"
+			android:layout_width="140dp"
+			android:layout_height="140dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/contentDesc" />
 

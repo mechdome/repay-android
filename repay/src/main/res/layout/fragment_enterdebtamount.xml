@@ -22,9 +22,9 @@
 
         <TextView
             android:id="@+id/fragment_enterdebtamount_amount"
-            style="@style/EnterDebtAmount_Text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+			android:textSize="55sp"
             android:layout_toLeftOf="@id/fragment_enterdebtamount_backspace"
             android:fontFamily="sans-serif-light"
             android:gravity="right"

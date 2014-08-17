@@ -38,5 +38,10 @@
 	<string name="history">History</string>
 	<string name="even_debt">You\'re Even</string>
 	<string name="close">Close</string>
+	<string name="problem_getting_from_contacts">Problem in getting result from your contacts</string>
+	<string name="problem_adding_to_repay">There was a problem in adding this person to Repay</string>
+	<string name="friend_could_not_be_added">Friend could not be added</string>
+	<string name="enter_name">Enter Their Name</string>
+	<string name="please_enter_name">Please Enter A Name</string>
 
 </resources>
