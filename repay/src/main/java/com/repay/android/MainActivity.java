@@ -25,11 +25,8 @@ import java.util.Collections;
  *
  */
 
-public class MainActivity extends Activity {
-
-	private static final String		TAG = MainActivity.class.getName();
-	private static final String		FRIENDS = "friends";
-
+public class MainActivity extends Activity
+{
 	private DatabaseHandler			mDB;
 	private ArrayList<Friend>		mFriends;
 
@@ -43,22 +40,6 @@ public class MainActivity extends Activity {
 
 		mDB = new DatabaseHandler(this);
 
-		if (savedInstanceState != null &&
-			savedInstanceState.get(FRIENDS) != null &&
-			savedInstanceState.get(FRIENDS) instanceof ArrayList)
-		{
-			mFriends = (ArrayList<Friend>) savedInstanceState.get(FRIENDS);
-		}
-
-		if (mFriends == null) mFriends = mDB.getAllFriends();
-
-		// Sort the list
-		Collections.sort(mFriends);
-		if(SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
-		{
-			Collections.reverse(mFriends);
-		}
-
 		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new StartFragment()).commit();
 	}
 
@@ -66,7 +47,6 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
-		outState.putSerializable(FRIENDS, mFriends);
 	}
 
 	@Override
@@ -107,6 +87,19 @@ public class MainActivity extends Activity {
 		for (Friend friend : mFriends)
 		{
 			mDB.updateFriendRecord(friend);
+		}
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		mFriends = mDB.getAllFriends();
+		// Sort the list
+		Collections.sort(mFriends);
+		if(SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
+		{
+			Collections.reverse(mFriends);
 		}
 	}
 }
