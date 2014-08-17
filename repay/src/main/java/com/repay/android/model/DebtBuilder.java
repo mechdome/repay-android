@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -178,11 +179,11 @@ public class DebtBuilder implements Serializable
 		{
 			if (includingMe)
 			{
-				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size() + 1));
+				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size() + 1), RoundingMode.CEILING);
 			}
 			else
 			{
-				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size()));
+				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size()), BigDecimal.ROUND_CEILING);
 			}
 		}
 		else
