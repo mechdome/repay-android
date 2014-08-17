@@ -8,17 +8,17 @@
     <string name="settings_general_currency_desc">Set the currency notation used in Repay. Stored debts will not be converted.</string>
     
     <string-array name="settings_general_currency_keys">
+		<item>Default System Currency</item>
         <item>UK - Pounds</item>
         <item>US - Dollars</item>
         <item>EU - Euros</item>
-        <item>Default System Currency</item>
     </string-array>
     
     <string-array name="settings_general_currency_values">
+		<item>4</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
     </string-array>
     
     <string name="settings_dateformat_title">Set Date Format</string>
