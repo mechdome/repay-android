@@ -1,12 +1,5 @@
 package com.repay.android.adddebt;
 
-import java.util.ArrayList;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
-import com.repay.android.model.Friend;
-import com.repay.android.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,25 +9,31 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.repay.android.Application;
+import com.repay.android.R;
+import com.repay.android.model.Friend;
+
+import java.util.ArrayList;
+
 /**
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
 public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 {
-	private int 						mLayoutID;
-	private ArrayList<Friend> 			mFriends, mSelectedFriends;
-	public static final int 			SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
-	public static final int 			DESELECTED_COLOUR = Color.parseColor("#00FFFFFF"); // Invisible
+	public static final int SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
+	public static final int DESELECTED_COLOUR = Color.parseColor("#00FFFFFF"); // Invisible
+	private int mLayoutID;
+	private ArrayList<Friend> mFriends, mSelectedFriends;
 
-	public ChoosePersonAdapter(Context context, int layoutId, 
-			ArrayList<Friend> friends, ArrayList<Friend> selectedFriends) {
+	public ChoosePersonAdapter(Context context, int layoutId, ArrayList<Friend> friends, ArrayList<Friend> selectedFriends)
+	{
 		super(context, layoutId, friends);
 		this.mLayoutID = layoutId;
 		this.mFriends = friends;
@@ -52,7 +51,7 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 	{
 		View v = convertView;
 
-		if(v == null)
+		if (v == null)
 		{
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(mLayoutID, null);
@@ -60,7 +59,8 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 		Friend friend = mFriends.get(position);
 		TextView name = (TextView)v.findViewById(R.id.activity_friendchooser_name);
 		final ImageView pic = (ImageView)v.findViewById(R.id.activity_friendchooser_pic);
-		if(friend!=null){
+		if (friend != null)
+		{
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
 			// Colour the list item based on whether it is in the 'selected' list

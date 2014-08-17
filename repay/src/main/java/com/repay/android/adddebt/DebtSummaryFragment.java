@@ -24,19 +24,18 @@ import java.util.ArrayList;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
 public class DebtSummaryFragment extends DebtFragment implements OnClickListener, OnCheckedChangeListener
 {
-	private RoundedImageView				mHeaderPic, mHeaderPic2, mHeaderPic3;
-	private TextView 						mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem, mOverflowText;
-	private EditText						mDescription;
-	private CheckBox 						mSplitEvenly, mInclMe;
-	private int 							mTheyOweMeColour, mIOweThemColour, mNeutralColor;
+	private RoundedImageView mHeaderPic, mHeaderPic2, mHeaderPic3;
+	private TextView mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem, mOverflowText;
+	private EditText mDescription;
+	private CheckBox mSplitEvenly, mInclMe;
+	private int mTheyOweMeColour, mIOweThemColour, mNeutralColor;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -75,7 +74,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		mTheyOweMe.setOnClickListener(this);
 		mIOweThem.setOnClickListener(this);
 
-		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED)
+		if (SettingsFragment.getDebtHistoryColourPreference(getActivity()) == SettingsFragment.DEBTHISTORY_GREEN_RED)
 		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.darkred_debt);
@@ -87,15 +86,18 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		}
 		mNeutralColor = getActivity().getResources().getColor(R.color.main_background_slightlyDarker);
 
-		int numberOfPeople = ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size();
+		int numberOfPeople = ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size();
 		if (numberOfPeople < 2)
 		{
 			mSplitEvenly.setVisibility(CheckBox.INVISIBLE);
 		}
-		if (mNamesTxt != null) mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(false).trim());
+		if (mNamesTxt != null)
+		{
+			mNamesTxt.setText(((DebtActivity)getActivity()).getDebtBuilder().getNamesList(false).trim());
+		}
 
 		// Set images for the contact photos
-		ArrayList<String> availableImages = ((DebtActivity) getActivity()).getDebtBuilder().getAvailableImageUris();
+		ArrayList<String> availableImages = ((DebtActivity)getActivity()).getDebtBuilder().getAvailableImageUris();
 
 		try
 		{
@@ -132,16 +134,16 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		if (numberOfPeople > 3)
 		{
 			mOverflowText.setVisibility(View.VISIBLE);
-			mOverflowText.setText("+"+Integer.toString(numberOfPeople-3)+"\nmore");
+			mOverflowText.setText("+" + Integer.toString(numberOfPeople - 3) + "\nmore");
 		}
 
-		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString());
-		setOweStatusColour(((DebtActivity) getActivity()).getDebtBuilder().isInDebtToMe());
+		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity)getActivity()).getDebtBuilder().getAmount().toString());
+		setOweStatusColour(((DebtActivity)getActivity()).getDebtBuilder().isInDebtToMe());
 	}
 
 	private void setOweStatusColour(boolean isInDebtToMe)
 	{
-		if(isInDebtToMe)
+		if (isInDebtToMe)
 		{
 			mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
 			mIOweThem.setBackgroundColor(mNeutralColor);
@@ -154,16 +156,17 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		switch (v.getId())
 		{
 			case R.id.i_owe_them:
-				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(false);
+				((DebtActivity)getActivity()).getDebtBuilder().setInDebtToMe(false);
 				setOweStatusColour(false);
 				break;
 
 			case R.id.they_owe_me:
-				((DebtActivity) getActivity()).getDebtBuilder().setInDebtToMe(true);
+				((DebtActivity)getActivity()).getDebtBuilder().setInDebtToMe(true);
 				setOweStatusColour(true);
 				break;
 
@@ -173,24 +176,29 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	}
 
 	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if(buttonView.getId() == R.id.split_amount)
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+	{
+		if (buttonView.getId() == R.id.split_amount)
 		{
-			((DebtActivity) getActivity()).getDebtBuilder().setDistributedEvenly(isChecked);
-			if(isChecked){
+			((DebtActivity)getActivity()).getDebtBuilder().setDistributedEvenly(isChecked);
+			if (isChecked)
+			{
 				mInclMe.setVisibility(CheckBox.VISIBLE);
-			} else {
+			}
+			else
+			{
 				mInclMe.setVisibility(CheckBox.INVISIBLE);
 			}
 		}
 		else if (buttonView.getId() == R.id.incl_me)
 		{
-			((DebtActivity) getActivity()).getDebtBuilder().setIncludingMe(isChecked);
+			((DebtActivity)getActivity()).getDebtBuilder().setIncludingMe(isChecked);
 		}
 	}
 
 	@Override
-	public void saveFields() {
-		((DebtActivity) getActivity()).getDebtBuilder().setDescription(mDescription.getText().toString());
+	public void saveFields()
+	{
+		((DebtActivity)getActivity()).getDebtBuilder().setDescription(mDescription.getText().toString());
 	}
 }

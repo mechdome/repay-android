@@ -36,23 +36,23 @@ import java.util.ArrayList;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener, OnClickListener {
+public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener, OnClickListener
+{
 
-	private static final String 		TAG = ChoosePersonFragment.class.getName();
-	public static final int 			PICK_CONTACT_REQUEST = 1;
-
-	private ChoosePersonAdapter			mAdapter;
-	private ListView 					mListView;
-	private RelativeLayout 				mEmptyState;
+	public static final int PICK_CONTACT_REQUEST = 1;
+	private static final String TAG = ChoosePersonFragment.class.getName();
+	private ChoosePersonAdapter mAdapter;
+	private ListView mListView;
+	private RelativeLayout mEmptyState;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true); // Tell the activity that we have ActionBar items
 	}
@@ -63,22 +63,27 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	 * have menu items to add
 	 */
 	@Override
-	public void onCreateOptionsMenu(Menu menu,MenuInflater inf){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inf)
+	{
 		super.onCreateOptionsMenu(menu, inf);
-        if(menu.size()<=1){
-            // Stops Activity from receiving duplicate MenuItems
-            // Solves GitHub bug #2
-            inf.inflate(R.menu.chooseperson, menu);
-        }
+		if (menu.size() <= 1)
+		{
+			// Stops Activity from receiving duplicate MenuItems
+			// Solves GitHub bug #2
+			inf.inflate(R.menu.chooseperson, menu);
+		}
 	}
 
-	private void showAddFriendDialog(){
+	private void showAddFriendDialog()
+	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
-		dialog.setItems(new CharSequence[]{"Add From Contacts", "Add A Name"}, new DialogInterface.OnClickListener() {
+		dialog.setItems(new CharSequence[]{"Add From Contacts", "Add A Name"}, new DialogInterface.OnClickListener()
+		{
 
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog, int which)
+			{
 				if (which == 0)
 				{
 					/*
@@ -99,23 +104,30 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		dialog.show();
 	}
 
-	public void addFriendByName(){
+	public void addFriendByName()
+	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
 		final EditText nameEntry = new EditText(getActivity());
 		dialog.setView(nameEntry);
-		dialog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+		dialog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener()
+		{
 
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog, int which)
+			{
 				String name = nameEntry.getText().toString();
-				try {
-					if(!TextUtils.isEmpty(nameEntry.getText().toString())){
+				try
+				{
+					if (!TextUtils.isEmpty(nameEntry.getText().toString()))
+					{
 						Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
-						((DebtActivity) getActivity()).getDBHandler().addFriend(newFriend);
+						((DebtActivity)getActivity()).getDBHandler().addFriend(newFriend);
 						new GetFriendsFromDB().execute();
 					}
-				} catch (SQLException e) {
+				}
+				catch (SQLException e)
+				{
 					Toast.makeText(getActivity(), "Friend could not be added", Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -124,9 +136,11 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data){
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
 		super.onActivityResult(requestCode, resultCode, data);
-		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST){
+		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST)
+		{
 			try
 			{
 				String contactUri = data.getData().toString();
@@ -135,7 +149,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 
 				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
 
-				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
+				((DebtActivity)getActivity()).getDBHandler().addFriend(pickerResult);
 
 				new GetFriendsFromDB().execute();
 			}
@@ -153,20 +167,23 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
 		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-		case R.id.action_addfriend:
-			showAddFriendDialog();
-			return true;
+		switch (item.getItemId())
+		{
+			case R.id.action_addfriend:
+				showAddFriendDialog();
+				return true;
 
-		default:
-			return true;
+			default:
+				return true;
 		}
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_friendchooser, container, false);
 		return view;
@@ -187,60 +204,75 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+	{
 		Friend selectedFriend = (Friend)arg1.getTag();
-		Log.i(TAG, selectedFriend.getName()+ " selected ("+ selectedFriend.getRepayID() +")");
-		if(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().contains(selectedFriend)){
-			((DebtActivity) getActivity()).getDebtBuilder().removeSelectedFriend(selectedFriend);
+		Log.i(TAG, selectedFriend.getName() + " selected (" + selectedFriend.getRepayID() + ")");
+		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().contains(selectedFriend))
+		{
+			((DebtActivity)getActivity()).getDebtBuilder().removeSelectedFriend(selectedFriend);
 			arg1.setBackgroundColor(ChoosePersonAdapter.DESELECTED_COLOUR);
-		} else {
-			((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().add(selectedFriend);
+		}
+		else
+		{
+			((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().add(selectedFriend);
 			arg1.setBackgroundColor(ChoosePersonAdapter.SELECTED_COLOUR);
 		}
 	}
 
 	@Override
-	public void saveFields() {
+	public void saveFields()
+	{
 		// No need to do anything here. This fragment uses the DebtBuilder object as storage.
 	}
 
-	private class GetFriendsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>> {
+	@Override
+	public void onClick(View v)
+	{
+		if (v.getId() == R.id.activity_friendchooser_helpbtn)
+		{
+			showAddFriendDialog();
+		}
+	}
+
+	private class GetFriendsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>>
+	{
 
 		@Override
-		protected void onPreExecute() {
+		protected void onPreExecute()
+		{
 			mListView.setVisibility(ListView.INVISIBLE);
 			mEmptyState.setVisibility(RelativeLayout.INVISIBLE);
 		}
 
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseHandler... params) {
-			try{
-				ArrayList<Friend> friends = ((DebtActivity) getActivity()).getDBHandler().getAllFriends();
+		protected ArrayList<Friend> doInBackground(DatabaseHandler... params)
+		{
+			try
+			{
+				ArrayList<Friend> friends = ((DebtActivity)getActivity()).getDBHandler().getAllFriends();
 				return friends;
-			} catch (Throwable e){
+			}
+			catch (Throwable e)
+			{
 				return null;
 			}
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Friend> result){
-			if (result != null) {
+		protected void onPostExecute(ArrayList<Friend> result)
+		{
+			if (result != null)
+			{
 				mListView.setVisibility(ListView.VISIBLE);
-				mAdapter = new ChoosePersonAdapter(getActivity(), R.layout.fragment_adddebt_friendslist_item,
-						result, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
+				mAdapter = new ChoosePersonAdapter(getActivity(), R.layout.fragment_adddebt_friendslist_item, result, ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
 				mListView.setAdapter(mAdapter);
-				mAdapter.setSelectedFriends(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
-			} else {
+				mAdapter.setSelectedFriends(((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
+			}
+			else
+			{
 				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
 			}
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (v.getId()==R.id.activity_friendchooser_helpbtn)
-		{
-			showAddFriendDialog();
 		}
 	}
 }

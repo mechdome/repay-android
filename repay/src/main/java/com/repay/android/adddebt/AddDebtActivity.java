@@ -17,17 +17,17 @@ import java.math.BigDecimal;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public class AddDebtActivity extends DebtActivity {
+public class AddDebtActivity extends DebtActivity
+{
 
-	private static final String 		TAG = AddDebtActivity.class.getName();
+	private static final String TAG = AddDebtActivity.class.getName();
 
-	private int 						mFrame;
+	private int mFrame;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -49,62 +49,67 @@ public class AddDebtActivity extends DebtActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.adddebt, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
 
-		case R.id.action_settings:
-			Intent intent = new Intent();
-			intent.setClass(this, SettingsActivity.class);
-			startActivity(intent);
-			return true;
+			case R.id.action_settings:
+				Intent intent = new Intent();
+				intent.setClass(this, SettingsActivity.class);
+				startActivity(intent);
+				return true;
 
-		default:
-			break;
+			default:
+				break;
 		}
 		return false;
 	}
 
-	public void onNextButtonClick(View v){
-		switch (v.getId()) {
-		case R.id.activity_friendchooser_donebtn:
-			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
-			if(getDebtBuilder().getSelectedFriends() != null &&getDebtBuilder().getSelectedFriends().size() > 0)
-			{
-				Log.i(TAG, Integer.toString(getDebtBuilder().getSelectedFriends().size()) + " people selected");
-				getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
-			}
-			else
-			{
-				Toast.makeText(this, "Please choose 1 or more people first", Toast.LENGTH_SHORT).show();
-			}
-			break;
+	public void onNextButtonClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.activity_friendchooser_donebtn:
+				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+				if (getDebtBuilder().getSelectedFriends() != null && getDebtBuilder().getSelectedFriends().size() > 0)
+				{
+					Log.i(TAG, Integer.toString(getDebtBuilder().getSelectedFriends().size()) + " people selected");
+					getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
+				}
+				else
+				{
+					Toast.makeText(this, "Please choose 1 or more people first", Toast.LENGTH_SHORT).show();
+				}
+				break;
 
-		case R.id.fragment_enterdebtamount_donebtn:
-			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
-			if(getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO)>0)
-			{
-				getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
-			}
-			else
-			{
-				Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
-			}
-			break;
+			case R.id.fragment_enterdebtamount_donebtn:
+				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+				if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
+				{
+					getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
+				}
+				else
+				{
+					Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
+				}
+				break;
 
-		case R.id.donebtn:
-			((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
-			save();
-			break;
+			case R.id.donebtn:
+				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+				save();
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 }

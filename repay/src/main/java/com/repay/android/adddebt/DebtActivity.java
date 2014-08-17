@@ -13,17 +13,17 @@ import com.repay.android.model.Friend;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public abstract class DebtActivity extends Activity
 {
-	public static final String		FRIEND = "friend";
-	public static final String		DEBT = "debt";
-	public static final String		DEBT_REPAID_TEXT = "Repaid";
-	private static final String		DEBT_BUILDER = "builder";
+	public static final String FRIEND = "friend";
+	public static final String DEBT = "debt";
+	public static final String DEBT_REPAID_TEXT = "Repaid";
+	private static final String DEBT_BUILDER = "builder";
 
 	protected DatabaseHandler mDB;
 
@@ -42,7 +42,7 @@ public abstract class DebtActivity extends Activity
 
 		if (savedInstanceState != null && savedInstanceState.get(DEBT_BUILDER) != null)
 		{
-			mBuilder = (DebtBuilder) savedInstanceState.get(DEBT_BUILDER);
+			mBuilder = (DebtBuilder)savedInstanceState.get(DEBT_BUILDER);
 		}
 		else
 		{
@@ -50,13 +50,13 @@ public abstract class DebtActivity extends Activity
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
 			{
-				mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+				mFriend = (Friend)getIntent().getExtras().get(FRIEND);
 				mBuilder.addSelectedFriend(mFriend);
 			}
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
 			{
-				mDebt = (Debt) getIntent().getExtras().get(DEBT);
+				mDebt = (Debt)getIntent().getExtras().get(DEBT);
 				mBuilder.setAmount(mDebt.getAmount());
 				mBuilder.setDescription(mDebt.getDescription());
 				mBuilder.setDate(mDebt.getDate());
