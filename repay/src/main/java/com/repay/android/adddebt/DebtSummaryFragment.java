@@ -71,6 +71,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 		mHeaderPic3.setOuterColor(Color.parseColor("#DDDDDD"));
 		mInclMe.setVisibility(CheckBox.INVISIBLE);
 		mSplitEvenly.setOnCheckedChangeListener(this);
+		mInclMe.setOnCheckedChangeListener(this);
 		mTheyOweMe.setOnClickListener(this);
 		mIOweThem.setOnClickListener(this);
 
