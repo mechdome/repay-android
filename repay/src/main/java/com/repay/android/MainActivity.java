@@ -90,6 +90,11 @@ public class MainActivity extends Activity
 		}
 	}
 
+	public DatabaseHandler getDB()
+	{
+		return mDB;
+	}
+
 	@Override
 	public void onResume()
 	{
