@@ -36,7 +36,7 @@ import android.util.Log;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private static final String		TAG = DatabaseHandler.class.getName();
-	
+
 	public static final String		DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 
 	public static final String 		DB_NAME = "repay.db";
@@ -85,7 +85,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		// Create Debts table
 		db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, "
-				+ "%s TEXT, %s TEXT, %s TEXT, FOREIGN KEY(%s) REFERENCES %s(%s))", Names.D_TABLENAME, 
+						+ "%s TEXT, %s TEXT, %s TEXT, FOREIGN KEY(%s) REFERENCES %s(%s))", Names.D_TABLENAME,
 				Names.D_DEBTID, Names.D_REPAYID, Names.D_DATE, Names.D_AMOUNT,
 				Names.D_DESCRIPTION, Names.D_REPAYID, Names.F_TABLENAME, Names.F_REPAYID));
 	}
@@ -98,7 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				ArrayList<Debt> debts = new ArrayList<Debt>();
 				Cursor c;
 				// Get all current debts from database
-				c = db.query(Names.D_TABLENAME, new String[]{Names.D_REPAYID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION}, 
+				c = db.query(Names.D_TABLENAME, new String[]{Names.D_REPAYID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION},
 						null, null, null, null, null);
 				c.moveToFirst();
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -110,7 +110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				// Drop old table and create new one
 				db.execSQL(String.format("ALTER TABLE %s RENAME TO oldDebts", Names.D_TABLENAME));
 				db.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, "
-						+ "%s TEXT, %s TEXT, %s TEXT, FOREIGN KEY(%s) REFERENCES %s(%s))", Names.D_TABLENAME, 
+								+ "%s TEXT, %s TEXT, %s TEXT, FOREIGN KEY(%s) REFERENCES %s(%s))", Names.D_TABLENAME,
 						Names.D_DEBTID, Names.D_REPAYID, Names.D_DATE, Names.D_AMOUNT,
 						Names.D_DESCRIPTION, Names.D_REPAYID, Names.F_TABLENAME, Names.F_REPAYID));
 
@@ -137,52 +137,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 */
 	public ArrayList<Friend> getAllFriends() throws SQLException, NullPointerException, CursorIndexOutOfBoundsException{
 		SQLiteDatabase db = this.getReadableDatabase();
-		ArrayList<Friend> friends = null;
-		Cursor c = null;
+		ArrayList<Friend> friends = new ArrayList<Friend>();
 
-		if (db != null) {
-			c = db.query(Names.F_TABLENAME, new String[]{Names.F_REPAYID, Names.F_LOOKUPURI, Names.F_NAME, Names.F_DEBT},
-					null, null, null, null, null);
-		}
+		Cursor c = db.query(Names.F_TABLENAME, new String[]{Names.F_REPAYID, Names.F_LOOKUPURI, Names.F_NAME, Names.F_DEBT},
+				null, null, null, null, null);
 
-		if (c != null) {
+		if (c != null && c.getCount() > 0)
+		{
 			c.moveToFirst();
-			friends = new ArrayList<Friend>();
-			do{
-				try{
-					friends.add(new Friend(c.getString(0), c.getString(1), c.getString(2), new BigDecimal(c.getString(3))));
-				} catch (NullPointerException e){
-					friends.add(new Friend(c.getString(0), null, c.getString(2), new BigDecimal(c.getString(3))));
-				} catch (CursorIndexOutOfBoundsException e){
-					throw e;
-				}
-			} while (c.moveToNext());
+
+			do
+			{
+				friends.add(new Friend(c.getString(0), c.getString(1), c.getString(2), new BigDecimal(c.getString(3))));
+			}
+			while (c.moveToNext());
 		}
 		db.close();
+
 		return friends;
 	}
 
-    /**
-     * Convenience method for knowing how many friend entries are in the database
-     * @return Number of friends in database
-     * @throws NullPointerException If no records are found
-     */
-    public int getNumberOfPeople() throws NullPointerException{
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(Names.F_TABLENAME,null,null,null,null,null,null);
-        return c.getCount();
-    }
+	/**
+	 * Convenience method for knowing how many friend entries are in the database
+	 * @return Number of friends in database
+	 * @throws NullPointerException If no records are found
+	 */
+	public int getNumberOfPeople() throws NullPointerException{
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.query(Names.F_TABLENAME,null,null,null,null,null,null);
+		return c.getCount();
+	}
 
-    /**
-     * Convenience method for knowing how many debt entries are in the database
-     * @return Number of debts in database
-     * @throws NullPointerException If no records are found
-     */
-    public int getNumberOfDebts() throws NullPointerException{
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(Names.D_TABLENAME,null,null,null,null,null,null);
-        return c.getCount();
-    }
+	/**
+	 * Convenience method for knowing how many debt entries are in the database
+	 * @return Number of debts in database
+	 * @throws NullPointerException If no records are found
+	 */
+	public int getNumberOfDebts() throws NullPointerException{
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.query(Names.D_TABLENAME,null,null,null,null,null,null);
+		return c.getCount();
+	}
 
 	/**
 	 * Add a friend into the database. To get a RepayID, use generateRepayID()
@@ -225,7 +220,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.insert(Names.D_TABLENAME, null, values);
 		db.close();
 	}
-	
+
 	public void updateDebt(Debt debt) throws SQLException, NullPointerException {
 		ContentValues values = new ContentValues();
 		values.put(Names.D_AMOUNT, debt.getAmount().toString());
@@ -246,7 +241,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @throws android.database.CursorIndexOutOfBoundsException
 	 */
 	public ArrayList<Debt> getDebtsByRepayID(final String repayID) throws SQLException, ParseException,
-	CursorIndexOutOfBoundsException, NullPointerException {
+			CursorIndexOutOfBoundsException, NullPointerException {
 		ArrayList<Debt> debts = null;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.query(Names.D_TABLENAME, new String[]{Names.D_DEBTID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION},
@@ -257,20 +252,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			debts = new ArrayList<Debt>();
 			do{
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-                String description, dateString;
-                Date date;
-                // Try and catch errors to stop this failing silently
-                try{
-                    dateString = c.getString(1);
-                    date = sdf.parse(dateString);
-                } catch (Exception e){
-                    date = new Date();
-                }
-                try{
-                    description = c.getString(3);
-                } catch (Exception e){
-                    description = "";
-                }
+				String description, dateString;
+				Date date;
+				// Try and catch errors to stop this failing silently
+				try{
+					dateString = c.getString(1);
+					date = sdf.parse(dateString);
+				} catch (Exception e){
+					date = new Date();
+				}
+				try{
+					description = c.getString(3);
+				} catch (Exception e){
+					description = "";
+				}
 				debts.add(new Debt(c.getInt(0), repayID, date, new BigDecimal(c.getString(2)), description));
 			} while(c.moveToNext());
 		}
@@ -353,7 +348,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @throws NullPointerException
 	 */
 	public void removeDebt(int debtID) throws SQLException, IndexOutOfBoundsException,
-	NullPointerException{
+			NullPointerException{
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(Names.D_TABLENAME, Names.D_DEBTID+"=?",
 				new String[]{Integer.toString(debtID)});
@@ -369,17 +364,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @throws android.database.CursorIndexOutOfBoundsException
 	 */
 	public Debt getMostRecentDebt() throws ParseException, NullPointerException, SQLiteException,
-	CursorIndexOutOfBoundsException{
+			CursorIndexOutOfBoundsException{
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor c;
 		c = db.query(Names.D_TABLENAME, null, null, null, null, null, null);
 		c.moveToLast();
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		db.close();
-		return new Debt(c.getInt(0), c.getString(1), sdf.parse(c.getString(2)), 
+		return new Debt(c.getInt(0), c.getString(1), sdf.parse(c.getString(2)),
 				new BigDecimal(c.getString(2)), c.getString(3));
 	}
-	
+
 	/**
 	 * @param debtID
 	 * @return The debt stored against the two given attributes
