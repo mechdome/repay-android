@@ -129,9 +129,8 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST){
 			try
 			{
-				String contactUri = ContactsContract.Contacts.getLookupUri(getActivity().getContentResolver(), data.getData()).toString();
+				String contactUri = data.getData().toString();
 
-				String lookupThing = ContactsContractHelper.getLookupForContact(getActivity(), contactUri);
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
 				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
