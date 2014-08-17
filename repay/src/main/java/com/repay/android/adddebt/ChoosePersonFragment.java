@@ -57,19 +57,12 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		setHasOptionsMenu(true); // Tell the activity that we have ActionBar items
 	}
 
-	/*
-	 * Here we add the extra menu items needed into the ActionBar. Even with
-	 * implementing this method, we still need to tell the Activity that we
-	 * have menu items to add
-	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inf)
 	{
 		super.onCreateOptionsMenu(menu, inf);
 		if (menu.size() <= 1)
 		{
-			// Stops Activity from receiving duplicate MenuItems
-			// Solves GitHub bug #2
 			inf.inflate(R.menu.chooseperson, menu);
 		}
 	}
@@ -86,11 +79,6 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			{
 				if (which == 0)
 				{
-					/*
-					Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
-					pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
-					startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
-					*/
 					Intent intent = new Intent(Intent.ACTION_PICK);
 					intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
 					startActivityForResult(intent, PICK_CONTACT_REQUEST);
@@ -108,27 +96,30 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
-		final EditText nameEntry = new EditText(getActivity());
-		dialog.setView(nameEntry);
+		final View v = LayoutInflater.from(getActivity()).inflate(R.layout.add_friend_by_name, null);
+		dialog.setView(v);
 		dialog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener()
 		{
-
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				String name = nameEntry.getText().toString();
+				String name = ((EditText) v.findViewById(R.id.name_entry)).getText().toString();
 				try
 				{
-					if (!TextUtils.isEmpty(nameEntry.getText().toString()))
+					if (!TextUtils.isEmpty(name))
 					{
 						Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
 						((DebtActivity)getActivity()).getDBHandler().addFriend(newFriend);
 						new GetFriendsFromDB().execute();
 					}
+					else
+					{
+						((EditText) v.findViewById(R.id.name_entry)).setError(getActivity().getResources().getString(R.string.please_enter_name));
+					}
 				}
 				catch (SQLException e)
 				{
-					Toast.makeText(getActivity(), "Friend could not be added", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.friend_could_not_be_added, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -144,11 +135,9 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			try
 			{
 				String contactUri = data.getData().toString();
-
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
 				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
-
 				((DebtActivity)getActivity()).getDBHandler().addFriend(pickerResult);
 
 				new GetFriendsFromDB().execute();
@@ -156,12 +145,12 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			catch (IndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
-				Toast.makeText(getActivity(), "Problem in getting result from your contacts", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.problem_getting_from_contacts, Toast.LENGTH_LONG).show();
 			}
 			catch (SQLException e)
 			{
 				e.printStackTrace();
-				Toast.makeText(getActivity(), "There was a problem in adding this person to Repay", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.problem_adding_to_repay, Toast.LENGTH_LONG).show();
 			}
 		}
 	}
