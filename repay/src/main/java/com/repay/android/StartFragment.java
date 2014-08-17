@@ -1,12 +1,15 @@
 package com.repay.android;
 
-import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,24 +34,25 @@ import java.util.Collections;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public class StartFragment extends Fragment implements OnItemClickListener {
+public class StartFragment extends Fragment implements OnItemClickListener
+{
 
 	public static final String TAG = StartFragment.class.getName();
 
-	private GridView 				mGrid;
-	private TextView				mEmptyState;
-	private StartFragmentAdapter 	mAdapter;
-	private ProgressBar 			mProgressBar;
-	private int 					mListItem = R.layout.fragment_start_friendslist_item, mSortOrder;
+	private GridView mGrid;
+	private TextView mEmptyState;
+	private StartFragmentAdapter mAdapter;
+	private ProgressBar mProgressBar;
+	private int mListItem = R.layout.fragment_start_friendslist_item, mSortOrder;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_start, container, false);
 		return view;
@@ -75,6 +79,38 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId())
+		{
+			case R.id.action_total:
+				showTotalDialog();
+				return true;
+
+			case R.id.action_recalculateTotals:
+				new RecalculateTotalDebts().execute(((MainActivity) getActivity()).getDB());
+
+			default:
+				return true;
+		}
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true); // Tell the activity that we have ActionBar items
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inf)
+	{
+		super.onCreateOptionsMenu(menu, inf);
+		inf.inflate(R.menu.friendslist, menu);
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 	{
 		// Retrieve Friend object and continue with navigation
@@ -84,9 +120,9 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		startActivity(overview);
 	}
 
-	public void updateList(){
-		if (((MainActivity) getActivity()).getFriends() == null ||
-			((MainActivity) getActivity()).getFriends().size() == 0)
+	public void updateList()
+	{
+		if (((MainActivity)getActivity()).getFriends() == null || ((MainActivity)getActivity()).getFriends().size() == 0)
 		{
 			mGrid.setVisibility(View.GONE);
 			mEmptyState.setVisibility(View.VISIBLE);
@@ -98,35 +134,41 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			mEmptyState.setVisibility(View.GONE);
 			mProgressBar.setVisibility(ProgressBar.GONE);
 
-			mAdapter = new StartFragmentAdapter(getActivity(), mListItem, ((MainActivity) getActivity()).getFriends());
+			mAdapter = new StartFragmentAdapter(getActivity(), mListItem, ((MainActivity)getActivity()).getFriends());
 			mGrid.setAdapter(mAdapter);
 		}
 	}
 
-	private BigDecimal calculateTotalDebt(){
-		if (((MainActivity) getActivity()).getFriends() != null)
+	private BigDecimal calculateTotalDebt()
+	{
+		if (((MainActivity)getActivity()).getFriends() != null)
 		{
 			BigDecimal total = new BigDecimal("0");
-			for (Friend friend : ((MainActivity) getActivity()).getFriends())
+			for (Friend friend : ((MainActivity)getActivity()).getFriends())
 			{
 				total = total.add(friend.getDebt());
 			}
 			return total;
 		}
-		else return new BigDecimal("0");
+		else
+		{
+			return new BigDecimal("0");
+		}
 	}
 
 	public void showTotalDialog()
 	{
 		View v = LayoutInflater.from(getActivity()).inflate(R.layout.total_dialog, null, false);
-		((TextView) v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity())+calculateTotalDebt().toString());
-		new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(R.string.done, null).show();
+		((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
+		new Builder(getActivity()).setView(v).setPositiveButton(R.string.close, null).show();
 	}
 
-	private class RecalculateTotalDebts extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>> {
+	private class RecalculateTotalDebts extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>>
+	{
 
 		@Override
-		protected void onPreExecute() {
+		protected void onPreExecute()
+		{
 			mGrid.setAdapter(null);
 			mGrid.setVisibility(ListView.GONE);
 			mEmptyState.setVisibility(RelativeLayout.GONE);
@@ -138,7 +180,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			BigDecimal amount = new BigDecimal("0");
 			if (debts != null && debts.size() > 0)
 			{
-				for (int i=0;i<=debts.size()-1;i++)
+				for (int i = 0; i <= debts.size() - 1; i++)
 				{
 					amount = amount.add(debts.get(i).getAmount());
 				}
@@ -147,11 +189,14 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		}
 
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseHandler... params){
-			try{
+		protected ArrayList<Friend> doInBackground(DatabaseHandler... params)
+		{
+			try
+			{
 				ArrayList<Friend> friends = params[0].getAllFriends();
-				if(friends!=null){
-					for (int i=0;i<=friends.size()-1;i++)
+				if (friends != null)
+				{
+					for (int i = 0; i <= friends.size() - 1; i++)
 					{
 						BigDecimal newAmount;
 						try
@@ -175,10 +220,14 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 					}
 
 					Collections.sort(friends);
-					if (mSortOrder == SettingsFragment.SORTORDER_OWETHEM) Collections.reverse(friends);
+					if (mSortOrder == SettingsFragment.SORTORDER_OWETHEM)
+					{
+						Collections.reverse(friends);
+					}
 					return friends;
 				}
-			} catch (CursorIndexOutOfBoundsException e)
+			}
+			catch (CursorIndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
 			}
@@ -186,8 +235,9 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Friend> result){
-			if (result!=null)
+		protected void onPostExecute(ArrayList<Friend> result)
+		{
+			if (result != null)
 			{
 				mAdapter = new StartFragmentAdapter(getActivity(), mListItem, result);
 				mGrid.setVisibility(ListView.VISIBLE);
@@ -197,7 +247,7 @@ public class StartFragment extends Fragment implements OnItemClickListener {
 			{
 				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
 			}
-			
+
 			mProgressBar.setVisibility(ProgressBar.GONE);
 		}
 	}
