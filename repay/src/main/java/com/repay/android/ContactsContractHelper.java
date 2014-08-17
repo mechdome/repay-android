@@ -152,16 +152,28 @@ public class ContactsContractHelper
 	/**
 	 * Lookup the name of a contact in the system contacts app
 	 * @param c For {@link android.content.ContentResolver}
-	 * @param lookuoURI The LOOKUP_URI for the contact
+	 * @param lookupURI The LOOKUP_URI for the contact
 	 * @return String reresentation for the contacts display name as set in the Contacts app
 	 */
-	public static String getNameForContact(Context c, String lookuoURI)
+	public static String getNameForContact(Context c, String lookupURI)
 	{
 		String[] cols = {ContactsContract.Contacts.DISPLAY_NAME};
-		Cursor cursor = c.getContentResolver().query(Uri.parse(lookuoURI), cols, null, null, null);
+		Cursor cursor = c.getContentResolver().query(Uri.parse(lookupURI), cols, null, null, null);
 		cursor.moveToFirst();
 
 		String result = cursor.getString(0).replaceAll("[-+.^:,']","");
+		cursor.close();
+
+		return result;
+	}
+
+	public static String getLookupForContact(Context c, String lookupURI)
+	{
+		String[] cols = {ContactsContract.Contacts.LOOKUP_KEY};
+		Cursor cursor = c.getContentResolver().query(Uri.parse(lookupURI), cols, null, null, null);
+		cursor.moveToFirst();
+
+		String result = cursor.getString(0);
 		cursor.close();
 
 		return result;
