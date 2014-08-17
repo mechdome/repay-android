@@ -35,5 +35,7 @@
 
     <string name="enter_amount">Enter Amount</string>
     <string name="get_started">Get Started</string>
+	<string name="history">History</string>
+	<string name="even_debt">You\'re Even</string>
 
 </resources>

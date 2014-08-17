@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.repay.android.R;
+import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
 
 /**
@@ -13,7 +14,7 @@ import com.repay.android.settings.SettingsFragment;
  * <p/>
  * 10/08/2014.
  */
-public abstract class FriendFragment extends Fragment
+public abstract class FriendFragment extends Fragment implements OnFriendUpdatedListener
 {
 	protected int		mTheyOweMeColour, mIOweThemColour;
 
@@ -31,5 +32,5 @@ public abstract class FriendFragment extends Fragment
 		}
 	}
 
-	public abstract void updateUI();
+	public abstract void onFriendUpdated(Friend friend);
 }

@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.repay.android.Application;
 import com.repay.android.ContactsContractHelper;
 import com.repay.android.R;
+import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
 import com.repay.android.view.RoundedImageView;
 
@@ -25,16 +26,16 @@ import java.math.BigDecimal;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class FriendOverviewFragment extends FriendFragment implements OnClickListener
 {
-	private RoundedImageView 	mFriendPic;
-	private TextView 			mTotalOwed, mTotalOwedPrefix;
-	private Button 				mShareBtn;
+	private RoundedImageView mFriendPic;
+	private TextView mTotalOwed, mTotalOwedPrefix;
+	private Button mShareBtn;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,10 +50,10 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		mShareBtn = (Button)getView().findViewById(R.id.share);
-		mFriendPic = (RoundedImageView)getView().findViewById(R.id.friend_image);
-		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
-		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
+		mShareBtn = (Button) getView().findViewById(R.id.share);
+		mFriendPic = (RoundedImageView) getView().findViewById(R.id.friend_image);
+		mTotalOwed = (TextView) getView().findViewById(R.id.amount);
+		mTotalOwedPrefix = (TextView) getView().findViewById(R.id.owe_status);
 		mShareBtn.setOnClickListener(this);
 
 		// Animate the UI into view
@@ -63,55 +64,17 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		animator.scaleY(1f);
 		animator.setDuration(500);
 		animator.start();
-
-		updateUI();
-	}
-
-	public void updateUI(){
-		ImageLoader.getInstance().displayImage(((FriendActivity)getActivity()).getFriend().getLookupURI(), mFriendPic, Application.getImageOptions());
-
-		if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) == 0)
-		{
-			mTotalOwedPrefix.setText("You're Even");
-			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+"0");
-			mFriendPic.setOuterColor(mTheyOweMeColour);
-		}
-		else if (((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)<0)
-		{
-			mTotalOwedPrefix.setText(R.string.i_owe);
-			String amount = SettingsFragment.getFormattedAmount(((FriendActivity)getActivity()).getFriend().getDebt().negate());
-			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
-			mFriendPic.setOuterColor(mIOweThemColour);
-		}
-		else if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)>0)
-		{
-			mTotalOwedPrefix.setText(R.string.they_owe);
-			String amount = SettingsFragment.getFormattedAmount(((FriendActivity)getActivity()).getFriend().getDebt());
-			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity())+amount);
-			mFriendPic.setOuterColor(mTheyOweMeColour);
-		}
-
-		if (((FriendActivity)getActivity()).getFriend().getLookupURI() != null)
-		{
-			if (!ContactsContractHelper.hasContactData(getActivity(), Uri.parse(((FriendActivity)getActivity()).getFriend().getLookupURI()).getLastPathSegment()))
-			{
-				mShareBtn.setEnabled(false);
-			}
-		}
-		else
-		{
-			mShareBtn.setEnabled(false);
-		}
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		switch (v.getId())
 		{
 			case R.id.share:
-				if(((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO)!=0)
+				if (((FriendActivity) getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) != 0)
 				{
-					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity)getActivity()).getFriend());
+					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity) getActivity()).getFriend());
 					shareDialog.show();
 				}
 				else
@@ -122,5 +85,50 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		}
 	}
 
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
+		onFriendUpdated(((FriendActivity) getActivity()).getFriend());
+	}
+
+	@Override
+	public void onFriendUpdated(Friend friend)
+	{
+		ImageLoader.getInstance().displayImage(friend.getLookupURI(), mFriendPic, Application.getImageOptions());
+
+		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0)
+		{
+			mTotalOwedPrefix.setText(R.string.even_debt);
+			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + "0");
+			mFriendPic.setOuterColor(mTheyOweMeColour);
+		}
+		else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
+		{
+			mTotalOwedPrefix.setText(R.string.i_owe);
+			String amount = SettingsFragment.getFormattedAmount(friend.getDebt().negate());
+			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + amount);
+			mFriendPic.setOuterColor(mIOweThemColour);
+		}
+		else if (friend.getDebt().compareTo(BigDecimal.ZERO) > 0)
+		{
+			mTotalOwedPrefix.setText(R.string.they_owe);
+			String amount = SettingsFragment.getFormattedAmount(friend.getDebt());
+			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + amount);
+			mFriendPic.setOuterColor(mTheyOweMeColour);
+		}
+
+		if (friend.getLookupURI() != null)
+		{
+			if (!ContactsContractHelper.hasContactData(getActivity(), Uri.parse(friend.getLookupURI()).getLastPathSegment()))
+			{
+				mShareBtn.setEnabled(false);
+			}
+		}
+		else
+		{
+			mShareBtn.setEnabled(false);
+		}
+	}
 }
