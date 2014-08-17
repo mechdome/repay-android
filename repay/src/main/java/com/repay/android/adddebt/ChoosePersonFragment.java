@@ -81,9 +81,14 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == 0)
 				{
+					/*
 					Intent pickContactIntent = new Intent(Intent.ACTION_GET_CONTENT);
 					pickContactIntent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
 					startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+					*/
+					Intent intent = new Intent(Intent.ACTION_PICK);
+					intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+					startActivityForResult(intent, PICK_CONTACT_REQUEST);
 				}
 				else if (which == 1)
 				{
@@ -122,10 +127,11 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		if (data != null && resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT_REQUEST){
-			try{
-				Log.i(TAG,"Closing contact picker and adding to SQLite");
-				String contactUri = data.getData().toString();
+			try
+			{
+				String contactUri = ContactsContract.Contacts.getLookupUri(getActivity().getContentResolver(), data.getData()).toString();
 
+				String lookupThing = ContactsContractHelper.getLookupForContact(getActivity(), contactUri);
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
 				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
