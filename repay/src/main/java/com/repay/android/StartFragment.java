@@ -237,7 +237,7 @@ public class StartFragment extends Fragment implements OnItemClickListener
 		@Override
 		protected void onPostExecute(ArrayList<Friend> result)
 		{
-			if (result != null)
+			if (result != null && result.size() > 0)
 			{
 				mAdapter = new StartFragmentAdapter(getActivity(), mListItem, result);
 				mGrid.setVisibility(ListView.VISIBLE);
