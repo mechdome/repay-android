@@ -11,7 +11,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn_wide_red"
         android:fontFamily="sans-serif-condensed"
-        android:onClick="onNextBtn"
+        android:onClick="onNextButtonClick"
         android:text="@string/next" />
 
     <ListView
@@ -37,7 +37,7 @@
             android:fontFamily="sans-serif-condensed"
             style="@style/FriendsList.EmptyListText"
             android:gravity="center_horizontal"
-            android:text="@string/activity_friendchooser_helptxt"/>
+            android:text="@string/nobody_here"/>
 
         <Button
             android:id="@+id/activity_friendchooser_helpbtn"
@@ -49,7 +49,7 @@
             android:background="@drawable/btn_wide_red"
             android:fontFamily="sans-serif-condensed"
             android:padding="15dp"
-            android:text="@string/activity_friendchooser_helpbtn_txt" />
+            android:text="@string/add_someone" />
     </RelativeLayout>
 
 </RelativeLayout>

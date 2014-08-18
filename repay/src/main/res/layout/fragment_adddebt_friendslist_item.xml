@@ -3,13 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <com.repay.android.RoundedImageView
+    <com.repay.android.view.RoundedImageView
         android:id="@+id/activity_friendchooser_pic"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="5dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="5dp"
+		android:layout_margin="8dp"
         android:contentDescription="@string/contentDesc" />
 
     <TextView

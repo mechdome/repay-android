@@ -2,14 +2,15 @@ package com.repay.android.frienddetails;
 
 import java.util.HashMap;
 
-import com.repay.android.ContactLookup;
-import com.repay.android.Friend;
+import com.repay.android.ContactsContractHelper;
+import com.repay.android.model.Friend;
 import com.repay.android.SendMail;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,9 +25,9 @@ import android.widget.Toast;
  */
 
 public class ShareDialog extends Builder implements OnClickListener {
-	
+
 	private static final String					TAG = ShareDialog.class.getName();
-	
+
 	private HashMap<String, String> 			mEmails, mPhoneNums;
 	private Friend								mFriend;
 	private Context								mContext;
@@ -36,9 +37,9 @@ public class ShareDialog extends Builder implements OnClickListener {
 		mContext = context;
 		mFriend = friend;
 		Log.d(TAG, "Getting emails from contacts");
-		mEmails = ContactLookup.getContactsEmailAddress(mFriend.getLookupURI().getLastPathSegment(), context);
+		mEmails = ContactsContractHelper.getContactsEmailAddress(Uri.parse(mFriend.getLookupURI()).getLastPathSegment(), context);
 		Log.d(TAG, "Getting phone numbers from contacts");
-		mPhoneNums = ContactLookup.getContactPhoneNumber(context, mFriend.getLookupURI().getLastPathSegment());
+		mPhoneNums = ContactsContractHelper.getContactPhoneNumber(context, Uri.parse(mFriend.getLookupURI()).getLastPathSegment());
 		String[] items = new String[]{"SMS", "Email"};
 		setTitle("Select Share Method");
 		setItems(items, this);
@@ -47,7 +48,7 @@ public class ShareDialog extends Builder implements OnClickListener {
 	/* (non-Javadoc)
 	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
 	 * It seems to work well with just presuming you want to use the first number;
-	 * Android does a reverse lookup in the contacts book automtically
+	 * Android does a reverse lookup in the contacts book automatically
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

@@ -3,26 +3,27 @@
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:name=".ImageCache"
+        android:name=".Application"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
+		android:logo="@drawable/ic_actionbar_logo"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIkmk6ILUwrm1ljP0rjy0L139Kt2szKuXTjYhZ9w" />
+
         <activity
             android:name="com.repay.android.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.repay.android.adddebt.AddDebtActivity"
             android:label="@string/title_activity_add_debt"
@@ -32,6 +33,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.repay.android.MainActivity" />
         </activity>
+
         <activity
             android:name="com.repay.android.adddebt.RepayDebtActivity"
             android:label="@string/title_activity_add_debt"
@@ -41,6 +43,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.repay.android.MainActivity" />
         </activity>
+
         <activity
             android:name="com.repay.android.adddebt.EditDebtActivity"
             android:label="@string/title_activity_add_debt"
@@ -50,14 +53,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.repay.android.MainActivity" />
         </activity>
+
         <activity
-            android:name="com.repay.android.frienddetails.FriendDetailsActivity"
+            android:name=".frienddetails.FriendActivity"
             android:label="@string/title_activity_frienddetails"
             android:parentActivityName="com.repay.android.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.repay.android.MainActivity" />
         </activity>
+
         <activity
             android:name="com.repay.android.settings.SettingsActivity"
             android:label="@string/settings_activity_title"

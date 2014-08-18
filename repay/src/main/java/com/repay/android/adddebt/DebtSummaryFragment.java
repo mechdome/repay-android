@@ -1,17 +1,7 @@
 package com.repay.android.adddebt;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import com.repay.android.Friend;
-import com.repay.android.R;
-import com.repay.android.RetrieveContactPhoto;
-import com.repay.android.RoundedImageView;
-import com.repay.android.settings.SettingsFragment;
-
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,166 +10,195 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.repay.android.Application;
+import com.repay.android.R;
+import com.repay.android.settings.SettingsFragment;
+import com.repay.android.view.RoundedImageView;
+
+import java.util.ArrayList;
 
 /**
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public class DebtSummaryFragment extends Fragment implements OnClickListener, OnCheckedChangeListener {
-
-	private static final String 			TAG = DebtSummaryFragment.class.getName();
-
-	private ArrayList<Friend> 				mSelectedFriends;
-	private RoundedImageView				mHeaderPic;
-	private BigDecimal 						mAmount;
-	private TextView 						mNamesTxt, mIOweThem, mTheyOweMe, mAmountTxt;
-	private EditText						mDescriptionField;
-	private ProgressBar 					mProgress;
-	private CheckBox 						mSplitEvenly, mInclMe;
-	private boolean 						isNegative = false;
-	private int 							mTheyOweMeColour, mIOweThemColour;
+public class DebtSummaryFragment extends DebtFragment implements OnClickListener, OnCheckedChangeListener
+{
+	private RoundedImageView mHeaderPic, mHeaderPic2, mHeaderPic3;
+	private TextView mNamesTxt, mAmountTxt, mTheyOweMe, mIOweThem, mOverflowText;
+	private EditText mDescription;
+	private CheckBox mSplitEvenly, mInclMe;
+	private int mTheyOweMeColour, mIOweThemColour, mNeutralColor;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		super.onCreateView(inflater, container, savedInstanceState);
+
 		return inflater.inflate(R.layout.fragment_debtsummary, container, false);
 	}
 
 	@Override
-	public void onStart(){
-		super.onStart();
-		mProgress = (ProgressBar)getView().findViewById(R.id.fragment_debtsummary_headerLoading);
-		mDescriptionField = (EditText)getView().findViewById(R.id.fragment_debtsummary_description);
-		mSplitEvenly = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_splitAmount);
-		mIOweThem = (TextView)getView().findViewById(R.id.fragment_debtsummary_iOweThem);
-		mTheyOweMe = (TextView)getView().findViewById(R.id.fragment_debtsummary_theyOweMe);
-		mAmountTxt = (TextView)getView().findViewById(R.id.fragment_debtsummary_amount);
-		mHeaderPic = (RoundedImageView)getView().findViewById(R.id.fragment_debtsummary_headerPic);
-		mNamesTxt = (TextView)getView().findViewById(R.id.fragment_debtsummary_headerName);
-		mInclMe = (CheckBox)getView().findViewById(R.id.fragment_debtsummary_inclMe);
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-		mProgress.setVisibility(ProgressBar.INVISIBLE); // Not needed yet
-		mInclMe.setVisibility(CheckBox.INVISIBLE); 		// Hide all of the things
+		getActivity().getActionBar().setTitle(R.string.summary);
+		getActivity().getActionBar().setSubtitle(null);
+
+		mDescription = (EditText)getView().findViewById(R.id.description);
+		mSplitEvenly = (CheckBox)getView().findViewById(R.id.split_amount);
+		mIOweThem = (TextView)getView().findViewById(R.id.i_owe_them);
+		mTheyOweMe = (TextView)getView().findViewById(R.id.they_owe_me);
+		mAmountTxt = (TextView)getView().findViewById(R.id.amount);
+		mHeaderPic = (RoundedImageView)getView().findViewById(R.id.header_pic);
+		mHeaderPic2 = (RoundedImageView)getView().findViewById(R.id.header_pic2);
+		mHeaderPic3 = (RoundedImageView)getView().findViewById(R.id.header_pic3);
+		mNamesTxt = (TextView)getView().findViewById(R.id.header_names);
+		mInclMe = (CheckBox)getView().findViewById(R.id.incl_me);
+		mOverflowText = (TextView)getView().findViewById(R.id.overflow_text);
+
+		mHeaderPic.setOuterColor(Color.parseColor("#DDDDDD"));
+		mHeaderPic2.setOuterColor(Color.parseColor("#DDDDDD"));
+		mHeaderPic3.setOuterColor(Color.parseColor("#DDDDDD"));
+		mInclMe.setVisibility(CheckBox.INVISIBLE);
 		mSplitEvenly.setOnCheckedChangeListener(this);
+		mInclMe.setOnCheckedChangeListener(this);
 		mTheyOweMe.setOnClickListener(this);
 		mIOweThem.setOnClickListener(this);
-		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
-			mTheyOweMeColour = R.color.green_debt;
-			mIOweThemColour = R.color.darkred_debt;
-		} else {
-			mTheyOweMeColour = R.color.green_debt;
-			mIOweThemColour = R.color.blue_debt;
-		}
 
-		if(getActivity().getClass()==AddDebtActivity.class){
-			setAmount(((AddDebtActivity)getActivity()).getAmount());
-			setSelectedFriends(((AddDebtActivity)getActivity()).getSelectedFriends());
-		} else {
-			setAmount(((EditDebtActivity)getActivity()).getAmount());
-			setSelectedFriends(((EditDebtActivity)getActivity()).getSelectedFriends());
+		if (SettingsFragment.getDebtHistoryColourPreference(getActivity()) == SettingsFragment.DEBTHISTORY_GREEN_RED)
+		{
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.darkred_debt);
+		}
+		else
+		{
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
+		}
+		mNeutralColor = getActivity().getResources().getColor(R.color.main_background_slightlyDarker);
+
+		int numberOfPeople = ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size();
+		if (numberOfPeople < 2)
+		{
 			mSplitEvenly.setVisibility(CheckBox.INVISIBLE);
 		}
-	}
-
-	private void setOweStatusColour(boolean isNegative){
-		if(!isNegative){
-			mTheyOweMe.setBackgroundColor(getActivity().getResources().getColor(mTheyOweMeColour));
-			mIOweThem.setBackgroundColor(getActivity().getResources().getColor(R.color.main_background_slightlyDarker));
-		} else {
-			mTheyOweMe.setBackgroundColor(getActivity().getResources().getColor(R.color.main_background_slightlyDarker));
-			mIOweThem.setBackgroundColor(getActivity().getResources().getColor(mIOweThemColour));
+		if (mNamesTxt != null)
+		{
+			mNamesTxt.setText(((DebtActivity)getActivity()).getDebtBuilder().getNamesList(false).trim());
 		}
-	}
 
-	public void setAmount(BigDecimal amount){
-		this.mAmount = amount;
-		if(mAmount.compareTo(BigDecimal.ZERO)<0){
-			isNegative = true;
-		} else {
-			isNegative = false;
+		// Set images for the contact photos
+		ArrayList<String> availableImages = ((DebtActivity)getActivity()).getDebtBuilder().getAvailableImageUris();
+
+		try
+		{
+			ImageLoader.getInstance().displayImage(availableImages.get(0), mHeaderPic, Application.getImageOptions());
 		}
-		setOweStatusColour(isNegative);
-		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity())+mAmount.toString());
-	}
-
-	public void setSelectedFriends(ArrayList<Friend> friends){
-		this.mSelectedFriends = friends;
-		if(mSelectedFriends!=null && mSelectedFriends.size()>=1){
-			new RetrieveContactPhoto(mSelectedFriends.get(0).getLookupURI(), mHeaderPic, 
-					getActivity(), R.drawable.friend_image_dark).execute();
-			if(mSelectedFriends.size()==1){
-				mNamesTxt.setText(mSelectedFriends.get(0).getName());
-				mSplitEvenly.setText("Split amount evenly between us");
+		catch (IndexOutOfBoundsException e)
+		{
+			mHeaderPic.setImageResource(R.drawable.friend_image_light);
+		}
+		if (numberOfPeople >= 2)
+		{
+			mHeaderPic2.setVisibility(View.VISIBLE);
+			try
+			{
+				ImageLoader.getInstance().displayImage(availableImages.get(1), mHeaderPic2, Application.getImageOptions());
 			}
-			else if(mSelectedFriends.size()==2){
-				mSplitEvenly.setVisibility(CheckBox.VISIBLE);
-				mNamesTxt.setText(mSelectedFriends.get(0).getName()+
-						",\n"+mSelectedFriends.get(1).getName());
-				mSplitEvenly.setText("Split amount evenly between everyone");
-			} else {
-				mSplitEvenly.setVisibility(CheckBox.VISIBLE);
-				mNamesTxt.setText(mSelectedFriends.get(0).getName()+
-						",\nand "+Integer.toString(mSelectedFriends.size()-1)+" more");
-				mSplitEvenly.setText("Split amount evenly between everyone");
+			catch (IndexOutOfBoundsException e)
+			{
+				mHeaderPic2.setImageResource(R.drawable.friend_image_light);
 			}
 		}
+		if (numberOfPeople >= 3)
+		{
+			mHeaderPic3.setVisibility(View.VISIBLE);
+			try
+			{
+				ImageLoader.getInstance().displayImage(availableImages.get(2), mHeaderPic3, Application.getImageOptions());
+			}
+			catch (IndexOutOfBoundsException e)
+			{
+				mHeaderPic3.setImageResource(R.drawable.friend_image_light);
+			}
+		}
+		if (numberOfPeople > 3)
+		{
+			mOverflowText.setVisibility(View.VISIBLE);
+			mOverflowText.setText("+" + Integer.toString(numberOfPeople - 3) + "\nmore");
+		}
+
+		mAmountTxt.setText(SettingsFragment.getCurrencySymbol(getActivity()) + ((DebtActivity)getActivity()).getDebtBuilder().getAmount().toString());
+		setOweStatusColour(((DebtActivity)getActivity()).getDebtBuilder().isInDebtToMe());
 	}
 
-	public boolean isSplitEvenly(){
-		return mSplitEvenly.isChecked();
-	}
-
-	public boolean isIncludingMe(){
-		return mInclMe.isChecked();
-	}
-
-	/**
-	 * @return true if the user specifies that they owe the other party(s)
-	 */
-	public boolean isNegative(){
-		return isNegative;
-	}
-
-	public String getDescription(){
-		return mDescriptionField.getText().toString();
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.fragment_debtsummary_iOweThem:
-			isNegative = true;
-			Log.i(TAG,"I-Owe-Them button pressed");
-			setOweStatusColour(isNegative);
-			break;
-
-		case R.id.fragment_debtsummary_theyOweMe:
-			isNegative = false;
-			Log.i(TAG,"They-Owe-Me button pressed");
-			setOweStatusColour(isNegative);
-			break;
-
-		default:
-			break;
+	private void setOweStatusColour(boolean isInDebtToMe)
+	{
+		if (isInDebtToMe)
+		{
+			mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
+			mIOweThem.setBackgroundColor(mNeutralColor);
+		}
+		else
+		{
+			mTheyOweMe.setBackgroundColor(mNeutralColor);
+			mIOweThem.setBackgroundColor(mIOweThemColour);
 		}
 	}
 
 	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if(buttonView.getId()==R.id.fragment_debtsummary_splitAmount && mSelectedFriends.size()>1){
-			if(isChecked){
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.i_owe_them:
+				((DebtActivity)getActivity()).getDebtBuilder().setInDebtToMe(false);
+				setOweStatusColour(false);
+				break;
+
+			case R.id.they_owe_me:
+				((DebtActivity)getActivity()).getDebtBuilder().setInDebtToMe(true);
+				setOweStatusColour(true);
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+	{
+		if (buttonView.getId() == R.id.split_amount)
+		{
+			((DebtActivity)getActivity()).getDebtBuilder().setDistributedEvenly(isChecked);
+			if (isChecked)
+			{
 				mInclMe.setVisibility(CheckBox.VISIBLE);
-			} else {
+			}
+			else
+			{
 				mInclMe.setVisibility(CheckBox.INVISIBLE);
 			}
 		}
+		else if (buttonView.getId() == R.id.incl_me)
+		{
+			((DebtActivity)getActivity()).getDebtBuilder().setIncludingMe(isChecked);
+		}
+	}
+
+	@Override
+	public void saveFields()
+	{
+		((DebtActivity)getActivity()).getDebtBuilder().setDescription(mDescription.getText().toString());
 	}
 }

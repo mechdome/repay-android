@@ -1,17 +1,19 @@
 package com.repay.android;
 
-import com.repay.android.adddebt.*;
-import com.repay.android.settings.SettingsActivity;
-
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.repay.android.adddebt.AddDebtActivity;
+import com.repay.android.database.DatabaseHandler;
+import com.repay.android.model.Friend;
+import com.repay.android.settings.SettingsActivity;
+import com.repay.android.settings.SettingsFragment;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Property of Matt Allen
@@ -23,43 +25,27 @@ import android.view.MenuItem;
  *
  */
 
-public class MainActivity extends FragmentActivity {
-
-	private static final String		TAG = MainActivity.class.getName();
-	private Fragment 				mStartFr;
-	private FragmentTransaction 	mFragMan;
-	private final int 				mFrameLayout = R.id.start_fragmentframe;
+public class MainActivity extends Activity
+{
+	private DatabaseHandler			mDB;
+	private ArrayList<Friend>		mFriends;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// If the available screen size is that of an average tablet (as defined
-		// in the Android documentation) then allow the screen to rotate
-		if(getResources().getBoolean(R.bool.lock_orientation)){
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
-
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// Instantiate fragments
-		mStartFr = new StartFragment();
 		getActionBar().setDisplayShowTitleEnabled(false);
-		mFragMan = getSupportFragmentManager().beginTransaction();
-        if(savedInstanceState != null){
-            mFragMan.replace(mFrameLayout, mStartFr);
-        } else {
-            mFragMan.add(mFrameLayout, mStartFr);
-        }
-		mFragMan.commit();
+
+		mDB = new DatabaseHandler(this);
+
+		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new StartFragment()).commit();
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState)
+	{
 		super.onSaveInstanceState(outState);
 	}
 
@@ -74,32 +60,51 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 
-		case R.id.action_adddebt:
-			Intent intent = new Intent();
-			intent.setClass(this, AddDebtActivity.class);
-			startActivity(intent);
-			return true;
+			case R.id.action_adddebt:
+				Intent intent = new Intent();
+				intent.setClass(this, AddDebtActivity.class);
+				startActivity(intent);
+				return true;
 
-		case R.id.action_settings:
-			Intent intentSettings = new Intent();
-			intentSettings.setClass(this, SettingsActivity.class);
-			startActivity(intentSettings);
-			return true;
+			case R.id.action_settings:
+				Intent intentSettings = new Intent();
+				intentSettings.setClass(this, SettingsActivity.class);
+				startActivity(intentSettings);
+				return true;
 
-		case R.id.action_refresh:
-			((StartFragment)mStartFr).updateList();
-			return true;
-
-		case R.id.action_total:
-			((StartFragment)mStartFr).showTotalDialog();
-			return true;
-
-		case R.id.action_recalculateTotals:
-			Log.i(TAG, "Recalculating total debts...");
-			((StartFragment)mStartFr).recalculateTotals();
-			Log.i(TAG, "Finished recalculating debts");
-			return true;
+			default:
+				return false;
 		}
-		return false;
+	}
+
+	public ArrayList<Friend> getFriends()
+	{
+		return mFriends;
+	}
+
+	public void updateFriends()
+	{
+		for (Friend friend : mFriends)
+		{
+			mDB.updateFriendRecord(friend);
+		}
+	}
+
+	public DatabaseHandler getDB()
+	{
+		return mDB;
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		mFriends = mDB.getAllFriends();
+		// Sort the list
+		Collections.sort(mFriends);
+		if(SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
+		{
+			Collections.reverse(mFriends);
+		}
 	}
 }

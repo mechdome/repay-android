@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <bool name="lock_orientation">false</bool>
-    <bool name="use_tabView">false</bool>
-    <bool name="addDebt_longNameList">true</bool>
-</resources>

@@ -2,7 +2,7 @@
 
     <PreferenceCategory android:title="@string/settings_general_title" >
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="4"
             android:entries="@array/settings_general_currency_keys"
             android:entryValues="@array/settings_general_currency_values"
             android:key="currencies_list"
