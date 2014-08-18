@@ -139,11 +139,11 @@ public class DebtBuilder implements Serializable
 			}
 			else
 			{
-				for (int i=0; i <= 7; i++)
+				for (int i=0; i <= 5; i++)
 				{
 					name += mSelectedFriends.get(i).getName() + "\n";
 				}
-				if (mSelectedFriends.size() > 7)
+				if (mSelectedFriends.size() > 5)
 				{
 					name += "and more...";
 				}
