@@ -22,7 +22,6 @@ import java.util.Collections;
  *
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
 public class MainActivity extends Activity

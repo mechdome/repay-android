@@ -247,7 +247,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Cursor c = db.query(Names.D_TABLENAME, new String[]{Names.D_DEBTID, Names.D_DATE, Names.D_AMOUNT, Names.D_DESCRIPTION},
 				Names.D_REPAYID+"=?", new String[]{repayID}, null, null, null);
 
-		if(c!=null){
+		if(c != null && c.getCount() > 0){
 			c.moveToFirst();
 			debts = new ArrayList<Debt>();
 			do{

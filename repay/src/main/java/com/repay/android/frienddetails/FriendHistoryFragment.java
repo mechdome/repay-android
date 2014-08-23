@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.repay.android.R;
 import com.repay.android.adddebt.DebtActivity;
 import com.repay.android.adddebt.EditDebtActivity;
-import com.repay.android.database.DatabaseHandler;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 
@@ -68,7 +66,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 	{
 		final Debt debt = (Debt) view.getTag();
 		AlertDialog.Builder chooseDialog = new AlertDialog.Builder(getActivity());
-		chooseDialog.setTitle("Edit Or Delete?");
+		chooseDialog.setTitle(R.string.manage_debt);
 		chooseDialog.setItems(R.array.debtselected_items, new DialogInterface.OnClickListener()
 		{
 			@Override
@@ -139,7 +137,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 			// It's more accurate this way
 			ArrayList<Debt> allDebts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(((FriendActivity) getActivity()).getFriend().getRepayID());
 			BigDecimal newAmount = new BigDecimal("0");
-			if (allDebts != null && allDebts.size() != 0)
+			if (allDebts != null && allDebts.size() > 0)
 			{
 				for (int i = 0; i <= allDebts.size() - 1; i++)
 				{
@@ -147,6 +145,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 				}
 			}
 
+			((FriendActivity) getActivity()).getFriend().setDebt(newAmount);
 			((FriendActivity) getActivity()).getDB().updateFriendRecord(((FriendActivity) getActivity()).getFriend());
 		}
 		catch (Exception e)

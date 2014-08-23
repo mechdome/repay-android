@@ -35,7 +35,7 @@ public class RoundedImageView extends ImageView {
 	public RoundedImageView(Context context, AttributeSet attrs)
 	{
 	    super(context, attrs);
-		mBackgroundPaint = new Paint();
+		mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mBackgroundPaint.setColor(bgPaint);
 		mBackgroundPaint.setStyle(Paint.Style.FILL);
 	}
