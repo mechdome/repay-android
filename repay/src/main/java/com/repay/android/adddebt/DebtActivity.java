@@ -80,9 +80,13 @@ public abstract class DebtActivity extends Activity
 	{
 		if (isEditing)
 		{
+			// Subtract the old amount
+			mFriend.setDebt(mFriend.getDebt().subtract(mDebt.getAmount()));
+			// Get the newly entered data
 			mDebt.setAmount(mBuilder.getAmountToApply());
 			mDebt.setDescription(mBuilder.getDescription());
 			mDB.updateDebt(mDebt);
+			// Add the new amount
 			mFriend.setDebt(mFriend.getDebt().add(mDebt.getAmount()));
 			mDB.updateFriendRecord(mFriend);
 			finish();
