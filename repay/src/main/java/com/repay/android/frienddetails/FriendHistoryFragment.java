@@ -139,7 +139,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 			// It's more accurate this way
 			ArrayList<Debt> allDebts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(((FriendActivity) getActivity()).getFriend().getRepayID());
 			BigDecimal newAmount = new BigDecimal("0");
-			if (allDebts != null && allDebts.size() != 0)
+			if (allDebts != null && allDebts.size() > 0)
 			{
 				for (int i = 0; i <= allDebts.size() - 1; i++)
 				{
@@ -147,6 +147,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 				}
 			}
 
+			((FriendActivity) getActivity()).getFriend().setDebt(newAmount);
 			((FriendActivity) getActivity()).getDB().updateFriendRecord(((FriendActivity) getActivity()).getFriend());
 		}
 		catch (Exception e)
