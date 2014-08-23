@@ -13,7 +13,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_debthistory_title" >
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="4"
             android:entries="@array/settings_dateformat_keys"
             android:entryValues="@array/settings_dateformat_values"
             android:key="dateformat_list"
