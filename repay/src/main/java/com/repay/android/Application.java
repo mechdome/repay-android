@@ -6,6 +6,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.repay.android.images.download.MyImageDownloader;
 
 /**
  * Created by Matt Allen
@@ -34,7 +35,7 @@ public class Application extends android.app.Application {
 				.showImageOnLoading(R.drawable.friend_image_light)
 				.showImageForEmptyUri(R.drawable.friend_image_light)
 				.build();
-		mLoadConfig = new ImageLoaderConfiguration.Builder(this).build();
+		mLoadConfig = new ImageLoaderConfiguration.Builder(this).imageDownloader(new MyImageDownloader(this)).build();
 		ImageLoader.getInstance().init(mLoadConfig);
 	}
 
