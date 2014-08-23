@@ -159,7 +159,24 @@ public class StartFragment extends Fragment implements OnItemClickListener
 	public void showTotalDialog()
 	{
 		View v = LayoutInflater.from(getActivity()).inflate(R.layout.total_dialog, null, false);
-		((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
+		BigDecimal totalAmount = calculateTotalDebt();
+
+		if (totalAmount.compareTo(BigDecimal.ZERO) == 1)
+		{
+			((TextView)v.findViewById(R.id.title)).setText(R.string.youre_owed);
+			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
+		}
+		else if (totalAmount.compareTo(BigDecimal.ZERO) == 0)
+		{
+			((TextView)v.findViewById(R.id.title)).setText(R.string.even_debt);
+			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
+		}
+		else if (totalAmount.compareTo(BigDecimal.ZERO) == -1)
+		{
+			((TextView)v.findViewById(R.id.title)).setText(R.string.i_owe);
+			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().negate().toString());
+		}
+
 		new Builder(getActivity()).setView(v).setPositiveButton(R.string.close, null).show();
 	}
 

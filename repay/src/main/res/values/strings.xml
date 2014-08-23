@@ -43,5 +43,7 @@
 	<string name="friend_could_not_be_added">Friend could not be added</string>
 	<string name="enter_name">Enter Their Name</string>
 	<string name="please_enter_name">Please Enter A Name</string>
+	<string name="manage_debt">Manage Debt</string>
+	<string name="youre_owed">You\'re Owed</string>
 
 </resources>
