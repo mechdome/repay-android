@@ -36,7 +36,6 @@ public class AddDebtActivity extends DebtActivity
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
-		getActionBar().setSubtitle(R.string.choose_people);
 		setContentView(R.layout.activity_adddebt);
 
 		mFrame = R.id.activity_adddebt_framelayout;

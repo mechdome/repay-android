@@ -182,6 +182,10 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
+
+		getActivity().getActionBar().setTitle(R.string.title_activity_add_debt);
+		getActivity().getActionBar().setSubtitle(R.string.choose_people);
+
 		mListView = (ListView)getView().findViewById(R.id.activity_friendchooser_list);
 		mListView.setOnItemClickListener(this);
 
