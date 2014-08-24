@@ -19,10 +19,10 @@ import java.util.ArrayList;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
+ * <p/>
  * Adapter for displaying the history of debts
  */
 
@@ -32,7 +32,8 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 	private ArrayList<Debt> debts;
 	private Context context;
 
-	public FriendHistoryAdapter(Context context, int layoutId, ArrayList<Debt> debts) {
+	public FriendHistoryAdapter(Context context, int layoutId, ArrayList<Debt> debts)
+	{
 		super(context, layoutId, debts);
 		this.layoutId = layoutId;
 		this.debts = debts;
@@ -40,16 +41,17 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		View v = convertView;
-		if(v == null)
+		if (v == null)
 		{
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(layoutId, null);
 		}
 		Debt debt = debts.get(position);
 
-		if(debt!=null)
+		if (debt != null)
 		{
 			v.setTag(debt);
 			TextView description = (TextView)v.findViewById(R.id.fragment_debthistory_list_description);
@@ -57,9 +59,9 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 			TextView dateTxt = (TextView)v.findViewById(R.id.fragment_debthistory_list_date);
 			ImageView icon = (ImageView)v.findViewById(R.id.fragment_debthistory_list_icon);
 
-			if (debt.getAmount().compareTo(BigDecimal.ZERO)<0)
+			if (debt.getAmount().compareTo(BigDecimal.ZERO) < 0)
 			{
-				if(SettingsFragment.getDebtHistoryColourPreference(context)==SettingsFragment.DEBTHISTORY_GREEN_BLUE)
+				if (SettingsFragment.getDebtHistoryColourPreference(context) == SettingsFragment.DEBTHISTORY_GREEN_BLUE)
 				{
 					icon.setImageResource(R.drawable.debt_ind_blue);
 				}
@@ -68,17 +70,17 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 					icon.setImageResource(R.drawable.debt_ind_red);
 				}
 				//debt.setAmount(debt.getAmount().negate()); // For it to show up without the minus in front of it **Makes Green on recycle. Substr instead**
-				StringBuilder sb = new StringBuilder(SettingsFragment.getCurrencySymbol(context)+SettingsFragment.getFormattedAmount(debt.getAmount()));
+				StringBuilder sb = new StringBuilder(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
 				sb.deleteCharAt(1);
 				amount.setText(sb.toString());
 			}
-			else if (debt.getAmount().compareTo(BigDecimal.ZERO)>=0)
+			else if (debt.getAmount().compareTo(BigDecimal.ZERO) >= 0)
 			{
-				amount.setText(SettingsFragment.getCurrencySymbol(context)+SettingsFragment.getFormattedAmount(debt.getAmount()));
+				amount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
 				icon.setImageResource(R.drawable.debt_ind_green);
 			}
 			description.setText(debt.getDescription());
-			if(debt.getDescription().equals(""))
+			if (debt.getDescription().equals(""))
 			{
 				description.setText("No Description");
 			}

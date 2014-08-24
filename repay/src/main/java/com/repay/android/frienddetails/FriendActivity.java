@@ -56,14 +56,14 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
 
 		mOverViewFrag = new FriendOverviewFragment();
 		mDebtHistoryFrag = new FriendHistoryFragment();
 
 		if (findViewById(R.id.activity_frienddetails_tabView) != null)
 		{
-			mTabView = (ViewPager) findViewById(R.id.activity_frienddetails_tabView);
+			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
 			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new FriendFragment[]{mOverViewFrag, mDebtHistoryFrag});
 			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -211,15 +211,14 @@ public class FriendActivity extends Activity implements View.OnClickListener
 				return true;
 
 			case R.id.action_info:
-				new AlertDialog.Builder(this).setTitle(R.string.info).setMessage(R.string.info_dialog_text)
-						.setPositiveButton(R.string.okay, new OnClickListener()
-						{
-							@Override
-							public void onClick(DialogInterface dialog, int which)
-							{
-								dialog.dismiss();
-							}
-						}).show();
+				new AlertDialog.Builder(this).setTitle(R.string.info).setMessage(R.string.info_dialog_text).setPositiveButton(R.string.okay, new OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						dialog.dismiss();
+					}
+				}).show();
 				return true;
 
 			case R.id.action_addDebt:
@@ -259,11 +258,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 					mDB.addDebt(mFriend.getRepayID(), debtRepayed, "Repaid");
 					mFriend.setDebt(mFriend.getDebt().add(debtRepayed));
 					mDB.updateFriendRecord(mFriend);
-					Toast.makeText(
-							getApplicationContext(),
-							"Debt of " + SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString() + " cleared",
-							Toast.LENGTH_SHORT
-					).show();
+					Toast.makeText(getApplicationContext(), "Debt of " + SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString() + " cleared", Toast.LENGTH_SHORT).show();
 					finish();
 				}
 				catch (Throwable e)
@@ -393,8 +388,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 				view.setTranslationX(pageWidth * -position);
 
 				// Scale the page down (between MIN_SCALE and 1)
-				float scaleFactor = MIN_SCALE
-						+ (1 - MIN_SCALE) * (1 - Math.abs(position));
+				float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
 				view.setScaleX(scaleFactor);
 				view.setScaleY(scaleFactor);
 

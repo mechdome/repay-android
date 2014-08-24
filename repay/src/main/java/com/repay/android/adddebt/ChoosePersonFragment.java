@@ -103,7 +103,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				String name = ((EditText) v.findViewById(R.id.name_entry)).getText().toString();
+				String name = ((EditText)v.findViewById(R.id.name_entry)).getText().toString();
 				try
 				{
 					if (!TextUtils.isEmpty(name))
@@ -114,7 +114,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 					}
 					else
 					{
-						((EditText) v.findViewById(R.id.name_entry)).setError(getActivity().getResources().getString(R.string.please_enter_name));
+						((EditText)v.findViewById(R.id.name_entry)).setError(getActivity().getResources().getString(R.string.please_enter_name));
 					}
 				}
 				catch (SQLException e)

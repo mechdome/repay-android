@@ -39,25 +39,32 @@ public class DebtBuilder implements Serializable
 		mDescription = description;
 	}
 
-	public boolean isInDebtToMe() {
+	public boolean isInDebtToMe()
+	{
 		return owesMe;
 	}
 
-	public void setInDebtToMe(boolean owesMe) {
+	public void setInDebtToMe(boolean owesMe)
+	{
 		this.owesMe = owesMe;
 	}
 
-	public boolean isDistributedEvenly() {
+	public boolean isDistributedEvenly()
+	{
 		return distributeEvenly;
 	}
 
-	public void setDistributedEvenly(boolean distributeEvenly) {
+	public void setDistributedEvenly(boolean distributeEvenly)
+	{
 		this.distributeEvenly = distributeEvenly;
 	}
 
 	public Date getDate()
 	{
-		if (mDate == null) mDate = new Date();
+		if (mDate == null)
+		{
+			mDate = new Date();
+		}
 		return mDate;
 	}
 
@@ -66,25 +73,32 @@ public class DebtBuilder implements Serializable
 		mDate = date;
 	}
 
-	public boolean isIncludingMe() {
+	public boolean isIncludingMe()
+	{
 		return includingMe;
 	}
 
-	public void setIncludingMe(boolean includingMe) {
+	public void setIncludingMe(boolean includingMe)
+	{
 		this.includingMe = includingMe;
 	}
 
-	public ArrayList<Friend> getSelectedFriends() {
+	public ArrayList<Friend> getSelectedFriends()
+	{
 		return mSelectedFriends;
 	}
 
-	public void setSelectedFriends(ArrayList<Friend> selectedFriends) {
+	public void setSelectedFriends(ArrayList<Friend> selectedFriends)
+	{
 		this.mSelectedFriends = selectedFriends;
 	}
 
 	public void addSelectedFriend(Friend friend)
 	{
-		if (!mSelectedFriends.contains(friend)) mSelectedFriends.add(friend);
+		if (!mSelectedFriends.contains(friend))
+		{
+			mSelectedFriends.add(friend);
+		}
 	}
 
 	public void removeSelectedFriend(Friend friend)
@@ -92,11 +106,13 @@ public class DebtBuilder implements Serializable
 		mSelectedFriends.remove(friend);
 	}
 
-	public BigDecimal getAmount() {
+	public BigDecimal getAmount()
+	{
 		return mAmount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(BigDecimal amount)
+	{
 		this.mAmount = amount;
 	}
 
@@ -131,7 +147,7 @@ public class DebtBuilder implements Serializable
 		{
 			if (shortened)
 			{
-				for (int i=0; i <= 2; i++)
+				for (int i = 0; i <= 2; i++)
 				{
 					name += mSelectedFriends.get(i).getName() + "\n";
 				}
@@ -139,7 +155,7 @@ public class DebtBuilder implements Serializable
 			}
 			else
 			{
-				for (int i=0; i <= 5; i++)
+				for (int i = 0; i <= 5; i++)
 				{
 					name += mSelectedFriends.get(i).getName() + "\n";
 				}
@@ -154,6 +170,7 @@ public class DebtBuilder implements Serializable
 
 	/**
 	 * Create a list of all new debts to add into the database
+	 *
 	 * @return A list of debts that can be iterated through
 	 */
 	public List<Debt> getNewDebts()
@@ -170,6 +187,7 @@ public class DebtBuilder implements Serializable
 
 	/**
 	 * Quickly get the amount that will be applied to each person
+	 *
 	 * @return {@link java.math.BigDecimal} representation of the amount
 	 */
 	public BigDecimal getAmountToApply()
@@ -190,7 +208,10 @@ public class DebtBuilder implements Serializable
 		{
 			debtAmount = mAmount;
 		}
-		if (!owesMe) debtAmount = debtAmount.negate();
+		if (!owesMe)
+		{
+			debtAmount = debtAmount.negate();
+		}
 		return debtAmount;
 	}
 

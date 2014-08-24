@@ -47,14 +47,22 @@ import java.net.URL;
  */
 public class MyImageDownloader implements ImageDownloader
 {
-	/** {@value} */
+	/**
+	 * {@value}
+	 */
 	public static final int DEFAULT_HTTP_CONNECT_TIMEOUT = 5 * 1000; // milliseconds
-	/** {@value} */
+	/**
+	 * {@value}
+	 */
 	public static final int DEFAULT_HTTP_READ_TIMEOUT = 20 * 1000; // milliseconds
 
-	/** {@value} */
+	/**
+	 * {@value}
+	 */
 	protected static final int BUFFER_SIZE = 32 * 1024; // 32 Kb
-	/** {@value} */
+	/**
+	 * {@value}
+	 */
 	protected static final String ALLOWED_URI_CHARS = "@#&=*+-_.,:!?()/~'%";
 
 	protected static final int MAX_REDIRECT_COUNT = 5;
@@ -67,21 +75,25 @@ public class MyImageDownloader implements ImageDownloader
 	protected final int connectTimeout;
 	protected final int readTimeout;
 
-	public MyImageDownloader(Context context) {
+	public MyImageDownloader(Context context)
+	{
 		this.context = context.getApplicationContext();
 		this.connectTimeout = DEFAULT_HTTP_CONNECT_TIMEOUT;
 		this.readTimeout = DEFAULT_HTTP_READ_TIMEOUT;
 	}
 
-	public MyImageDownloader(Context context, int connectTimeout, int readTimeout) {
+	public MyImageDownloader(Context context, int connectTimeout, int readTimeout)
+	{
 		this.context = context.getApplicationContext();
 		this.connectTimeout = connectTimeout;
 		this.readTimeout = readTimeout;
 	}
 
 	@Override
-	public InputStream getStream(String imageUri, Object extra) throws IOException {
-		switch (Scheme.ofUri(imageUri)) {
+	public InputStream getStream(String imageUri, Object extra) throws IOException
+	{
+		switch (Scheme.ofUri(imageUri))
+		{
 			case HTTP:
 			case HTTPS:
 				return getStreamFromNetwork(imageUri, extra);
@@ -103,25 +115,32 @@ public class MyImageDownloader implements ImageDownloader
 	 * Retrieves {@link java.io.InputStream} of image by URI (image is located in the network).
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
+	 *
 	 * @throws java.io.IOException if some I/O error occurs during network request or if no InputStream could be created for
-	 *                     URL.
+	 * URL.
 	 */
-	protected InputStream getStreamFromNetwork(String imageUri, Object extra) throws IOException {
+	protected InputStream getStreamFromNetwork(String imageUri, Object extra) throws IOException
+	{
 		HttpURLConnection conn = createConnection(imageUri, extra);
 
 		int redirectCount = 0;
-		while (conn.getResponseCode() / 100 == 3 && redirectCount < MAX_REDIRECT_COUNT) {
+		while (conn.getResponseCode() / 100 == 3 && redirectCount < MAX_REDIRECT_COUNT)
+		{
 			conn = createConnection(conn.getHeaderField("Location"), extra);
 			redirectCount++;
 		}
 
 		InputStream imageStream;
-		try {
+		try
+		{
 			imageStream = conn.getInputStream();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// Read all data to allow reuse connection (http://bit.ly/1ad35PY)
 			IoUtils.readAndCloseStream(conn.getErrorStream());
 			throw e;
@@ -132,16 +151,19 @@ public class MyImageDownloader implements ImageDownloader
 	/**
 	 * Create {@linkplain java.net.HttpURLConnection HTTP connection} for incoming URL
 	 *
-	 * @param url   URL to connect to
+	 * @param url URL to connect to
 	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *              DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@linkplain java.net.HttpURLConnection Connection} for incoming URL. Connection isn't established so it still configurable.
+	 *
 	 * @throws java.io.IOException if some I/O error occurs during network request or if no InputStream could be created for
-	 *                     URL.
+	 * URL.
 	 */
-	protected HttpURLConnection createConnection(String url, Object extra) throws IOException {
+	protected HttpURLConnection createConnection(String url, Object extra) throws IOException
+	{
 		String encodedUrl = Uri.encode(url, ALLOWED_URI_CHARS);
-		HttpURLConnection conn = (HttpURLConnection) new URL(encodedUrl).openConnection();
+		HttpURLConnection conn = (HttpURLConnection)new URL(encodedUrl).openConnection();
 		conn.setConnectTimeout(connectTimeout);
 		conn.setReadTimeout(readTimeout);
 		return conn;
@@ -151,40 +173,48 @@ public class MyImageDownloader implements ImageDownloader
 	 * Retrieves {@link java.io.InputStream} of image by URI (image is located on the local file system or SD card).
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
+	 *
 	 * @throws java.io.IOException if some I/O error occurs reading from file system
 	 */
-	protected InputStream getStreamFromFile(String imageUri, Object extra) throws IOException {
+	protected InputStream getStreamFromFile(String imageUri, Object extra) throws IOException
+	{
 		String filePath = Scheme.FILE.crop(imageUri);
-		return new ContentLengthInputStream(new BufferedInputStream(new FileInputStream(filePath), BUFFER_SIZE),
-				(int) new File(filePath).length());
+		return new ContentLengthInputStream(new BufferedInputStream(new FileInputStream(filePath), BUFFER_SIZE), (int)new File(filePath).length());
 	}
 
 	/**
 	 * Retrieves {@link java.io.InputStream} of image by URI (image is accessed using {@link android.content.ContentResolver}).
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
+	 *
 	 * @throws java.io.FileNotFoundException if the provided URI could not be opened
 	 */
-	protected InputStream getStreamFromContent(String imageUri, Object extra) throws FileNotFoundException {
+	protected InputStream getStreamFromContent(String imageUri, Object extra) throws FileNotFoundException
+	{
 		ContentResolver res = context.getContentResolver();
 
 		Uri uri = Uri.parse(imageUri);
-		if (isVideoUri(uri)) { // video thumbnail
+		if (isVideoUri(uri))
+		{ // video thumbnail
 			Long origId = Long.valueOf(uri.getLastPathSegment());
-			Bitmap bitmap = MediaStore.Video.Thumbnails
-					.getThumbnail(res, origId, MediaStore.Images.Thumbnails.MINI_KIND, null);
-			if (bitmap != null) {
+			Bitmap bitmap = MediaStore.Video.Thumbnails.getThumbnail(res, origId, MediaStore.Images.Thumbnails.MINI_KIND, null);
+			if (bitmap != null)
+			{
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				bitmap.compress(CompressFormat.PNG, 0, bos);
 				return new ByteArrayInputStream(bos.toByteArray());
 			}
-		} else if (imageUri.startsWith(CONTENT_CONTACTS_URI_PREFIX)) { // contacts photo
+		}
+		else if (imageUri.startsWith(CONTENT_CONTACTS_URI_PREFIX))
+		{ // contacts photo
 			return ContactsContract.Contacts.openContactPhotoInputStream(res, uri, true);
 		}
 
@@ -195,12 +225,15 @@ public class MyImageDownloader implements ImageDownloader
 	 * Retrieves {@link java.io.InputStream} of image by URI (image is located in assets of application).
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
+	 *
 	 * @throws java.io.IOException if some I/O error occurs file reading
 	 */
-	protected InputStream getStreamFromAssets(String imageUri, Object extra) throws IOException {
+	protected InputStream getStreamFromAssets(String imageUri, Object extra) throws IOException
+	{
 		String filePath = Scheme.ASSETS.crop(imageUri);
 		return context.getAssets().open(filePath);
 	}
@@ -209,11 +242,13 @@ public class MyImageDownloader implements ImageDownloader
 	 * Retrieves {@link java.io.InputStream} of image by URI (image is located in drawable resources of application).
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
 	 */
-	protected InputStream getStreamFromDrawable(String imageUri, Object extra) {
+	protected InputStream getStreamFromDrawable(String imageUri, Object extra)
+	{
 		String drawableIdString = Scheme.DRAWABLE.crop(imageUri);
 		int drawableId = Integer.parseInt(drawableIdString);
 		return context.getResources().openRawResource(drawableId);
@@ -226,20 +261,25 @@ public class MyImageDownloader implements ImageDownloader
 	 * default.
 	 *
 	 * @param imageUri Image URI
-	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
+	 *
 	 * @return {@link java.io.InputStream} of image
-	 * @throws java.io.IOException                   if some I/O error occurs
+	 *
+	 * @throws java.io.IOException if some I/O error occurs
 	 * @throws UnsupportedOperationException if image URI has unsupported scheme(protocol)
 	 */
-	protected InputStream getStreamFromOtherSource(String imageUri, Object extra) throws IOException {
+	protected InputStream getStreamFromOtherSource(String imageUri, Object extra) throws IOException
+	{
 		throw new UnsupportedOperationException(String.format(ERROR_UNSUPPORTED_SCHEME, imageUri));
 	}
 
-	private boolean isVideoUri(Uri uri) {
+	private boolean isVideoUri(Uri uri)
+	{
 		String mimeType = context.getContentResolver().getType(uri);
 
-		if (mimeType == null) {
+		if (mimeType == null)
+		{
 			return false;
 		}
 

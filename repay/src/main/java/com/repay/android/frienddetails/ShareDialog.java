@@ -1,11 +1,5 @@
 package com.repay.android.frienddetails;
 
-import java.util.HashMap;
-
-import com.repay.android.ContactsContractHelper;
-import com.repay.android.model.Friend;
-import com.repay.android.SendMail;
-
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,25 +8,32 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.repay.android.ContactsContractHelper;
+import com.repay.android.SendMail;
+import com.repay.android.model.Friend;
+
+import java.util.HashMap;
+
 /**
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
- *
  */
 
-public class ShareDialog extends Builder implements OnClickListener {
+public class ShareDialog extends Builder implements OnClickListener
+{
 
-	private static final String					TAG = ShareDialog.class.getName();
+	private static final String TAG = ShareDialog.class.getName();
 
-	private HashMap<String, String> 			mEmails, mPhoneNums;
-	private Friend								mFriend;
-	private Context								mContext;
+	private HashMap<String, String> mEmails, mPhoneNums;
+	private Friend mFriend;
+	private Context mContext;
 
-	public ShareDialog(Context context, Friend friend) {
+	public ShareDialog(Context context, Friend friend)
+	{
 		super(context);
 		mContext = context;
 		mFriend = friend;
@@ -51,21 +52,30 @@ public class ShareDialog extends Builder implements OnClickListener {
 	 * Android does a reverse lookup in the contacts book automatically
 	 */
 	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		if(which==0){
-			Log.i(TAG,"SMS Selected");
-			if(mPhoneNums.size()>=1){
+	public void onClick(DialogInterface dialog, int which)
+	{
+		if (which == 0)
+		{
+			Log.i(TAG, "SMS Selected");
+			if (mPhoneNums.size() >= 1)
+			{
 				SendMail.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mFriend.getDebt());
-			} else {
-				Toast.makeText(mContext, "No Numbers Found For "+mFriend.getName(), Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(mContext, "No Numbers Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
 			}
 		}
-		else if(which==1){
+		else if (which == 1)
+		{
 			Log.i(TAG, "Email Selected");
-			if(mEmails.size()>=1){
+			if (mEmails.size() >= 1)
+			{
 				SendMail.emailFriend(mContext, mFriend.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
-			} else {
-				Toast.makeText(mContext, "No Email Addresses Found For "+mFriend.getName(), Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(mContext, "No Email Addresses Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

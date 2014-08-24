@@ -3,25 +3,26 @@ package com.repay.android.frienddetails;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentPagerAdapter
+{
 
 	private FriendFragment[] mFragments;
 
 	public TabPagerAdapter(FragmentManager fm, FriendFragment[] fragments)
 	{
-    	super(fm);
+		super(fm);
 		mFragments = fragments;
-    }
+	}
 
-    @Override
-    public int getCount()
+	@Override
+	public int getCount()
 	{
-        return mFragments.length;
-    }
+		return mFragments.length;
+	}
 
-    @Override
-    public FriendFragment getItem(int position)
+	@Override
+	public FriendFragment getItem(int position)
 	{
-        return mFragments[position];
-    }
+		return mFragments[position];
+	}
 }

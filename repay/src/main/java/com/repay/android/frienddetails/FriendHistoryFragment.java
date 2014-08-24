@@ -54,17 +54,17 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		mList = (ListView) getView().findViewById(R.id.fragment_debtHistory_list);
+		mList = (ListView)getView().findViewById(R.id.fragment_debtHistory_list);
 		mList.setOnItemLongClickListener(this);
-		mNoDebtsMsg = (TextView) getView().findViewById(R.id.fragment_debtHistory_noDebts);
-		mProgressBar = (ProgressBar) getView().findViewById(R.id.fragment_debtHistory_progress);
+		mNoDebtsMsg = (TextView)getView().findViewById(R.id.fragment_debtHistory_noDebts);
+		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_debtHistory_progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id)
 	{
-		final Debt debt = (Debt) view.getTag();
+		final Debt debt = (Debt)view.getTag();
 		AlertDialog.Builder chooseDialog = new AlertDialog.Builder(getActivity());
 		chooseDialog.setTitle(R.string.manage_debt);
 		chooseDialog.setItems(R.array.debtselected_items, new DialogInterface.OnClickListener()
@@ -76,7 +76,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 				{
 					Intent i = new Intent(getActivity(), EditDebtActivity.class);
 					i.putExtra(DebtActivity.DEBT, debt);
-					i.putExtra(DebtActivity.FRIEND, ((FriendActivity) getActivity()).getFriend());
+					i.putExtra(DebtActivity.FRIEND, ((FriendActivity)getActivity()).getFriend());
 					getActivity().startActivity(i);
 				}
 				else if (which == 1)
@@ -100,7 +100,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 			public void onClick(DialogInterface dialog, int which)
 			{
 				deleteDebtFromDatabase(debt);
-				((FriendActivity) getActivity()).updateFriend();
+				((FriendActivity)getActivity()).updateFriend();
 			}
 		});
 
@@ -113,7 +113,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 	{
 		super.onResume();
 
-		onFriendUpdated(((FriendActivity) getActivity()).getFriend());
+		onFriendUpdated(((FriendActivity)getActivity()).getFriend());
 	}
 
 	@Override
@@ -132,10 +132,10 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 	{
 		try
 		{
-			((FriendActivity) getActivity()).getDB().removeDebt(debtToDelete.getDebtID());
+			((FriendActivity)getActivity()).getDB().removeDebt(debtToDelete.getDebtID());
 			// Recalculate all the debts stored against this person's ID.
 			// It's more accurate this way
-			ArrayList<Debt> allDebts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(((FriendActivity) getActivity()).getFriend().getRepayID());
+			ArrayList<Debt> allDebts = ((FriendActivity)getActivity()).getDB().getDebtsByRepayID(((FriendActivity)getActivity()).getFriend().getRepayID());
 			BigDecimal newAmount = new BigDecimal("0");
 			if (allDebts != null && allDebts.size() > 0)
 			{
@@ -145,8 +145,8 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 				}
 			}
 
-			((FriendActivity) getActivity()).getFriend().setDebt(newAmount);
-			((FriendActivity) getActivity()).getDB().updateFriendRecord(((FriendActivity) getActivity()).getFriend());
+			((FriendActivity)getActivity()).getFriend().setDebt(newAmount);
+			((FriendActivity)getActivity()).getDB().updateFriendRecord(((FriendActivity)getActivity()).getFriend());
 		}
 		catch (Exception e)
 		{
@@ -176,7 +176,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 		{
 			try
 			{
-				ArrayList<Debt> debts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(params[0].getRepayID());
+				ArrayList<Debt> debts = ((FriendActivity)getActivity()).getDB().getDebtsByRepayID(params[0].getRepayID());
 				Collections.sort(debts);
 				return debts;
 			}
@@ -193,8 +193,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 			mProgressBar.setVisibility(ProgressBar.GONE);
 			if (result != null && result.size() > 0)
 			{
-				mAdapter = new FriendHistoryAdapter(getActivity(),
-						R.layout.fragment_debthistory_listitem, result);
+				mAdapter = new FriendHistoryAdapter(getActivity(), R.layout.fragment_debthistory_listitem, result);
 				mList.setAdapter(mAdapter);
 				mList.setVisibility(ListView.VISIBLE);
 			}

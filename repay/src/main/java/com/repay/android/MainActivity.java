@@ -19,15 +19,15 @@ import java.util.Collections;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class MainActivity extends Activity
 {
-	private DatabaseHandler			mDB;
-	private ArrayList<Friend>		mFriends;
+	private DatabaseHandler mDB;
+	private ArrayList<Friend> mFriends;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -49,15 +49,18 @@ public class MainActivity extends Activity
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
 
 			case R.id.action_adddebt:
 				Intent intent = new Intent();
@@ -101,7 +104,7 @@ public class MainActivity extends Activity
 		mFriends = mDB.getAllFriends();
 		// Sort the list
 		Collections.sort(mFriends);
-		if(SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
+		if (SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
 		{
 			Collections.reverse(mFriends);
 		}

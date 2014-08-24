@@ -16,20 +16,24 @@ import com.repay.android.settings.SettingsFragment;
  */
 public abstract class FriendFragment extends Fragment implements OnFriendUpdatedListener
 {
-	protected int		mTheyOweMeColour, mIOweThemColour;
+	protected int mTheyOweMeColour, mIOweThemColour, mNeutralColour;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		if(SettingsFragment.getDebtHistoryColourPreference(getActivity())==SettingsFragment.DEBTHISTORY_GREEN_RED){
+		if (SettingsFragment.getDebtHistoryColourPreference(getActivity()) == SettingsFragment.DEBTHISTORY_GREEN_RED)
+		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.red_debt);
-		} else {
+		}
+		else
+		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
 		}
+		mNeutralColour = getActivity().getResources().getColor(R.color.neutral_debt);
 	}
 
 	public abstract void onFriendUpdated(Friend friend);

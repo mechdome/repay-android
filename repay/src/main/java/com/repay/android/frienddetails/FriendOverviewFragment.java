@@ -36,6 +36,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	private RoundedImageView mFriendPic;
 	private TextView mTotalOwed, mTotalOwedPrefix;
 	private Button mShareBtn;
+	private boolean mUseNeutralColour;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -50,11 +51,13 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		mShareBtn = (Button) getView().findViewById(R.id.share);
-		mFriendPic = (RoundedImageView) getView().findViewById(R.id.friend_image);
-		mTotalOwed = (TextView) getView().findViewById(R.id.amount);
-		mTotalOwedPrefix = (TextView) getView().findViewById(R.id.owe_status);
+		mShareBtn = (Button)getView().findViewById(R.id.share);
+		mFriendPic = (RoundedImageView)getView().findViewById(R.id.friend_image);
+		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
+		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
 		mShareBtn.setOnClickListener(this);
+
+		mUseNeutralColour = SettingsFragment.isUsingNeutralColour(getActivity());
 
 		// Animate the UI into view
 		mFriendPic.setScaleX(0f);
@@ -72,9 +75,9 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		switch (v.getId())
 		{
 			case R.id.share:
-				if (((FriendActivity) getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) != 0)
+				if (((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) != 0)
 				{
-					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity) getActivity()).getFriend());
+					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity)getActivity()).getFriend());
 					shareDialog.show();
 				}
 				else
@@ -90,7 +93,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	{
 		super.onResume();
 
-		onFriendUpdated(((FriendActivity) getActivity()).getFriend());
+		onFriendUpdated(((FriendActivity)getActivity()).getFriend());
 	}
 
 	@Override
@@ -102,7 +105,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		{
 			mTotalOwedPrefix.setText(R.string.even_debt);
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + "0");
-			mFriendPic.setOuterColor(mTheyOweMeColour);
+			if (mUseNeutralColour) mFriendPic.setOuterColor(mNeutralColour); else mFriendPic.setOuterColor(mTheyOweMeColour);
 		}
 		else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{

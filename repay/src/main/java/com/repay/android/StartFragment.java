@@ -89,7 +89,7 @@ public class StartFragment extends Fragment implements OnItemClickListener
 				return true;
 
 			case R.id.action_recalculateTotals:
-				new RecalculateTotalDebts().execute(((MainActivity) getActivity()).getDB());
+				new RecalculateTotalDebts().execute(((MainActivity)getActivity()).getDB());
 
 			default:
 				return true;
