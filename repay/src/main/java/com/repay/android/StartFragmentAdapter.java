@@ -1,7 +1,6 @@
 package com.repay.android;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,8 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend>
 	private int layoutId;
 	private ArrayList<Friend> friends;
 	private Context mContext;
-	private int mTheyOweMeColour, mIOweThemColour;
+	private int mTheyOweMeColour, mIOweThemColour, mNeutralColour;
+	private boolean mUseNeutralColour;
 
 	public StartFragmentAdapter(Context context, int layoutId, ArrayList<Friend> friends)
 	{
@@ -51,6 +51,8 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend>
 			mTheyOweMeColour = context.getResources().getColor(R.color.green_debt);
 			mIOweThemColour = context.getResources().getColor(R.color.blue_debt);
 		}
+		mNeutralColour = context.getResources().getColor(R.color.neutral_debt);
+		mUseNeutralColour = SettingsFragment.isUsingNeutralColour(context);
 	}
 
 	@Override
@@ -59,20 +61,19 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend>
 		View v = convertView;
 		if (v == null)
 		{
-			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(layoutId, null);
 		}
 		Friend friend = friends.get(position);
 		if (friend != null)
 		{
 			// TODO Implement View holder pattern
-			TextView name = (TextView) v.findViewById(R.id.fragment_start_friendslist_item_name);
-			TextView amount = (TextView) v.findViewById(R.id.fragment_start_friendslist_item_amount);
-			final RoundedImageView pic = (RoundedImageView) v.findViewById(R.id.fragment_start_friendslist_item_pic);
+			TextView name = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_name);
+			TextView amount = (TextView)v.findViewById(R.id.fragment_start_friendslist_item_amount);
+			final RoundedImageView pic = (RoundedImageView)v.findViewById(R.id.fragment_start_friendslist_item_pic);
 
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
 
-			Log.i(TAG, "Now retrieving contact image");
 			ImageLoader.getInstance().displayImage(friend.getLookupURI(), pic, Application.getImageOptions());
 
 			name.setText(friend.getName());
@@ -80,14 +81,16 @@ public class StartFragmentAdapter extends ArrayAdapter<Friend>
 			if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 			{
 				pic.setOuterColor(mIOweThemColour);
-				amount.setText(SettingsFragment.getCurrencySymbol(mContext) +
-						SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
+				amount.setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
 			}
 			else
 			{
 				pic.setOuterColor(mTheyOweMeColour);
-				amount.setText(SettingsFragment.getCurrencySymbol(mContext) +
-						SettingsFragment.getFormattedAmount(friend.getDebt()));
+				amount.setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(friend.getDebt()));
+			}
+			if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0 && mUseNeutralColour)
+			{
+				pic.setOuterColor(mNeutralColour);
 			}
 		}
 

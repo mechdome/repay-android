@@ -1,16 +1,5 @@
 package com.repay.android.settings;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Currency;
-import java.util.Date;
-import java.util.Locale;
-
-import com.repay.android.R;
-import com.repay.android.SendMail;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,6 +9,17 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
+
+import com.repay.android.R;
+import com.repay.android.SendMail;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Property of Matt Allen
@@ -40,9 +40,11 @@ public class SettingsFragment extends PreferenceFragment
 	private static final String PREF_KEY_DATEFORMAT = "dateformat_list";
 	private static final String PREF_KEY_DEBTHISTORY_COLOURS = "debthistoryColours";
 	private static final String PREF_KEY_SORTORDER = "sortOrder";
+	private static final String PREF_KEY_USE_NEUTRAL_COLOUR = "neutralColor";
 
 	/**
 	 * @param c The Context to operate in
+	 *
 	 * @return The currency symbol based on the preference set by the user. If not preference has been set, the GBP symbol will be returned
 	 */
 	public static String getCurrencySymbol(Context c)
@@ -73,8 +75,9 @@ public class SettingsFragment extends PreferenceFragment
 	}
 
 	/**
-	 * @param c    The Context to operate in
+	 * @param c The Context to operate in
 	 * @param date The date as returned from the database
+	 *
 	 * @return The date, formatted as the user preference specifies
 	 */
 	@SuppressLint("SimpleDateFormat")
@@ -106,13 +109,14 @@ public class SettingsFragment extends PreferenceFragment
 		}
 		else if (datePref.equals("5"))
 		{
-			return (cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.DAY_OF_MONTH));
+			return (cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH));
 		}
 		return null;
 	}
 
 	/**
 	 * @param amount The amount returned from the database
+	 *
 	 * @return The amount specified, in a consistent format
 	 */
 	public static String getFormattedAmount(BigDecimal amount)
@@ -126,6 +130,7 @@ public class SettingsFragment extends PreferenceFragment
 	 * Get preference on colours used in DebtHistoryFragment
 	 *
 	 * @param c Context to run in
+	 *
 	 * @return Integer representation of preference. Use constants to reveal setting
 	 */
 	public static int getDebtHistoryColourPreference(Context c)
@@ -136,6 +141,7 @@ public class SettingsFragment extends PreferenceFragment
 
 	/**
 	 * @param c
+	 *
 	 * @return The order repesented by an int
 	 */
 	public static int getSortOrder(Context c)
@@ -161,5 +167,17 @@ public class SettingsFragment extends PreferenceFragment
 				return true;
 			}
 		});
+	}
+
+	/**
+	 * Determine if the user wants the app to show people with a neutral debt on a different colour
+	 * @param c
+	 * @return True if you should use a neutral colour
+	 */
+	public static boolean isUsingNeutralColour(Context c)
+	{
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+
+		return prefs.getBoolean(PREF_KEY_USE_NEUTRAL_COLOUR, false);
 	}
 }

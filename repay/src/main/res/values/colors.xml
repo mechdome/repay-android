@@ -11,4 +11,5 @@
     <color name="darkred_debt">#c0392b</color>
     <color name="selected_tint">#FFC3BB</color>
 	<color name="pressed_myactionbar">#CCA53535</color>
+	<color name="neutral_debt">#34495e</color>
 </resources>
