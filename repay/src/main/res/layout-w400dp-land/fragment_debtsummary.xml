@@ -137,7 +137,6 @@
 
     <CheckBox
         android:id="@+id/split_amount"
-        style="@style/CustomCheckBox"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/description"
@@ -149,7 +148,6 @@
 
     <CheckBox
         android:id="@+id/incl_me"
-        style="@style/CustomCheckBox"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/split_amount"

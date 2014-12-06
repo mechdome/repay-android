@@ -1,8 +1,8 @@
 package com.repay.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,7 +24,7 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class MainActivity extends Activity
+public class MainActivity extends ActionBarActivity
 {
 	private DatabaseHandler mDB;
 	private ArrayList<Friend> mFriends;
@@ -34,8 +34,6 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		getActionBar().setDisplayShowTitleEnabled(false);
 
 		mDB = new DatabaseHandler(this);
 
