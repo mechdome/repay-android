@@ -1,7 +1,7 @@
 package com.repay.android.settings;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import com.repay.android.R;
 
@@ -14,18 +14,13 @@ import com.repay.android.R;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class SettingsActivity extends Activity
+public class SettingsActivity extends ActionBarActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		getActionBar().setDisplayShowTitleEnabled(false);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 		setContentView(R.layout.settings_activity);
-
 		getFragmentManager().beginTransaction().replace(R.id.settings_FrameLayout, new SettingsFragment()).commit();
 	}
 }

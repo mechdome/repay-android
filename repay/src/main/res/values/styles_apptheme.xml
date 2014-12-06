@@ -4,6 +4,7 @@
 		<item name="colorPrimary">@color/red_debt</item>
 		<item name="colorPrimaryDark">@color/darkred_debt</item>
 		<item name="android:windowContentOverlay">@null</item>
+		<item name="colorAccent">@color/darkred_debt</item>
 	</style>
 
 </resources>

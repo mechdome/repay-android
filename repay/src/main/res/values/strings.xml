@@ -19,7 +19,7 @@
 	<string name="delete">Delete</string>
 
     <!-- Displayed when there are no friends in the database -->
-    <string name="havent_added_anyone">You haven\'t added anyone yet?\n\nUse the Plus Button to Get Started</string>
+    <string name="havent_added_anyone">Get Started With The Plus Button</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_adddebt">Add Debt</string>

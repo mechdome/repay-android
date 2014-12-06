@@ -43,7 +43,6 @@ import java.util.ArrayList;
 
 public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener, OnClickListener
 {
-
 	public static final int PICK_CONTACT_REQUEST = 1;
 	private static final String TAG = ChoosePersonFragment.class.getName();
 	private ChoosePersonAdapter mAdapter;
@@ -183,8 +182,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		getActivity().getActionBar().setTitle(R.string.title_activity_add_debt);
-		getActivity().getActionBar().setSubtitle(R.string.choose_people);
+		getActivity().setTitle(R.string.title_activity_add_debt);
 
 		mListView = (ListView)getView().findViewById(R.id.activity_friendchooser_list);
 		mListView.setOnItemClickListener(this);

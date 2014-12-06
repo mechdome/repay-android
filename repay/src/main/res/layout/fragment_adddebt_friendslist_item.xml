@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	>
 
-    <com.repay.android.view.RoundedImageView
-        android:id="@+id/activity_friendchooser_pic"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="5dp"
-        android:layout_centerVertical="true"
+	<com.repay.android.view.RoundedImageView
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:id="@+id/activity_friendchooser_pic"
+		android:layout_centerVertical="true"
 		android:layout_margin="8dp"
-        android:contentDescription="@string/contentDesc" />
+		android:layout_marginLeft="5dp"
+		android:contentDescription="@string/contentDesc"
+		/>
 
-    <TextView
-        android:id="@+id/activity_friendchooser_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:maxLines="2"
-        android:ellipsize="marquee"
-        android:layout_toRightOf="@id/activity_friendchooser_pic"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000"
-        android:textSize="20sp" />
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/activity_friendchooser_name"
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="10dp"
+		android:layout_toRightOf="@id/activity_friendchooser_pic"
+		android:ellipsize="marquee"
+		android:fontFamily="sans-serif-light"
+		android:maxLines="2"
+		android:textColor="#000"
+		android:textSize="20sp"
+		/>
 
 </RelativeLayout>

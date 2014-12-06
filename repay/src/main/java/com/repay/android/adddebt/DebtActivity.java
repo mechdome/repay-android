@@ -1,7 +1,7 @@
 package com.repay.android.adddebt;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.repay.android.database.DatabaseHandler;
@@ -18,7 +18,7 @@ import com.repay.android.model.Friend;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public abstract class DebtActivity extends Activity
+public abstract class DebtActivity extends ActionBarActivity
 {
 	public static final String FRIEND = "friend";
 	public static final String DEBT = "debt";

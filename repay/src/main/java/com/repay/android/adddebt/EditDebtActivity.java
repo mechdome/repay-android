@@ -29,9 +29,6 @@ public class EditDebtActivity extends DebtActivity
 
 		isEditing = true;
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowTitleEnabled(true);
-
 		mFrame = R.id.activity_adddebt_framelayout;
 
 		if (getFragmentManager().findFragmentById(mFrame) == null)

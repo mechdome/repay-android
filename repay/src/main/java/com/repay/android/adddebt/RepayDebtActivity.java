@@ -32,8 +32,6 @@ public class RepayDebtActivity extends DebtActivity
 		setContentView(R.layout.activity_adddebt);
 
 		mBuilder.setDescription(DEBT_REPAID_TEXT);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowTitleEnabled(true);
 
 		getFragmentManager().beginTransaction().replace(mFrameId, new EnterAmountFragment()).commit();
 	}

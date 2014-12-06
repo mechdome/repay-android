@@ -33,9 +33,6 @@ public class AddDebtActivity extends DebtActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowTitleEnabled(true);
 		setContentView(R.layout.activity_adddebt);
 
 		mFrame = R.id.activity_adddebt_framelayout;

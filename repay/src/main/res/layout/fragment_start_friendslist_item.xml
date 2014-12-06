@@ -1,48 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_start_friendslist_item"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-	android:padding="8dp" >
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:id="@+id/fragment_start_friendslist_item"
+	android:gravity="center_horizontal"
+	android:padding="8dp"
+	>
 
-    <com.repay.android.view.RoundedImageView
-        android:id="@+id/fragment_start_friendslist_item_pic"
+	<com.repay.android.view.RoundedImageView
+		android:layout_width="140dp"
 		android:layout_height="140dp"
-        android:layout_width="140dp"
-        android:scaleType="centerCrop"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/contentDesc" />
+		android:id="@+id/fragment_start_friendslist_item_pic"
+		android:layout_centerHorizontal="true"
+		android:contentDescription="@string/contentDesc"
+		android:scaleType="centerCrop"
+		/>
 
-    <LinearLayout
-        android:id="@+id/fragment_start_friendslist_item_textBg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:layout_below="@id/fragment_start_friendslist_item_pic"
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_start_friendslist_item_textBg"
 		android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+		android:layout_below="@id/fragment_start_friendslist_item_pic"
+		android:orientation="vertical"
+		>
 
-        <TextView
-            android:id="@+id/fragment_start_friendslist_item_name"
-            style="@style/FriendsList.Text"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_horizontal"
-            android:textColor="@color/text" />
+		<TextView
+			style="@style/FriendsList.Text"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:id="@+id/fragment_start_friendslist_item_name"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			android:layout_weight="1"
+			android:fontFamily="sans-serif-light"
+			android:gravity="center_horizontal"
+			android:textColor="@color/text"
+			/>
 
-        <TextView
-            android:id="@+id/fragment_start_friendslist_item_amount"
-            style="@style/FriendsList.Text"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:textColor="@color/text" />
-    </LinearLayout>
+		<TextView
+			style="@style/FriendsList.Text"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:id="@+id/fragment_start_friendslist_item_amount"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			android:layout_weight="1"
+			android:gravity="center_horizontal"
+			android:textColor="@color/text"
+			/>
+	</LinearLayout>
 
 </RelativeLayout>
