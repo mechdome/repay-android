@@ -2,7 +2,6 @@ package com.repay.android;
 
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
-import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,15 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.repay.android.database.DatabaseHandler;
-import com.repay.android.frienddetails.FriendActivity;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 import com.repay.android.settings.SettingsFragment;
@@ -40,7 +36,7 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class StartFragment extends Fragment implements OnItemClickListener
+public class StartFragment extends Fragment
 {
 
 	public static final String TAG = StartFragment.class.getName();
@@ -67,7 +63,11 @@ public class StartFragment extends Fragment implements OnItemClickListener
 	{
 		super.onActivityCreated(savedInstanceState);
 		mList.setHasFixedSize(true);
-		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
+
+		mList.setLayoutManager(new StaggeredGridLayoutManager(
+			getResources().getInteger(R.integer.mainactivity_cols),
+			StaggeredGridLayoutManager.VERTICAL)
+		);
 	}
 
 	@Override
