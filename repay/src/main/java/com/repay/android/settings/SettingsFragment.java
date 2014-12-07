@@ -139,6 +139,39 @@ public class SettingsFragment extends PreferenceFragment
 		return Integer.parseInt(prefs.getString(PREF_KEY_DEBTHISTORY_COLOURS, "1"));
 	}
 
+	public static int getNegativeDebtColourPreference(Context c)
+	{
+		int colPref = getDebtHistoryColourPreference(c);
+		switch (colPref)
+		{
+			case DEBTHISTORY_GREEN_BLUE:
+				return c.getResources().getColor(R.color.blue_debt);
+
+			case DEBTHISTORY_GREEN_RED:
+				return c.getResources().getColor(R.color.red_debt);
+		}
+		return c.getResources().getColor(R.color.red_debt);
+	}
+
+	public static int getPositiveDebtColourPreference(Context c)
+	{
+		int colPref = getDebtHistoryColourPreference(c);
+		switch (colPref)
+		{
+			case DEBTHISTORY_GREEN_BLUE:
+				return c.getResources().getColor(R.color.green_debt);
+
+			case DEBTHISTORY_GREEN_RED:
+				return c.getResources().getColor(R.color.green_debt);
+		}
+		return c.getResources().getColor(R.color.green_debt);
+	}
+
+	public static int getNeutralDebtColourPreference(Context c)
+	{
+		return c.getResources().getColor(R.color.neutral_debt);
+	}
+
 	/**
 	 * @param c
 	 *

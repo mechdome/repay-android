@@ -4,6 +4,7 @@
     <style name="FriendsList.Text" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">@color/text</item>
+		<item name="android:maxLines">1</item>
     </style>
 
     <style name="FriendsList.EmptyListText" parent="@android:style/Widget.Holo.TextView">

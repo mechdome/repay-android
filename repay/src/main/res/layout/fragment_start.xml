@@ -5,24 +5,15 @@
 	tools:context=".MainActivity"
 	>
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:gravity="center_vertical"
-		>
-
-		<TextView
-			style="@style/FriendsList.EmptyListText"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/fragment_start_nofriendsadded"
-			android:layout_marginBottom="30dp"
-			android:fontFamily="sans-serif-condensed"
-			android:gravity="center_horizontal"
-			android:text="@string/havent_added_anyone"
-			/>
-
-	</RelativeLayout>
+	<TextView
+		style="@style/FriendsList.EmptyListText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/empty"
+		android:fontFamily="sans-serif-condensed"
+		android:layout_centerInParent="true"
+		android:text="@string/havent_added_anyone"
+		/>
 
 	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"
@@ -33,7 +24,7 @@
 	<ProgressBar
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/fragment_start_progress"
+		android:id="@+id/progress"
 		android:layout_centerInParent="true"
 		/>
 

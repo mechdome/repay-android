@@ -256,7 +256,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			if (result != null && result.size() > 0)
 			{
 				mListView.setVisibility(ListView.VISIBLE);
-				mAdapter = new ChoosePersonAdapter(getActivity(), R.layout.fragment_adddebt_friendslist_item, result, ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
+				mAdapter = new ChoosePersonAdapter(getActivity(), R.layout.friend_list_item, result, ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
 				mListView.setAdapter(mAdapter);
 				mAdapter.setSelectedFriends(((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
 			}

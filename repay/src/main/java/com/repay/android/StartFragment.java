@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -44,17 +45,20 @@ public class StartFragment extends Fragment implements OnItemClickListener
 
 	public static final String TAG = StartFragment.class.getName();
 
-	private GridView mGrid;
+	private RecyclerView mList;
 	private TextView mEmptyState;
-	private StartFragmentAdapter mAdapter;
+	private FriendListAdapter mAdapter;
 	private ProgressBar mProgressBar;
-	private int mListItem = R.layout.fragment_start_friendslist_item, mSortOrder;
+	private int mListItem = R.layout.friend_grid_item, mSortOrder;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_start, container, false);
+		mList = (RecyclerView)view.findViewById(R.id.list);
+		mEmptyState = (TextView)view.findViewById(R.id.empty);
+		mProgressBar = (ProgressBar)view.findViewById(R.id.progress);
+		mProgressBar.setVisibility(ProgressBar.GONE);
 		return view;
 	}
 
@@ -62,13 +66,8 @@ public class StartFragment extends Fragment implements OnItemClickListener
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-
-		mGrid = (GridView)getView().findViewById(R.id.fragment_start_friendsgrid);
-		mEmptyState = (TextView)getView().findViewById(R.id.fragment_start_nofriendsadded);
-		mProgressBar = (ProgressBar)getView().findViewById(R.id.fragment_start_progress);
-		mProgressBar.setVisibility(ProgressBar.GONE);
-		mGrid.setOnItemClickListener(this); // THE GRID. A DIGITAL FRONTIER.
-		mSortOrder = SettingsFragment.getSortOrder(getActivity());
+		mList.setHasFixedSize(true);
+		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
 	}
 
 	@Override
@@ -110,32 +109,22 @@ public class StartFragment extends Fragment implements OnItemClickListener
 		inf.inflate(R.menu.friendslist, menu);
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-	{
-		// Retrieve Friend object and continue with navigation
-		Friend selectedFriend = (Friend)arg1.getTag();
-		Intent overview = new Intent(getActivity(), FriendActivity.class);
-		overview.putExtra(FriendActivity.FRIEND, selectedFriend);
-		startActivity(overview);
-	}
-
 	public void updateList()
 	{
 		if (((MainActivity)getActivity()).getFriends() == null || ((MainActivity)getActivity()).getFriends().size() == 0)
 		{
-			mGrid.setVisibility(View.GONE);
+			mList.setVisibility(View.GONE);
 			mEmptyState.setVisibility(View.VISIBLE);
 			mProgressBar.setVisibility(ProgressBar.GONE);
 		}
 		else
 		{
-			mGrid.setVisibility(View.VISIBLE);
+			mList.setVisibility(View.VISIBLE);
 			mEmptyState.setVisibility(View.GONE);
 			mProgressBar.setVisibility(ProgressBar.GONE);
 
-			mAdapter = new StartFragmentAdapter(getActivity(), mListItem, ((MainActivity)getActivity()).getFriends());
-			mGrid.setAdapter(mAdapter);
+			mAdapter = new FriendListAdapter(getActivity(), ((MainActivity)getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
+			mList.setAdapter(mAdapter);
 		}
 	}
 
@@ -186,8 +175,8 @@ public class StartFragment extends Fragment implements OnItemClickListener
 		@Override
 		protected void onPreExecute()
 		{
-			mGrid.setAdapter(null);
-			mGrid.setVisibility(ListView.GONE);
+			mList.setAdapter(null);
+			mList.setVisibility(ListView.GONE);
 			mEmptyState.setVisibility(RelativeLayout.GONE);
 			mProgressBar.setVisibility(ProgressBar.VISIBLE);
 		}
@@ -256,9 +245,9 @@ public class StartFragment extends Fragment implements OnItemClickListener
 		{
 			if (result != null && result.size() > 0)
 			{
-				mAdapter = new StartFragmentAdapter(getActivity(), mListItem, result);
-				mGrid.setVisibility(ListView.VISIBLE);
-				mGrid.setAdapter(mAdapter);
+				mAdapter = new FriendListAdapter(getActivity(), result, FriendListAdapter.VIEW_GRID);
+				mList.setVisibility(ListView.VISIBLE);
+				mList.setAdapter(mAdapter);
 			}
 			else
 			{
