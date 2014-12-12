@@ -37,13 +37,16 @@ public class Application extends android.app.Application
 		Log.d(TAG, "Image options now being set");
 		mImageOptions = new DisplayImageOptions.Builder()
 			.resetViewBeforeLoading(true)
-			.cacheInMemory(true).cacheOnDisk(true)
+			.cacheInMemory(true)
+			.cacheOnDisk(true)
 			.imageScaleType(ImageScaleType.NONE)
 			.showImageOnLoading(R.drawable.friend_image_light)
-			.showImageForEmptyUri(R.drawable.friend_image_light).build();
+			.showImageForEmptyUri(R.drawable.friend_image_light)
+			.build();
 
 		mLoadConfig = new ImageLoaderConfiguration.Builder(this)
-			.imageDownloader(new MyImageDownloader(this)).build();
+			.imageDownloader(new MyImageDownloader(this))
+			.build();
 
 		ImageLoader.getInstance().init(mLoadConfig);
 	}

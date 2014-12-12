@@ -3,7 +3,6 @@
 
     <style name="FriendsList.Text" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:ellipsize">marquee</item>
-        <item name="android:textColor">@color/text</item>
 		<item name="android:maxLines">1</item>
     </style>
 
@@ -15,27 +14,22 @@
 
     <style name="AddDebt.LabelText" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/text</item>
     </style>
 
     <style name="AddDebt.SelectedFriendText" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/text</item>
     </style>
 
     <style name="FriendChooser.ListText" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:textSize">25sp</item>
-        <item name="android:textColor">@color/text</item>
     </style>
 
     <style name="AddDebt.AmountEditText" parent="@android:style/Widget.EditText">
-        <item name="android:textColor">@color/text</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="EnterDebtAmount_Button">
         <item name="android:layout_width">80dp</item>
-        <item name="android:textColor">@color/text</item>
         <item name="android:layout_height">70dp</item>
         <item name="android:textSize">45sp</item>
         <item name="android:background">@drawable/btn_enteramount</item>

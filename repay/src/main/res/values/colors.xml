@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_background">#BABABA</color>
-    <color name="main_background_slightlyDarker">#AFAFAF</color>
-    <color name="green_debt">#27ae60</color>
-    <color name="red_debt">#e74c3c</color>
-    <color name="blue_debt">#3498db</color>
-    <color name="main_foreground">#eee</color>
-    <color name="text">#2a2a2a</color>
-    <color name="emphasised_text">#444</color>
-    <color name="darkred_debt">#c0392b</color>
-    <color name="selected_tint">#FFC3BB</color>
-	<color name="pressed_myactionbar">#CCA53535</color>
-	<color name="neutral_debt">#34495e</color>
+    <color name="debt_green">#4CAF50</color>
+    <color name="debt_red">#F44336</color>
+    <color name="debt_blue">#2196F3</color>
+    <color name="debt_red_dark">#B71C1C</color>
+	<color name="debt_neutral">#34495E</color>
+
+	<color name="primary">#F44336</color>
+	<color name="primary_dark">#D32F2F</color>
+	<color name="accent">#FFEB3B</color>
+	<color name="inactive">#AFAFAF</color>
 </resources>

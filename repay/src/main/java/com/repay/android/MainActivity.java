@@ -8,9 +8,9 @@ import android.view.MenuItem;
 
 import com.repay.android.debtwizard.AddDebtActivity;
 import com.repay.android.fragment.FriendsListFragment;
+import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
-import com.repay.android.fragment.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.Collections;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
@@ -78,6 +78,11 @@ public class MainActivity extends ActionBarActivity
 	public ArrayList<Friend> getFriends()
 	{
 		return mFriends;
+	}
+
+	public void setFriends(ArrayList<Friend> friends)
+	{
+		mFriends = friends;
 	}
 
 	public void updateFriends()

@@ -21,7 +21,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/radio_group"
 		android:layout_above="@id/donebtn"
-		android:background="@color/main_background_slightlyDarker"
+		android:background="@color/inactive"
 		android:orientation="horizontal"
 		>
 
@@ -30,14 +30,14 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/they_owe_me"
 			android:layout_weight="1"
-			android:background="@color/main_background_slightlyDarker"
+			android:background="@color/inactive"
 			android:fontFamily="sans-serif-condensed"
 			android:gravity="center_horizontal"
 			android:paddingBottom="10dp"
 			android:paddingTop="10dp"
 			android:text="@string/they_owe_me"
 			android:textAllCaps="true"
-			android:textColor="@color/main_foreground"
+			android:textColor="@android:color/white"
 			android:textSize="18sp"
 			android:textStyle="bold"
 			/>
@@ -47,14 +47,14 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/i_owe_them"
 			android:layout_weight="1"
-			android:background="@color/main_background_slightlyDarker"
+			android:background="@color/inactive"
 			android:fontFamily="sans-serif-condensed"
 			android:gravity="center_horizontal"
 			android:paddingBottom="10dp"
 			android:paddingTop="10dp"
 			android:text="@string/i_owe_them"
 			android:textAllCaps="true"
-			android:textColor="@color/main_foreground"
+			android:textColor="@android:color/white"
 			android:textSize="18sp"
 			android:textStyle="bold"
 			/>
@@ -160,7 +160,7 @@
 		android:fontFamily="sans-serif-condensed"
 		android:gravity="center_horizontal|center_vertical"
 		android:padding="8dp"
-		android:textColor="@color/emphasised_text"
+		android:textColor="@android:color/secondary_text_light"
 		android:textSize="60sp"
 		/>
 

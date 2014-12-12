@@ -26,7 +26,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:paddingTop="10dp"
-        android:textColor="@color/emphasised_text"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="25sp"
         android:textStyle="italic" />
 
@@ -38,7 +38,7 @@
         android:layout_marginTop="-10dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="top|center_horizontal"
-        android:textColor="@color/emphasised_text"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="60sp" />
 
     <Button

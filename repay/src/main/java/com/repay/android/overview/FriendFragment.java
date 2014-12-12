@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.repay.android.R;
-import com.repay.android.model.Friend;
 import com.repay.android.fragment.SettingsFragment;
+import com.repay.android.model.Friend;
 
 /**
  * Created by Matt Allen
@@ -25,15 +25,15 @@ public abstract class FriendFragment extends Fragment implements OnFriendUpdated
 
 		if (SettingsFragment.getDebtHistoryColourPreference(getActivity()) == SettingsFragment.DEBTHISTORY_GREEN_RED)
 		{
-			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
-			mIOweThemColour = getActivity().getResources().getColor(R.color.red_debt);
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_red);
 		}
 		else
 		{
-			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
-			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_blue);
 		}
-		mNeutralColour = getActivity().getResources().getColor(R.color.neutral_debt);
+		mNeutralColour = getActivity().getResources().getColor(R.color.debt_neutral);
 	}
 
 	public abstract void onFriendUpdated(Friend friend);

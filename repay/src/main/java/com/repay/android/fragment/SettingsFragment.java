@@ -145,12 +145,12 @@ public class SettingsFragment extends PreferenceFragment
 		switch (colPref)
 		{
 			case DEBTHISTORY_GREEN_BLUE:
-				return c.getResources().getColor(R.color.blue_debt);
+				return c.getResources().getColor(R.color.debt_blue);
 
 			case DEBTHISTORY_GREEN_RED:
-				return c.getResources().getColor(R.color.red_debt);
+				return c.getResources().getColor(R.color.debt_red);
 		}
-		return c.getResources().getColor(R.color.red_debt);
+		return c.getResources().getColor(R.color.debt_red);
 	}
 
 	public static int getPositiveDebtColourPreference(Context c)
@@ -159,17 +159,17 @@ public class SettingsFragment extends PreferenceFragment
 		switch (colPref)
 		{
 			case DEBTHISTORY_GREEN_BLUE:
-				return c.getResources().getColor(R.color.green_debt);
+				return c.getResources().getColor(R.color.debt_green);
 
 			case DEBTHISTORY_GREEN_RED:
-				return c.getResources().getColor(R.color.green_debt);
+				return c.getResources().getColor(R.color.debt_green);
 		}
-		return c.getResources().getColor(R.color.green_debt);
+		return c.getResources().getColor(R.color.debt_green);
 	}
 
 	public static int getNeutralDebtColourPreference(Context c)
 	{
-		return c.getResources().getColor(R.color.neutral_debt);
+		return c.getResources().getColor(R.color.debt_neutral);
 	}
 
 	/**
@@ -204,7 +204,9 @@ public class SettingsFragment extends PreferenceFragment
 
 	/**
 	 * Determine if the user wants the app to show people with a neutral debt on a different colour
+	 *
 	 * @param c
+	 *
 	 * @return True if you should use a neutral colour
 	 */
 	public static boolean isUsingNeutralColour(Context c)

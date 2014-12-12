@@ -24,10 +24,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.repay.android.R;
 import com.repay.android.debtwizard.ChoosePersonAdapter;
 import com.repay.android.debtwizard.DebtActivity;
 import com.repay.android.helper.ContactsContractHelper;
-import com.repay.android.R;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
 

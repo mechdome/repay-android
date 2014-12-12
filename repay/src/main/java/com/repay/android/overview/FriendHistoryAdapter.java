@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repay.android.R;
-import com.repay.android.model.Debt;
 import com.repay.android.fragment.SettingsFragment;
+import com.repay.android.model.Debt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

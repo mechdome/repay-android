@@ -39,7 +39,6 @@
 		android:maxLines="3"
 		android:paddingBottom="5dp"
 		android:paddingLeft="10dp"
-		android:textColor="@color/text"
 		android:textSize="22sp"
 		/>
 
@@ -53,7 +52,6 @@
 		android:fontFamily="sans-serif-light"
 		android:gravity="right"
 		android:paddingRight="16dp"
-		android:textColor="@color/text"
 		android:textSize="28sp"
 		/>
 

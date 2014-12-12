@@ -8,7 +8,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/fragment_enterdebtamount_amountGrp"
-		android:background="@color/main_background"
+		android:background="@android:color/darker_gray"
 		>
 
 		<ImageButton
@@ -17,7 +17,7 @@
 			android:id="@+id/fragment_enterdebtamount_backspace"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:background="@color/main_background"
+			android:background="@android:color/darker_gray"
 			android:contentDescription="@string/contentDesc"
 			android:padding="10dp"
 			android:src="@drawable/ic_backspace"
@@ -33,7 +33,6 @@
 			android:padding="10dp"
 			android:scrollHorizontally="true"
 			android:text="0.00"
-			android:textColor="@color/text"
 			android:textSize="55sp"
 			/>
 	</RelativeLayout>
@@ -207,7 +206,7 @@
 				android:fontFamily="sans-serif-light"
 				android:hapticFeedbackEnabled="true"
 				android:text="@string/clear"
-				android:textColor="@color/red_debt"
+				android:textColor="@color/debt_red"
 				/>
 
 			<Button

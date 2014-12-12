@@ -2,6 +2,7 @@ package com.repay.android.fragment;
 
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,9 +22,11 @@ import android.widget.TextView;
 import com.repay.android.MainActivity;
 import com.repay.android.R;
 import com.repay.android.adapter.FriendListAdapter;
+import com.repay.android.adapter.OnItemClickListener;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
+import com.repay.android.overview.FriendActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class FriendsListFragment extends Fragment
+public class FriendsListFragment extends Fragment implements OnItemClickListener<Friend>
 {
 
 	public static final String TAG = FriendsListFragment.class.getName();
@@ -65,10 +68,7 @@ public class FriendsListFragment extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		mList.setLayoutManager(new StaggeredGridLayoutManager(
-			getResources().getInteger(R.integer.mainactivity_cols),
-			StaggeredGridLayoutManager.VERTICAL)
-		);
+		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
 	}
 
 	@Override
@@ -125,6 +125,7 @@ public class FriendsListFragment extends Fragment
 			mProgressBar.setVisibility(ProgressBar.GONE);
 
 			mAdapter = new FriendListAdapter(getActivity(), ((MainActivity)getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
+			mAdapter.setOnItemClickListener(this);
 			mList.setAdapter(mAdapter);
 		}
 	}
@@ -168,6 +169,14 @@ public class FriendsListFragment extends Fragment
 		}
 
 		new Builder(getActivity()).setView(v).setPositiveButton(R.string.close, null).show();
+	}
+
+	@Override
+	public void onItemClicked(Friend obj, int position)
+	{
+		Intent i = new Intent(getActivity(), FriendActivity.class);
+		i.putExtra(FriendActivity.FRIEND, obj);
+		startActivity(i);
 	}
 
 	private class RecalculateTotalDebts extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
@@ -244,15 +253,10 @@ public class FriendsListFragment extends Fragment
 		@Override
 		protected void onPostExecute(ArrayList<Friend> result)
 		{
-			if (result != null && result.size() > 0)
+			if (result != null)
 			{
-				mAdapter = new FriendListAdapter(getActivity(), result, FriendListAdapter.VIEW_GRID);
-				mList.setVisibility(ListView.VISIBLE);
-				mList.setAdapter(mAdapter);
-			}
-			else
-			{
-				mEmptyState.setVisibility(RelativeLayout.VISIBLE);
+				((MainActivity)getActivity()).setFriends(result);
+				updateList();
 			}
 
 			mProgressBar.setVisibility(ProgressBar.GONE);

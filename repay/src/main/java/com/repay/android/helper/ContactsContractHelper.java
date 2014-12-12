@@ -22,14 +22,16 @@ public class ContactsContractHelper
 {
 	private static final String TAG = ContactsContractHelper.class.getName();
 
-	private static int[] typesPhone = new int[]{
+	private static int[] typesPhone = new int[]
+	{
 		ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
 		ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
 		ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
 		ContactsContract.CommonDataKinds.Phone.TYPE_WORK
 	};
 
-	private static int[] typesEmail = new int[]{
+	private static int[] typesEmail = new int[]
+	{
 		ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
 		ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
 		ContactsContract.CommonDataKinds.Phone.TYPE_WORK

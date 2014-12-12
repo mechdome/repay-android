@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.repay.android.Application;
-import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.R;
-import com.repay.android.model.Friend;
 import com.repay.android.fragment.SettingsFragment;
+import com.repay.android.helper.ContactsContractHelper;
+import com.repay.android.model.Friend;
 import com.repay.android.view.RoundedImageView;
 
 import java.math.BigDecimal;
@@ -105,7 +105,14 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		{
 			mTotalOwedPrefix.setText(R.string.even_debt);
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + "0");
-			if (mUseNeutralColour) mFriendPic.setOuterColor(mNeutralColour); else mFriendPic.setOuterColor(mTheyOweMeColour);
+			if (mUseNeutralColour)
+			{
+				mFriendPic.setOuterColor(mNeutralColour);
+			}
+			else
+			{
+				mFriendPic.setOuterColor(mTheyOweMeColour);
+			}
 		}
 		else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{

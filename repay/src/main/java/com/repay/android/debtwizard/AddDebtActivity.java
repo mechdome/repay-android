@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.repay.android.R;
+import com.repay.android.SettingsActivity;
 import com.repay.android.debtwizard.fragment.ChoosePersonFragment;
 import com.repay.android.debtwizard.fragment.DebtFragment;
 import com.repay.android.debtwizard.fragment.DebtSummaryFragment;
 import com.repay.android.debtwizard.fragment.EnterAmountFragment;
-import com.repay.android.SettingsActivity;
 
 import java.math.BigDecimal;
 

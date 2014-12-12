@@ -16,15 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.R;
+import com.repay.android.SettingsActivity;
 import com.repay.android.debtwizard.AddDebtActivity;
 import com.repay.android.debtwizard.DebtActivity;
 import com.repay.android.debtwizard.RepayDebtActivity;
+import com.repay.android.fragment.SettingsFragment;
+import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
-import com.repay.android.SettingsActivity;
-import com.repay.android.fragment.SettingsFragment;
 
 import java.math.BigDecimal;
 

@@ -76,15 +76,15 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 
 		if (SettingsFragment.getDebtHistoryColourPreference(getActivity()) == SettingsFragment.DEBTHISTORY_GREEN_RED)
 		{
-			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
-			mIOweThemColour = getActivity().getResources().getColor(R.color.darkred_debt);
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_red_dark);
 		}
 		else
 		{
-			mTheyOweMeColour = getActivity().getResources().getColor(R.color.green_debt);
-			mIOweThemColour = getActivity().getResources().getColor(R.color.blue_debt);
+			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
+			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_blue);
 		}
-		mNeutralColor = getActivity().getResources().getColor(R.color.main_background_slightlyDarker);
+		mNeutralColor = getActivity().getResources().getColor(R.color.debt_neutral);
 
 		int numberOfPeople = ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size();
 		if (numberOfPeople < 2)

@@ -1,10 +1,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@color/red_debt</item>
-		<item name="colorPrimaryDark">@color/darkred_debt</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="android:windowContentOverlay">@null</item>
-		<item name="colorAccent">@color/darkred_debt</item>
+		<item name="colorAccent">@color/primary</item>
 	</style>
 
 </resources>

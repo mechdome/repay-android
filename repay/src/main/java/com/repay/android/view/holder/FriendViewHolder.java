@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  * @author Matt Allen
  * @project Repay
  */
-public class FriendViewHolder extends ViewHolder implements OnClickListener
+public class FriendViewHolder extends ViewHolder
 {
 	/**
 	 * Store the friend object here to later pass with the onClick
@@ -51,12 +51,18 @@ public class FriendViewHolder extends ViewHolder implements OnClickListener
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mImage.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
-			if (mAmount != null) mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
+			if (mAmount != null)
+			{
+				mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
+			}
 		}
 		else
 		{
 			mImage.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
-			if (mAmount != null) mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
+			if (mAmount != null)
+			{
+				mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
+			}
 		}
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0 && SettingsFragment.isUsingNeutralColour(context))
 		{
@@ -64,8 +70,8 @@ public class FriendViewHolder extends ViewHolder implements OnClickListener
 		}
 	}
 
-	@Override public void onClick(View v)
+	public void setOnClickListener(OnClickListener listener)
 	{
-		
+		this.itemView.setOnClickListener(listener);
 	}
 }
