@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.repay.android.R;
-import com.repay.android.settings.SettingsActivity;
+import com.repay.android.debtwizard.fragment.ChoosePersonFragment;
+import com.repay.android.debtwizard.fragment.DebtFragment;
+import com.repay.android.debtwizard.fragment.DebtSummaryFragment;
+import com.repay.android.debtwizard.fragment.EnterAmountFragment;
+import com.repay.android.SettingsActivity;
 
 import java.math.BigDecimal;
 
@@ -57,7 +61,6 @@ public class AddDebtActivity extends DebtActivity
 	{
 		switch (item.getItemId())
 		{
-
 			case R.id.action_settings:
 				Intent intent = new Intent();
 				intent.setClass(this, SettingsActivity.class);

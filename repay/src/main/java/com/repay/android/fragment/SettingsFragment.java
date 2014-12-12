@@ -1,4 +1,4 @@
-package com.repay.android.settings;
+package com.repay.android.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 
 import com.repay.android.R;
-import com.repay.android.SendMail;
+import com.repay.android.manager.ShareManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -175,7 +175,7 @@ public class SettingsFragment extends PreferenceFragment
 	/**
 	 * @param c
 	 *
-	 * @return The order repesented by an int
+	 * @return The order represented by an int
 	 */
 	public static int getSortOrder(Context c)
 	{
@@ -196,7 +196,7 @@ public class SettingsFragment extends PreferenceFragment
 			@Override
 			public boolean onPreferenceClick(Preference preference)
 			{
-				SendMail.sendFeedback(getActivity());
+				ShareManager.sendFeedback(getActivity());
 				return true;
 			}
 		});

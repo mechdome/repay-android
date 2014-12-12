@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name="com.repay.android.adddebt.AddDebtActivity"
+            android:name="com.repay.android.debtwizard.AddDebtActivity"
             android:label="@string/title_activity_add_debt"
             android:parentActivityName="com.repay.android.MainActivity"
             android:windowSoftInputMode="stateHidden" >
@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name="com.repay.android.adddebt.RepayDebtActivity"
+            android:name="com.repay.android.debtwizard.RepayDebtActivity"
             android:label="@string/title_activity_add_debt"
             android:parentActivityName="com.repay.android.MainActivity"
             android:windowSoftInputMode="stateHidden" >
@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name="com.repay.android.adddebt.EditDebtActivity"
+            android:name="com.repay.android.debtwizard.EditDebtActivity"
             android:label="@string/title_activity_add_debt"
             android:parentActivityName="com.repay.android.MainActivity"
             android:windowSoftInputMode="stateHidden" >
@@ -55,7 +55,7 @@
         </activity>
 
         <activity
-            android:name=".frienddetails.FriendActivity"
+            android:name=".overview.FriendActivity"
             android:label="@string/title_activity_frienddetails"
             android:parentActivityName="com.repay.android.MainActivity" >
             <meta-data
@@ -64,7 +64,7 @@
         </activity>
 
         <activity
-            android:name="com.repay.android.settings.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/settings_activity_title"
             android:parentActivityName="com.repay.android.MainActivity" >
             <meta-data

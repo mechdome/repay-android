@@ -1,4 +1,4 @@
-package com.repay.android.database;
+package com.repay.android.manager;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -31,20 +31,19 @@ import java.util.Date;
  */
 
 @SuppressLint("SimpleDateFormat")
-public class DatabaseHandler extends SQLiteOpenHelper
+public class DatabaseManager extends SQLiteOpenHelper
 {
-
 	public static final String DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 	public static final String DB_NAME = "repay.db";
 	public static final int DB_VERSION = 2;
-	private static final String TAG = DatabaseHandler.class.getName();
+	private static final String TAG = DatabaseManager.class.getName();
 
 	/**
 	 * Finds or creates a SQLite database corresponding to the current user of the application
 	 *
 	 * @param context The current context
 	 */
-	public DatabaseHandler(Context context)
+	public DatabaseManager(Context context)
 	{
 		super(context, DB_NAME, null, DB_VERSION);
 	}

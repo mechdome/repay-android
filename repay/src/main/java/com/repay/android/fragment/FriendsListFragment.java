@@ -1,4 +1,4 @@
-package com.repay.android;
+package com.repay.android.fragment;
 
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
@@ -18,10 +18,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.repay.android.database.DatabaseHandler;
+import com.repay.android.MainActivity;
+import com.repay.android.R;
+import com.repay.android.adapter.FriendListAdapter;
+import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsFragment;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -36,10 +38,10 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class StartFragment extends Fragment
+public class FriendsListFragment extends Fragment
 {
 
-	public static final String TAG = StartFragment.class.getName();
+	public static final String TAG = FriendsListFragment.class.getName();
 
 	private RecyclerView mList;
 	private TextView mEmptyState;
@@ -62,7 +64,6 @@ public class StartFragment extends Fragment
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		mList.setHasFixedSize(true);
 
 		mList.setLayoutManager(new StaggeredGridLayoutManager(
 			getResources().getInteger(R.integer.mainactivity_cols),
@@ -169,7 +170,7 @@ public class StartFragment extends Fragment
 		new Builder(getActivity()).setView(v).setPositiveButton(R.string.close, null).show();
 	}
 
-	private class RecalculateTotalDebts extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>>
+	private class RecalculateTotalDebts extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
 	{
 
 		@Override
@@ -195,7 +196,7 @@ public class StartFragment extends Fragment
 		}
 
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseHandler... params)
+		protected ArrayList<Friend> doInBackground(DatabaseManager... params)
 		{
 			try
 			{

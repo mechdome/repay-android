@@ -1,10 +1,10 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-import com.repay.android.database.DatabaseHandler;
+import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Debt;
 import com.repay.android.model.DebtBuilder;
 import com.repay.android.model.Friend;
@@ -25,7 +25,7 @@ public abstract class DebtActivity extends ActionBarActivity
 	public static final String DEBT_REPAID_TEXT = "Repaid";
 	private static final String DEBT_BUILDER = "builder";
 
-	protected DatabaseHandler mDB;
+	protected DatabaseManager mDB;
 
 	protected Friend mFriend;
 	protected Debt mDebt;
@@ -63,7 +63,7 @@ public abstract class DebtActivity extends ActionBarActivity
 			}
 		}
 
-		mDB = new DatabaseHandler(this);
+		mDB = new DatabaseManager(this);
 	}
 
 	public DebtBuilder getDebtBuilder()
@@ -71,7 +71,7 @@ public abstract class DebtActivity extends ActionBarActivity
 		return mBuilder;
 	}
 
-	public DatabaseHandler getDBHandler()
+	public DatabaseManager getDBHandler()
 	{
 		return mDB;
 	}

@@ -75,24 +75,24 @@
 
 		<com.repay.android.view.RoundedImageView
 			android:id="@+id/header_pic3"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
 			android:layout_marginLeft="72dp"
 			android:contentDescription="@string/contentDesc"
 			android:visibility="gone"/>
 
 		<com.repay.android.view.RoundedImageView
 			android:id="@+id/header_pic2"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
 			android:layout_marginLeft="36dp"
 			android:contentDescription="@string/contentDesc"
 			android:visibility="gone" />
 
 		<com.repay.android.view.RoundedImageView
 			android:id="@+id/header_pic"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
 			android:contentDescription="@string/contentDesc" />
 
 	</RelativeLayout>

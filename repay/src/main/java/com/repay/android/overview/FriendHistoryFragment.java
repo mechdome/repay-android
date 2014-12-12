@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.repay.android.R;
-import com.repay.android.adddebt.DebtActivity;
-import com.repay.android.adddebt.EditDebtActivity;
+import com.repay.android.debtwizard.DebtActivity;
+import com.repay.android.debtwizard.EditDebtActivity;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 

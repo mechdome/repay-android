@@ -1,9 +1,9 @@
-package com.repay.android.settings;
+package com.repay.android;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.repay.android.R;
+import com.repay.android.fragment.SettingsFragment;
 
 /**
  * Property of Matt Allen

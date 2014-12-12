@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard;
 
 import android.content.Context;
 import android.graphics.Color;

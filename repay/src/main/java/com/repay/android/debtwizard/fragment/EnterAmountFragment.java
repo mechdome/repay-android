@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.repay.android.R;
+import com.repay.android.debtwizard.DebtActivity;
+import com.repay.android.debtwizard.RepayDebtActivity;
 
 import java.math.BigDecimal;
 
@@ -46,8 +48,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		getActivity().getActionBar().setSubtitle(R.string.whats_debt_amount);
-		getActivity().getActionBar().setTitle(R.string.enter_amount);
+		getActivity().setTitle(R.string.enter_amount);
 
 		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_DEC) != null)
 		{

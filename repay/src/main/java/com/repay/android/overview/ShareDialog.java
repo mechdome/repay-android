@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.repay.android.ContactsContractHelper;
-import com.repay.android.SendMail;
+import com.repay.android.helper.ContactsContractHelper;
+import com.repay.android.manager.ShareManager;
 import com.repay.android.model.Friend;
 
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class ShareDialog extends Builder implements OnClickListener
 			Log.i(TAG, "SMS Selected");
 			if (mPhoneNums.size() >= 1)
 			{
-				SendMail.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mFriend.getDebt());
+				ShareManager.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mFriend.getDebt());
 			}
 			else
 			{
@@ -71,7 +71,7 @@ public class ShareDialog extends Builder implements OnClickListener
 			Log.i(TAG, "Email Selected");
 			if (mEmails.size() >= 1)
 			{
-				SendMail.emailFriend(mContext, mFriend.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
+				ShareManager.emailFriend(mContext, mFriend.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
 			}
 			else
 			{

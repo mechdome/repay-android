@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,9 +24,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.repay.android.ContactsContractHelper;
+import com.repay.android.debtwizard.ChoosePersonAdapter;
+import com.repay.android.debtwizard.DebtActivity;
+import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.R;
-import com.repay.android.database.DatabaseHandler;
+import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
 
 import java.math.BigDecimal;
@@ -107,7 +109,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				{
 					if (!TextUtils.isEmpty(name))
 					{
-						Friend newFriend = new Friend(DatabaseHandler.generateRepayID(), null, name, new BigDecimal("0"));
+						Friend newFriend = new Friend(DatabaseManager.generateRepayID(), null, name, new BigDecimal("0"));
 						((DebtActivity)getActivity()).getDBHandler().addFriend(newFriend);
 						new GetFriendsFromDB().execute();
 					}
@@ -136,7 +138,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				String contactUri = data.getData().toString();
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
-				Friend pickerResult = new Friend(DatabaseHandler.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
+				Friend pickerResult = new Friend(DatabaseManager.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
 				((DebtActivity)getActivity()).getDBHandler().addFriend(pickerResult);
 
 				new GetFriendsFromDB().execute();
@@ -226,7 +228,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		}
 	}
 
-	private class GetFriendsFromDB extends AsyncTask<DatabaseHandler, Integer, ArrayList<Friend>>
+	private class GetFriendsFromDB extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
 	{
 
 		@Override
@@ -237,7 +239,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		}
 
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseHandler... params)
+		protected ArrayList<Friend> doInBackground(DatabaseManager... params)
 		{
 			try
 			{

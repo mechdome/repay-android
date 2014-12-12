@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +15,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.repay.android.Application;
 import com.repay.android.R;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.debtwizard.DebtActivity;
+import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.view.RoundedImageView;
 
 import java.util.ArrayList;
@@ -50,8 +51,7 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 	{
 		super.onActivityCreated(savedInstanceState);
 
-		getActivity().getActionBar().setTitle(R.string.summary);
-		getActivity().getActionBar().setSubtitle(null);
+		getActivity().setTitle(R.string.summary);
 
 		mDescription = (EditText)getView().findViewById(R.id.description);
 		mSplitEvenly = (CheckBox)getView().findViewById(R.id.split_amount);

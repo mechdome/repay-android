@@ -1,4 +1,4 @@
-package com.repay.android;
+package com.repay.android.manager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
-import com.repay.android.database.DatabaseHandler;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.fragment.SettingsFragment;
 
 import java.math.BigDecimal;
 
@@ -20,10 +19,10 @@ import java.math.BigDecimal;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class SendMail
+public class ShareManager
 {
 
-	private static final String TAG = SendMail.class.getName();
+	private static final String TAG = ShareManager.class.getName();
 
 	/**
 	 * Start intent for sending an email to my email with a set subject.
@@ -40,7 +39,7 @@ public class SendMail
 		String emailBody;
 		try
 		{
-			DatabaseHandler db = new DatabaseHandler(c);
+			DatabaseManager db = new DatabaseManager(c);
 			int people = db.getNumberOfPeople();
 			int debts = db.getNumberOfDebts();
 			emailBody = "API Level: " + Integer.toString(Build.VERSION.SDK_INT) +

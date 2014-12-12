@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.AlertDialog;
 import android.net.Uri;
@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.repay.android.Application;
-import com.repay.android.ContactsContractHelper;
+import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.R;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.view.RoundedImageView;
 
 import java.math.BigDecimal;

@@ -1,11 +1,11 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.Fragment;
 import android.os.Bundle;
 
 import com.repay.android.R;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.fragment.SettingsFragment;
 
 /**
  * Created by Matt Allen

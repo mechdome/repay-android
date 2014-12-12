@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import com.repay.android.model.Friend;
 

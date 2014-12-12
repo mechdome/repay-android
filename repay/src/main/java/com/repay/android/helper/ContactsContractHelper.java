@@ -1,4 +1,4 @@
-package com.repay.android;
+package com.repay.android.helper;
 
 import android.content.Context;
 import android.database.Cursor;

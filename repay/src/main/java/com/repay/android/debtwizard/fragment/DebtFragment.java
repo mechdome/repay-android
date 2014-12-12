@@ -1,4 +1,4 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard.fragment;
 
 import android.app.Fragment;
 

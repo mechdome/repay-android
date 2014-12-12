@@ -1,9 +1,11 @@
-package com.repay.android.adddebt;
+package com.repay.android.debtwizard;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.repay.android.R;
+import com.repay.android.debtwizard.fragment.DebtFragment;
+import com.repay.android.debtwizard.fragment.EnterAmountFragment;
 
 import java.math.BigDecimal;
 

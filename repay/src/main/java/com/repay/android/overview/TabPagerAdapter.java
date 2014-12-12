@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;

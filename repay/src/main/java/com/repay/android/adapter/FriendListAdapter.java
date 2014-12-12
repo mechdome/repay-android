@@ -1,12 +1,15 @@
-package com.repay.android;
+package com.repay.android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.repay.android.R;
 import com.repay.android.model.Friend;
+import com.repay.android.view.holder.FriendViewHolder;
 
 import java.util.ArrayList;
 
@@ -14,7 +17,7 @@ import java.util.ArrayList;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
+ *
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
@@ -28,6 +31,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	private ArrayList<Friend> mFriends;
 	private int mSelectedView;
 	private Context mContext;
+	private OnItemClickListener mItemClickListener;
 
 	public FriendListAdapter(Context context, ArrayList<Friend> friends, int viewStyle)
 	{
@@ -46,8 +50,8 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 
 	public void setItems(ArrayList<Friend> friends)
 	{
+		mFriends.clear();
 		mFriends = friends;
-		notifyDataSetChanged();
 	}
 
 	@Override public FriendViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
@@ -77,5 +81,10 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	@Override public int getItemCount()
 	{
 		return mFriends.size();
+	}
+
+	public void setOnItemClickListener(OnItemClickListener listener)
+	{
+		mItemClickListener = listener;
 	}
 }

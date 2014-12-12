@@ -6,11 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.repay.android.adddebt.AddDebtActivity;
-import com.repay.android.database.DatabaseHandler;
+import com.repay.android.debtwizard.AddDebtActivity;
+import com.repay.android.fragment.FriendsListFragment;
+import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsActivity;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.fragment.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,14 +19,14 @@ import java.util.Collections;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
+ *
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class MainActivity extends ActionBarActivity
 {
-	private DatabaseHandler mDB;
+	private DatabaseManager mDB;
 	private ArrayList<Friend> mFriends;
 
 	@Override
@@ -35,9 +35,9 @@ public class MainActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mDB = new DatabaseHandler(this);
+		mDB = new DatabaseManager(this);
 
-		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new StartFragment()).commit();
+		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new FriendsListFragment()).commit();
 	}
 
 	@Override
@@ -46,10 +46,8 @@ public class MainActivity extends ActionBarActivity
 		super.onSaveInstanceState(outState);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	@Override public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -90,7 +88,7 @@ public class MainActivity extends ActionBarActivity
 		}
 	}
 
-	public DatabaseHandler getDB()
+	public DatabaseManager getDB()
 	{
 		return mDB;
 	}

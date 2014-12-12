@@ -1,4 +1,4 @@
-package com.repay.android.frienddetails;
+package com.repay.android.overview;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -16,15 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.repay.android.ContactsContractHelper;
+import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.R;
-import com.repay.android.adddebt.AddDebtActivity;
-import com.repay.android.adddebt.DebtActivity;
-import com.repay.android.adddebt.RepayDebtActivity;
-import com.repay.android.database.DatabaseHandler;
+import com.repay.android.debtwizard.AddDebtActivity;
+import com.repay.android.debtwizard.DebtActivity;
+import com.repay.android.debtwizard.RepayDebtActivity;
+import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsActivity;
-import com.repay.android.settings.SettingsFragment;
+import com.repay.android.SettingsActivity;
+import com.repay.android.fragment.SettingsFragment;
 
 import java.math.BigDecimal;
 
@@ -44,7 +44,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 	private Friend mFriend;
 	private ViewPager mTabView;
 	private TabPagerAdapter mPageAdapter;
-	private DatabaseHandler mDB;
+	private DatabaseManager mDB;
 	private FriendFragment mOverViewFrag, mDebtHistoryFrag;
 
 	@Override
@@ -52,7 +52,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_frienddetails);
-		mDB = new DatabaseHandler(this);
+		mDB = new DatabaseManager(this);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -115,7 +115,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		}
 	}
 
-	public DatabaseHandler getDB()
+	public DatabaseManager getDB()
 	{
 		return mDB;
 	}

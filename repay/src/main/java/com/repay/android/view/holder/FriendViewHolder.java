@@ -1,23 +1,21 @@
-package com.repay.android;
+package com.repay.android.view.holder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.frienddetails.FriendActivity;
+import com.repay.android.Application;
+import com.repay.android.R;
+import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.model.Friend;
-import com.repay.android.settings.SettingsFragment;
 import com.repay.android.view.RoundedImageView;
 
 import java.math.BigDecimal;
 
 /**
- * // TODO: Add class description
- *
  * @author Matt Allen
  * @project Repay
  */
@@ -68,8 +66,6 @@ public class FriendViewHolder extends ViewHolder implements OnClickListener
 
 	@Override public void onClick(View v)
 	{
-		Intent i = new Intent(v.getContext(), FriendActivity.class);
-		i.putExtra(FriendActivity.FRIEND, mFriend);
-		v.getContext().startActivity(i);
+		
 	}
 }
