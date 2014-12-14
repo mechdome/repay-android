@@ -54,10 +54,10 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 		if (debt != null)
 		{
 			v.setTag(debt);
-			TextView description = (TextView)v.findViewById(R.id.fragment_debthistory_list_description);
-			TextView amount = (TextView)v.findViewById(R.id.fragment_debthistory_list_amount);
-			TextView dateTxt = (TextView)v.findViewById(R.id.fragment_debthistory_list_date);
-			ImageView icon = (ImageView)v.findViewById(R.id.fragment_debthistory_list_icon);
+			TextView description = (TextView)v.findViewById(R.id.description);
+			TextView amount = (TextView)v.findViewById(R.id.amount);
+			TextView dateTxt = (TextView)v.findViewById(R.id.default_activity_button);
+			ImageView icon = (ImageView)v.findViewById(R.id.icon);
 
 			if (debt.getAmount().compareTo(BigDecimal.ZERO) < 0)
 			{

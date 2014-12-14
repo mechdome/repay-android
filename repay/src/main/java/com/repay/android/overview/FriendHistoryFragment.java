@@ -193,7 +193,7 @@ public class FriendHistoryFragment extends FriendFragment implements AdapterView
 			mProgressBar.setVisibility(ProgressBar.GONE);
 			if (result != null && result.size() > 0)
 			{
-				mAdapter = new FriendHistoryAdapter(getActivity(), R.layout.fragment_debthistory_listitem, result);
+				mAdapter = new FriendHistoryAdapter(getActivity(), R.layout.friend_list_item, result);
 				mList.setAdapter(mAdapter);
 				mList.setVisibility(ListView.VISIBLE);
 			}

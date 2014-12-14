@@ -57,8 +57,8 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 			v = vi.inflate(mLayoutID, null);
 		}
 		Friend friend = mFriends.get(position);
-		TextView name = (TextView)v.findViewById(R.id.activity_friendchooser_name);
-		final ImageView pic = (ImageView)v.findViewById(R.id.activity_friendchooser_pic);
+		TextView name = (TextView)v.findViewById(R.id.name);
+		final ImageView pic = (ImageView)v.findViewById(R.id.image);
 		if (friend != null)
 		{
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
