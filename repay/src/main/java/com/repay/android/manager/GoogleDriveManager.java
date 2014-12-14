@@ -52,7 +52,7 @@ public class GoogleDriveManager
 		// Put file in Google Drive
 	}
 
-	public void doRestore(Context context, OnRestoreCompleteListener listener)
+	public void doRestore(Context context, String path, OnRestoreCompleteListener listener)
 	{
 		// Check file exists on Drive
 		// Replace local file with one from Drive
