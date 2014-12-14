@@ -3,6 +3,8 @@ package com.repay.android;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
 import com.repay.android.fragment.SettingsFragment;
 
 /**
@@ -16,11 +18,23 @@ import com.repay.android.fragment.SettingsFragment;
 
 public class SettingsActivity extends ActionBarActivity
 {
+	private GoogleApiClient mGoogleApiClient;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_activity);
 		getFragmentManager().beginTransaction().replace(R.id.settings_FrameLayout, new SettingsFragment()).commit();
+
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+			.addApi(Drive.API)
+			.addScope(Drive.SCOPE_FILE)
+			.build();
+	}
+
+	public GoogleApiClient getGoogleApiClient()
+	{
+		return mGoogleApiClient;
 	}
 }
