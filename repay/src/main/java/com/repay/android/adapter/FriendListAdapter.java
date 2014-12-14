@@ -14,12 +14,12 @@ import com.repay.android.view.holder.FriendViewHolder;
 import java.util.ArrayList;
 
 /**
+ * {@link android.support.v7.widget.RecyclerView.Adapter} for showing friends in a list or grid.
+ * Whether amounts are to be shown is toggleable.
+ *
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
- * This software is distributed under the Apache v2.0 license and use
- * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class FriendListAdapter extends Adapter<FriendViewHolder>
@@ -32,6 +32,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	private int mSelectedView;
 	private Context mContext;
 	private OnItemClickListener<Friend> mItemClickListener;
+	private boolean mShowingAmounts = true;
 
 	public FriendListAdapter(Context context, ArrayList<Friend> friends, int viewStyle)
 	{
@@ -46,6 +47,16 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		super();
 		mSelectedView = viewStyle;
 		mContext = context;
+	}
+
+	public void setShowingAmounts(boolean state)
+	{
+		mShowingAmounts = state;
+	}
+
+	public boolean isShowingAmounts()
+	{
+		return mShowingAmounts;
 	}
 
 	public void setItems(ArrayList<Friend> friends)
@@ -75,7 +86,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 
 	@Override public void onBindViewHolder(FriendViewHolder vh, final int i)
 	{
-		vh.populateView(mContext, mFriends.get(i));
+		vh.populateView(mContext, mFriends.get(i), mShowingAmounts);
 		vh.setOnClickListener(new OnClickListener()
 		{
 			@Override public void onClick(View v)

@@ -34,39 +34,31 @@ public class FriendViewHolder extends ViewHolder
 		super(itemView);
 		mImage = (RoundedImageView)itemView.findViewById(R.id.image);
 		mName = (TextView)itemView.findViewById(R.id.name);
-		try
-		{
-			mAmount = (TextView)itemView.findViewById(R.id.amount);
-		}
-		catch (Exception e)
-		{
-			// Using list, not grid
-		}
+		mAmount = (TextView)itemView.findViewById(R.id.amount);
 	}
 
-	public void populateView(Context context, Friend friend)
+	public void populateView(Context context, Friend friend, boolean showingAmount)
 	{
 		ImageLoader.getInstance().displayImage(friend.getLookupURI(), mImage, Application.getImageOptions());
 		mName.setText(friend.getName());
+		if (!showingAmount)
+		{
+			mAmount.setVisibility(View.GONE);
+		}
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mImage.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
-			if (mAmount != null)
-			{
-				mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
-			}
+			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
 		}
 		else
 		{
 			mImage.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
-			if (mAmount != null)
-			{
-				mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
-			}
+			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
 		}
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0 && SettingsFragment.isUsingNeutralColour(context))
 		{
 			mImage.setOuterColor(SettingsFragment.getNeutralDebtColourPreference(context));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + "0.00");
 		}
 	}
 
