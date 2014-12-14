@@ -45,5 +45,11 @@
 	<string name="please_enter_name">Please Enter A Name</string>
 	<string name="manage_debt">Manage Debt</string>
 	<string name="youre_owed">You\'re Owed</string>
+	<string name="backup">Backup</string>
+	<string name="restore_summary">Restore from an existing backup in Google Drive. Anything already in the app will be removed and replaced by the data in the backup</string>
+	<string name="backup_summary">Backup all of your added people and their debts to Google Drive</string>
+	<string name="auto_backup">Auto Backup</string>
+	<string name="auto_backup_summary_off">Changes will only be synced when you request them. Request a backup using the button below.</string>
+	<string name="auto_backup_summary_on">All changes will be synced to Google Drive when you make any changes</string>
 
 </resources>

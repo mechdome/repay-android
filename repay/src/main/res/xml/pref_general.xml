@@ -64,4 +64,24 @@
 			/>
 	</PreferenceCategory>
 
+	<PreferenceCategory android:title="@string/backup">
+		<CheckBoxPreference
+			android:title="@string/auto_backup"
+			android:key="autoBackup"
+			android:summaryOn="@string/auto_backup_summary_on"
+			android:summaryOff="@string/auto_backup_summary_off"
+		/>
+		<Preference
+			android:key="backup"
+			android:selectable="true"
+			android:summary="@string/backup_summary"
+			android:title="@string/backup"
+		/>
+		<Preference
+			android:key="restore"
+			android:selectable="true"
+			android:summary="@string/restore_summary"
+		/>
+	</PreferenceCategory>
+
 </PreferenceScreen>
