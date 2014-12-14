@@ -81,6 +81,7 @@
 			android:key="restore"
 			android:selectable="true"
 			android:summary="@string/restore_summary"
+			android:title="@string/restore"
 		/>
 	</PreferenceCategory>
 

@@ -51,5 +51,7 @@
 	<string name="auto_backup">Auto Backup</string>
 	<string name="auto_backup_summary_off">Changes will only be synced when you request them. Request a backup using the button below.</string>
 	<string name="auto_backup_summary_on">All changes will be synced to Google Drive when you make any changes</string>
+	<string name="restore_from_google">Restore From Google Drive</string>
+	<string name="restore">Restore</string>
 
 </resources>

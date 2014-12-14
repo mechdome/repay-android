@@ -1,16 +1,24 @@
 package com.repay.android.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 
+import com.google.android.gms.drive.Drive;
 import com.repay.android.R;
+import com.repay.android.SettingsActivity;
+import com.repay.android.manager.GoogleDriveManager;
 import com.repay.android.manager.ShareManager;
 
 import java.math.BigDecimal;
@@ -41,6 +49,9 @@ public class SettingsFragment extends PreferenceFragment
 	private static final String PREF_KEY_DEBTHISTORY_COLOURS = "debthistoryColours";
 	private static final String PREF_KEY_SORTORDER = "sortOrder";
 	private static final String PREF_KEY_USE_NEUTRAL_COLOUR = "neutralColor";
+	private static final String PREF_KEY_RESTORE = "restore";
+	private static final String PREF_KEY_BACKUP = "backup";
+	private static final String PREF_KEY_AUTO_BACKUP = "autoBackup";
 
 	/**
 	 * @param c The Context to operate in
@@ -200,6 +211,33 @@ public class SettingsFragment extends PreferenceFragment
 				return true;
 			}
 		});
+		findPreference(PREF_KEY_RESTORE).setOnPreferenceClickListener(new OnPreferenceClickListener()
+		{
+			@Override public boolean onPreferenceClick(Preference preference)
+			{
+				new Builder(getActivity())
+					.setTitle(R.string.restore_from_google)
+					.setMessage(R.string.are_you_sure)
+					.setPositiveButton("Yes", new OnClickListener()
+					{
+						@Override public void onClick(DialogInterface dialog, int which)
+						{
+							IntentSender intentSender = Drive.DriveApi
+								.newOpenFileActivityBuilder()
+								.setMimeType(new String[]{"file/file"})
+								.build(((SettingsActivity)getActivity()).getGoogleApiClient());
+							// Restore from this file
+						}
+					})
+					.setNegativeButton("Cancel", null)
+					.show();
+				return true;
+			}
+		});
+		if (!TextUtils.isEmpty(GoogleDriveManager.getInstance().getBackupPath()))
+		{
+			findPreference(PREF_KEY_AUTO_BACKUP).setEnabled(false);
+		}
 	}
 
 	/**
