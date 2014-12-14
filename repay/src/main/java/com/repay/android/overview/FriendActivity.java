@@ -1,8 +1,6 @@
 package com.repay.android.overview;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -10,7 +8,10 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar.TabListener;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,7 @@ import java.math.BigDecimal;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class FriendActivity extends Activity implements View.OnClickListener
+public class FriendActivity extends ActionBarActivity implements View.OnClickListener
 {
 	public static final String FRIEND = "friend";
 	private static final int PICK_CONTACT_REQUEST = 1;
@@ -53,8 +54,6 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_frienddetails);
 		mDB = new DatabaseManager(this);
-		getActionBar().setDisplayShowTitleEnabled(false);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
 
@@ -65,7 +64,7 @@ public class FriendActivity extends Activity implements View.OnClickListener
 		{
 			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
 			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new FriendFragment[]{mOverViewFrag, mDebtHistoryFrag});
-			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 			mTabView.setAdapter(mPageAdapter);
 			mTabView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
@@ -76,36 +75,29 @@ public class FriendActivity extends Activity implements View.OnClickListener
 				{
 					super.onPageSelected(position);
 					// Find the ViewPager Position
-					getActionBar().setSelectedNavigationItem(position);
+					getSupportActionBar().setSelectedNavigationItem(position);
 					mTabView.setCurrentItem(position, true);
 				}
 			});
 			// Set the ViewPager animation
 			mTabView.setPageTransformer(true, new DepthPageTransformer());
 			// Capture tab button clicks
-			ActionBar.TabListener tabListener = new ActionBar.TabListener()
+			TabListener tabListener = new TabListener()
 			{
-
 				@Override
-				public void onTabReselected(Tab tab, android.app.FragmentTransaction ft)
-				{
-				}
-
-				@Override
-				public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft)
-				{
-				}
-
-				@Override
-				public void onTabSelected(Tab tab, android.app.FragmentTransaction ft)
+				public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 				{
 					mTabView.setCurrentItem(tab.getPosition());
 				}
+				@Override
+				public void onTabUnselected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction){}
+				@Override
+				public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction){}
 			};
 
 			// Create tabs
-			getActionBar().addTab(getActionBar().newTab().setText(mFriend.getName()).setTabListener(tabListener));
-			getActionBar().addTab(getActionBar().newTab().setText(getString(R.string.history)).setTabListener(tabListener));
+			getSupportActionBar().addTab(getSupportActionBar().newTab().setText(mFriend.getName()).setTabListener(tabListener));
+			getSupportActionBar().addTab(getSupportActionBar().newTab().setText(getString(R.string.history)).setTabListener(tabListener));
 		}
 		else
 		{
