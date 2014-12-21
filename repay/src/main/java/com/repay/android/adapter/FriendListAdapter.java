@@ -32,14 +32,18 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	private int mSelectedView;
 	private Context mContext;
 	private OnItemClickListener<Friend> mItemClickListener;
-	private boolean mShowingAmounts = true;
+	private boolean mShowingAmounts = true, mMultiSelect = false;
+	private ArrayList<Friend> mSelectedFriends;
 
 	public FriendListAdapter(Context context, ArrayList<Friend> friends, int viewStyle)
 	{
 		super();
 		mSelectedView = viewStyle;
 		mContext = context;
-		mFriends = friends;
+		if (friends != null)
+		{
+			mFriends = friends;
+		}
 	}
 
 	public FriendListAdapter(Context context, int viewStyle)
@@ -61,11 +65,28 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 
 	public void setItems(ArrayList<Friend> friends)
 	{
-		mFriends.clear();
-		mFriends = friends;
+		if (friends != null)
+		{
+			mFriends = friends;
+			notifyDataSetChanged();
+		}
 	}
 
-	@Override public FriendViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
+	public void setItemsWithSelected(ArrayList<Friend> friends, ArrayList<Friend> selected)
+	{
+		if (friends != null)
+		{
+			mFriends = friends;
+			if (selected != null)
+			{
+				mSelectedFriends = selected;
+			}
+			notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public FriendViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
 	{
 		View view = null;
 		switch (mSelectedView)
@@ -84,7 +105,8 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		return new FriendViewHolder(view);
 	}
 
-	@Override public void onBindViewHolder(FriendViewHolder vh, final int i)
+	@Override
+	public void onBindViewHolder(FriendViewHolder vh, final int i)
 	{
 		vh.populateView(mContext, mFriends.get(i), mShowingAmounts);
 		vh.setOnClickListener(new OnClickListener()
@@ -97,15 +119,43 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 				}
 			}
 		});
+		if (isMultiSelect())
+		{
+			if (mSelectedFriends.contains(mFriends.get(i)))
+			{
+				vh.setSelected(true);
+			}
+			else
+			{
+				vh.setSelected(false);
+			}
+		}
 	}
 
-	@Override public int getItemCount()
+	@Override
+	public int getItemCount()
 	{
-		return mFriends.size();
+		return mFriends != null ? mFriends.size() : 0;
 	}
 
 	public void setOnItemClickListener(OnItemClickListener listener)
 	{
 		mItemClickListener = listener;
+	}
+
+	public void setSelectedFriends(ArrayList<Friend> friends)
+	{
+		mSelectedFriends = friends;
+		notifyDataSetChanged();
+	}
+
+	public void setMultiSelect(boolean state)
+	{
+		mMultiSelect = state;
+	}
+
+	public boolean isMultiSelect()
+	{
+		return mMultiSelect;
 	}
 }
