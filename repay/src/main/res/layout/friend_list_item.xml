@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	>
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
 	<com.repay.android.view.RoundedImageView
 		android:layout_width="60dp"
@@ -10,19 +9,16 @@
 		android:id="@+id/image"
 		android:layout_centerVertical="true"
 		android:layout_margin="8dp"
-		android:contentDescription="@string/contentDesc"
-		/>
+		android:contentDescription="@string/contentDesc"/>
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/name"
+	<com.repay.android.view.RoundedImageView
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:id="@+id/selected"
 		android:layout_centerVertical="true"
-		android:layout_toRightOf="@id/image"
-		android:ellipsize="marquee"
-		android:maxLines="2"
-		android:textSize="20sp"
-		/>
+		android:src="@drawable/ic_selected"
+		android:scaleType="centerInside"
+		android:layout_margin="8dp"/>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -30,7 +26,19 @@
 		android:id="@+id/amount"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"
-		android:padding="8dp"
-		/>
+		android:padding="8dp"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/name"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@id/image"
+		android:layout_toEndOf="@id/image"
+		android:layout_toLeftOf="@id/amount"
+		android:layout_toStartOf="@id/amount"
+		android:ellipsize="marquee"
+		android:maxLines="2"
+		android:textSize="20sp"/>
 
 </RelativeLayout>

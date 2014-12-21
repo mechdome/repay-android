@@ -26,6 +26,7 @@ public class FriendViewHolder extends ViewHolder
 	 */
 	private Friend mFriend;
 	private RoundedImageView mImage;
+	private RoundedImageView mSelected;
 	private TextView mName;
 	private TextView mAmount;
 
@@ -35,6 +36,8 @@ public class FriendViewHolder extends ViewHolder
 		mImage = (RoundedImageView)itemView.findViewById(R.id.image);
 		mName = (TextView)itemView.findViewById(R.id.name);
 		mAmount = (TextView)itemView.findViewById(R.id.amount);
+		mSelected = (RoundedImageView)itemView.findViewById(R.id.selected);
+		mSelected.setVisibility(View.INVISIBLE);
 	}
 
 	public void populateView(Context context, Friend friend, boolean showingAmount)
@@ -48,16 +51,19 @@ public class FriendViewHolder extends ViewHolder
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mImage.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
+			mSelected.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
 		}
 		else
 		{
 			mImage.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
+			mSelected.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
 		}
 		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0 && SettingsFragment.isUsingNeutralColour(context))
 		{
 			mImage.setOuterColor(SettingsFragment.getNeutralDebtColourPreference(context));
+			mSelected.setOuterColor(SettingsFragment.getNeutralDebtColourPreference(context));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + "0.00");
 		}
 	}
@@ -65,5 +71,17 @@ public class FriendViewHolder extends ViewHolder
 	public void setOnClickListener(OnClickListener listener)
 	{
 		this.itemView.setOnClickListener(listener);
+	}
+
+	public void setSelected(boolean state)
+	{
+		if (state)
+		{
+			mSelected.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			mSelected.setVisibility(View.INVISIBLE);
+		}
 	}
 }
