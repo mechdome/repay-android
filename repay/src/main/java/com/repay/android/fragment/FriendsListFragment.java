@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.repay.android.MainActivity;
@@ -64,18 +63,20 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-
-		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
-	}
-
-	@Override
 	public void onResume()
 	{
 		super.onResume();
 		updateList();
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
+		mAdapter = new FriendListAdapter(getActivity(), ((MainActivity)getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
+		mAdapter.setOnItemClickListener(this);
+		mList.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -112,22 +113,9 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 
 	public void updateList()
 	{
-		if (((MainActivity)getActivity()).getFriends() == null || ((MainActivity)getActivity()).getFriends().size() == 0)
-		{
-			mList.setVisibility(View.GONE);
-			mEmptyState.setVisibility(View.VISIBLE);
-			mProgressBar.setVisibility(ProgressBar.GONE);
-		}
-		else
-		{
-			mList.setVisibility(View.VISIBLE);
-			mEmptyState.setVisibility(View.GONE);
-			mProgressBar.setVisibility(ProgressBar.GONE);
-
-			mAdapter = new FriendListAdapter(getActivity(), ((MainActivity)getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
-			mAdapter.setOnItemClickListener(this);
-			mList.setAdapter(mAdapter);
-		}
+		mList.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(ProgressBar.GONE);
+		mAdapter.setItems(((MainActivity)getActivity()).getFriends());
 	}
 
 	private BigDecimal calculateTotalDebt()
@@ -185,9 +173,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		@Override
 		protected void onPreExecute()
 		{
-			mList.setAdapter(null);
 			mList.setVisibility(ListView.GONE);
-			mEmptyState.setVisibility(RelativeLayout.GONE);
 			mProgressBar.setVisibility(ProgressBar.VISIBLE);
 		}
 
