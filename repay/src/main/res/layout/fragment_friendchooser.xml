@@ -8,7 +8,7 @@
 		style="@style/CustomBtn"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/activity_friendchooser_donebtn"
+		android:id="@+id/done"
 		android:layout_alignParentBottom="true"
 		android:background="@drawable/btn_wide_red"
 		android:fontFamily="sans-serif-condensed"
@@ -16,45 +16,12 @@
 		android:text="@string/next"
 		/>
 
-	<ListView
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:id="@+id/activity_friendchooser_list"
-		android:layout_above="@id/activity_friendchooser_donebtn"
+	<android.support.v7.widget.RecyclerView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/list"
+		android:layout_above="@id/done"
 		android:divider="@null"
-		></ListView>
-
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:id="@+id/activity_friendchooser_emptystate"
-		android:layout_above="@id/activity_friendchooser_donebtn"
-		android:gravity="center_vertical"
-		>
-
-		<TextView
-			style="@style/FriendsList.EmptyListText"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/activity_friendchooser_helptxt"
-			android:layout_marginBottom="30dp"
-			android:fontFamily="sans-serif-condensed"
-			android:gravity="center_horizontal"
-			android:text="@string/nobody_here"
-			/>
-
-		<Button
-			style="@style/CustomBtn"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/activity_friendchooser_helpbtn"
-			android:layout_below="@id/activity_friendchooser_helptxt"
-			android:layout_centerHorizontal="true"
-			android:background="@drawable/btn_wide_red"
-			android:fontFamily="sans-serif-condensed"
-			android:padding="15dp"
-			android:text="@string/add_someone"
-			/>
-	</RelativeLayout>
+	/>
 
 </RelativeLayout>
