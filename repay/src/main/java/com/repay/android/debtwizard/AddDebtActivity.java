@@ -2,7 +2,6 @@ package com.repay.android.debtwizard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,11 +76,10 @@ public class AddDebtActivity extends DebtActivity
 	{
 		switch (v.getId())
 		{
-			case R.id.activity_friendchooser_donebtn:
+			case R.id.done:
 				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
 				if (getDebtBuilder().getSelectedFriends() != null && getDebtBuilder().getSelectedFriends().size() > 0)
 				{
-					Log.i(TAG, Integer.toString(getDebtBuilder().getSelectedFriends().size()) + " people selected");
 					getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
 				}
 				else
