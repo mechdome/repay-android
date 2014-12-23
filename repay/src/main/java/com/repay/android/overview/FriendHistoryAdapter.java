@@ -63,11 +63,11 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 			{
 				if (SettingsFragment.getDebtHistoryColourPreference(context) == SettingsFragment.DEBTHISTORY_GREEN_BLUE)
 				{
-					icon.setImageResource(R.drawable.debt_ind_blue);
+					//icon.setImageResource(R.drawable.debt_ind_blue);
 				}
 				else
 				{
-					icon.setImageResource(R.drawable.debt_ind_red);
+					//icon.setImageResource(R.drawable.debt_ind_red);
 				}
 				//debt.setAmount(debt.getAmount().negate()); // For it to show up without the minus in front of it **Makes Green on recycle. Substr instead**
 				StringBuilder sb = new StringBuilder(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
@@ -77,7 +77,7 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 			else if (debt.getAmount().compareTo(BigDecimal.ZERO) >= 0)
 			{
 				amount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
-				icon.setImageResource(R.drawable.debt_ind_green);
+				//icon.setImageResource(R.drawable.debt_ind_green);
 			}
 			description.setText(debt.getDescription());
 			if (debt.getDescription().equals(""))

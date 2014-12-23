@@ -6,8 +6,17 @@
     <color name="debt_red_dark">#B71C1C</color>
 	<color name="debt_neutral">#34495E</color>
 
+	<color name="primary_old">#F44336</color>
+	<color name="primary_dark_old">#D32F2F</color>
+	<color name="accent_old">#FFEB3B</color>
+	<color name="inactive">#AFAFAF</color>
+
 	<color name="primary">#F44336</color>
 	<color name="primary_dark">#D32F2F</color>
-	<color name="accent">#FFEB3B</color>
-	<color name="inactive">#AFAFAF</color>
+	<color name="primary_light">#FFCDD2</color>
+	<color name="accent">#7C4DFF</color>
+	<color name="primary_text">#212121</color>
+	<color name="secondary_text">#727272</color>
+	<color name="icons">#FFFFFF</color>
+	<color name="divider">#B6B6B6</color>
 </resources>

@@ -3,8 +3,7 @@
 	android:layout_height="fill_parent"
 	android:id="@+id/fragment_start_friendslist_item"
 	android:gravity="center_horizontal"
-	android:padding="8dp"
-	>
+	android:padding="8dp">
 
 	<com.repay.android.view.RoundedImageView
 		android:layout_width="140dp"
@@ -12,25 +11,23 @@
 		android:id="@+id/image"
 		android:layout_centerHorizontal="true"
 		android:contentDescription="@string/contentDesc"
-		android:scaleType="centerCrop"
-		/>
+		android:scaleType="centerCrop"/>
 
 	<com.repay.android.view.RoundedImageView
 		android:layout_width="140dp"
 		android:layout_height="140dp"
 		android:id="@+id/selected"
-		android:padding="40dp"
 		android:layout_centerVertical="true"
-		android:src="@drawable/ic_selected"
-		android:layout_margin="8dp"/>
+		android:src="@drawable/ic_tick"
+		android:layout_margin="8dp"
+		android:scaleType="center"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_below="@id/image"
-		android:orientation="vertical"
-		>
+		android:orientation="vertical">
 
 		<TextView
 			style="@style/FriendsList.Text"
@@ -40,8 +37,7 @@
 			android:layout_marginLeft="4dp"
 			android:layout_marginRight="4dp"
 			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			/>
+			android:gravity="center_horizontal"/>
 
 		<TextView
 			style="@style/FriendsList.Text"
@@ -51,8 +47,7 @@
 			android:layout_marginLeft="4dp"
 			android:layout_marginRight="4dp"
 			android:layout_weight="1"
-			android:gravity="center_horizontal"
-			/>
-	</LinearLayout>
+			android:gravity="center_horizontal"/>
 
+	</LinearLayout>
 </RelativeLayout>

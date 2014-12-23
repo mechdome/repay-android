@@ -16,8 +16,8 @@
 		android:layout_height="60dp"
 		android:id="@+id/selected"
 		android:layout_centerVertical="true"
-		android:src="@drawable/ic_selected"
-		android:scaleType="centerInside"
+		android:src="@drawable/ic_tick"
+		android:scaleType="fitCenter"
 		android:layout_margin="8dp"/>
 
 	<TextView

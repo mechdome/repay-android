@@ -12,10 +12,8 @@ import com.repay.android.images.download.MyImageDownloader;
  * Created by Matt Allen
  * http://mattallensoftware.co.uk
  * mattallen092@gmail.com
- * <p/>
- * 17/05/14
- * <p/>
- * A simple instantiation class for the app-wide variables needed for various functions
+ *
+ * A simple singleton for the app-wide variables needed for various functions
  */
 public class Application extends android.app.Application
 {
@@ -23,7 +21,6 @@ public class Application extends android.app.Application
 	private static final String TAG = Application.class.getSimpleName();
 
 	private static DisplayImageOptions mImageOptions;
-	private ImageLoaderConfiguration mLoadConfig;
 
 	public static DisplayImageOptions getImageOptions()
 	{
@@ -44,9 +41,7 @@ public class Application extends android.app.Application
 			.showImageForEmptyUri(R.drawable.friend_image_light)
 			.build();
 
-		mLoadConfig = new ImageLoaderConfiguration.Builder(this)
-			.imageDownloader(new MyImageDownloader(this))
-			.build();
+		ImageLoaderConfiguration mLoadConfig = new ImageLoaderConfiguration.Builder(this).imageDownloader(new MyImageDownloader(this)).build();
 
 		ImageLoader.getInstance().init(mLoadConfig);
 	}

@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.repay.android.debtwizard.AddDebtActivity;
 import com.repay.android.fragment.FriendsListFragment;
 import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.manager.DatabaseManager;
@@ -57,13 +56,6 @@ public class MainActivity extends ActionBarActivity
 	{
 		switch (item.getItemId())
 		{
-
-			case R.id.action_adddebt:
-				Intent intent = new Intent();
-				intent.setClass(this, AddDebtActivity.class);
-				startActivity(intent);
-				return true;
-
 			case R.id.action_settings:
 				Intent intentSettings = new Intent();
 				intentSettings.setClass(this, SettingsActivity.class);

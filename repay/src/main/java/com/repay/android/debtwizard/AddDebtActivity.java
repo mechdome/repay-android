@@ -2,7 +2,6 @@ package com.repay.android.debtwizard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -45,14 +44,6 @@ public class AddDebtActivity extends DebtActivity
 			// Show the first fragment
 			getFragmentManager().beginTransaction().replace(mFrame, new ChoosePersonFragment()).commit();
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.adddebt, menu);
-		return true;
 	}
 
 	@Override
