@@ -12,10 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -41,37 +39,19 @@ import java.util.ArrayList;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener<Friend>
+public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener<Friend>, OnClickListener
 {
 	public static final int PICK_CONTACT_REQUEST = 1;
 	private static final String TAG = ChoosePersonFragment.class.getName();
-	private RecyclerView mListView;
 	private RelativeLayout mEmptyState;
 	private FriendListAdapter mAdapter;
 	private ArrayList<Friend> mFriends;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true); // Tell the activity that we have ActionBar items
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inf)
-	{
-		super.onCreateOptionsMenu(menu, inf);
-		if (menu.size() <= 1)
-		{
-			inf.inflate(R.menu.chooseperson, menu);
-		}
-	}
 
 	private void showAddFriendDialog()
 	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
-		dialog.setItems(new CharSequence[]{"Add From Contacts", "Add A Name"}, new DialogInterface.OnClickListener()
+		dialog.setItems(new CharSequence[]{"Add From Contacts", "Enter A Name"}, new DialogInterface.OnClickListener()
 		{
 
 			@Override
@@ -96,7 +76,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		dialog.setTitle(R.string.enter_friends_name);
-		final View v = LayoutInflater.from(getActivity()).inflate(R.layout.add_friend_by_name, null);
+		final View v = LayoutInflater.from(getActivity()).inflate(R.layout.add_friend_by_name, null, false);
 		dialog.setView(v);
 		dialog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener()
 		{
@@ -156,23 +136,9 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case R.id.action_addfriend:
-				showAddFriendDialog();
-				return true;
-
-			default:
-				return false;
-		}
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.fragment_friendchooser, container, false);
+		return inflater.inflate(R.layout.fragment_friendpick, container, false);
 	}
 
 	@Override
@@ -180,7 +146,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 		getActivity().setTitle(R.string.title_activity_add_debt);
-		mListView = (RecyclerView)getView().findViewById(R.id.list);
+		RecyclerView mListView = (RecyclerView)getView().findViewById(R.id.list);
 		mListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mAdapter = new FriendListAdapter(getActivity(), mFriends, FriendListAdapter.VIEW_LIST);
 		mListView.setAdapter(mAdapter);
@@ -208,6 +174,11 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().add(obj);
 			mAdapter.setSelectedFriends(((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
 		}
+	}
+
+	@Override public void onClick(View v)
+	{
+		showAddFriendDialog();
 	}
 
 	private class GetFriendsFromDB extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>

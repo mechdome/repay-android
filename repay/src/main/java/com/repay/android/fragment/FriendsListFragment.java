@@ -13,15 +13,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.repay.android.MainActivity;
 import com.repay.android.R;
 import com.repay.android.adapter.FriendListAdapter;
 import com.repay.android.adapter.OnItemClickListener;
+import com.repay.android.debtwizard.AddDebtActivity;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
@@ -40,7 +43,7 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class FriendsListFragment extends Fragment implements OnItemClickListener<Friend>
+public class FriendsListFragment extends Fragment implements OnItemClickListener<Friend>, OnClickListener
 {
 
 	public static final String TAG = FriendsListFragment.class.getName();
@@ -54,11 +57,12 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.fragment_start, container, false);
+		View view = inflater.inflate(R.layout.fragment_friendslist, container, false);
 		mList = (RecyclerView)view.findViewById(R.id.list);
-		mEmptyState = (TextView)view.findViewById(R.id.empty);
 		mProgressBar = (ProgressBar)view.findViewById(R.id.progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
+		((FloatingActionButton)view.findViewById(R.id.add)).attachToRecyclerView(mList);
+		((FloatingActionButton)view.findViewById(R.id.add)).setOnClickListener(this);
 		return view;
 	}
 
@@ -165,6 +169,13 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		Intent i = new Intent(getActivity(), FriendActivity.class);
 		i.putExtra(FriendActivity.FRIEND, obj);
 		startActivity(i);
+	}
+
+	@Override public void onClick(View v)
+	{
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), AddDebtActivity.class);
+		startActivity(intent);
 	}
 
 	private class RecalculateTotalDebts extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
