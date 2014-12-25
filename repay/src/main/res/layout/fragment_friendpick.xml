@@ -12,16 +12,24 @@
 		android:id="@+id/done"
 		android:layout_alignParentBottom="true"
 		android:background="@drawable/btn_wide_red"
-		android:fontFamily="sans-serif-condensed"
 		android:onClick="onNextButtonClick"
 		android:text="@string/next"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/empty"
+		android:layout_centerInParent="true"
+		android:gravity="center"
+		android:layout_above="@id/done"
+		android:text="@string/nobody_here"
+		style="@style/EmptyText"/>
 
 	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:id="@+id/list"
-		android:layout_above="@id/done"
-		android:divider="@null"/>
+		android:layout_above="@id/done"/>
 
 	<com.melnykov.fab.FloatingActionButton
 		android:layout_width="wrap_content"
@@ -31,7 +39,7 @@
 		android:layout_margin="16dp"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"
-		android:layout_alignParentBottom="true"
+		android:layout_alignBottom="@id/list"
 		android:layout_above="@id/done"
 		app:fab_colorNormal="@color/primary"
 		app:fab_colorPressed="@color/primary_dark"/>

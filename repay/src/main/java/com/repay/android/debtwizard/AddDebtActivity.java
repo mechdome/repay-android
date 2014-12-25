@@ -19,9 +19,6 @@ import java.math.BigDecimal;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
- * This software is distributed under the Apache v2.0 license and use
- * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class AddDebtActivity extends DebtActivity
@@ -42,7 +39,10 @@ public class AddDebtActivity extends DebtActivity
 		if (getFragmentManager().findFragmentById(mFrame) == null)
 		{
 			// Show the first fragment
-			getFragmentManager().beginTransaction().replace(mFrame, new ChoosePersonFragment()).commit();
+			getFragmentManager()
+				.beginTransaction()
+				.replace(mFrame, new ChoosePersonFragment())
+				.commit();
 		}
 	}
 
@@ -58,46 +58,38 @@ public class AddDebtActivity extends DebtActivity
 				return true;
 
 			default:
-				break;
+				return false;
 		}
-		return false;
 	}
 
 	public void onNextButtonClick(View v)
 	{
-		switch (v.getId())
+		((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+		if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof ChoosePersonFragment)
 		{
-			case R.id.done:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
-				if (getDebtBuilder().getSelectedFriends() != null && getDebtBuilder().getSelectedFriends().size() > 0)
-				{
-					getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
-				}
-				else
-				{
-					Toast.makeText(this, "Please choose 1 or more people first", Toast.LENGTH_SHORT).show();
-				}
-				break;
-
-			case R.id.fragment_enterdebtamount_donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
-				if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
-				{
-					getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
-				}
-				else
-				{
-					Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
-				}
-				break;
-
-			case R.id.donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
-				save();
-				break;
-
-			default:
-				break;
+			if (getDebtBuilder().getSelectedFriends() != null && getDebtBuilder().getSelectedFriends().size() > 0)
+			{
+				getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
+			}
+			else
+			{
+				Toast.makeText(this, "Please choose 1 or more people first", Toast.LENGTH_SHORT).show();
+			}
+		}
+		else if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof EnterAmountFragment)
+		{
+			if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
+			{
+				getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
+			}
+			else
+			{
+				Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
+			}
+		}
+		else if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof DebtSummaryFragment)
+		{
+			save();
 		}
 	}
 }

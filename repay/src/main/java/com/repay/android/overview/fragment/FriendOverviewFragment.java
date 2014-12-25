@@ -1,4 +1,4 @@
-package com.repay.android.overview;
+package com.repay.android.overview.fragment;
 
 import android.app.AlertDialog;
 import android.net.Uri;
@@ -18,6 +18,8 @@ import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.model.Friend;
+import com.repay.android.overview.FriendActivity;
+import com.repay.android.overview.ShareDialog;
 import com.repay.android.view.RoundedImageView;
 
 import java.math.BigDecimal;

@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.repay.android.R;
@@ -46,6 +48,8 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	private RelativeLayout mEmptyState;
 	private FriendListAdapter mAdapter;
 	private ArrayList<Friend> mFriends;
+	private Button mDoneBtn;
+	private TextView mEmpty;
 
 	private void showAddFriendDialog()
 	{
@@ -146,7 +150,10 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	{
 		super.onActivityCreated(savedInstanceState);
 		getActivity().setTitle(R.string.title_activity_add_debt);
+		getView().findViewById(R.id.add_person).setOnClickListener(this);
+		mEmpty = ((TextView)getView().findViewById(R.id.empty));
 		RecyclerView mListView = (RecyclerView)getView().findViewById(R.id.list);
+		mDoneBtn = ((Button)getView().findViewById(R.id.done));
 		mListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mAdapter = new FriendListAdapter(getActivity(), mFriends, FriendListAdapter.VIEW_LIST);
 		mListView.setAdapter(mAdapter);
@@ -167,12 +174,20 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().contains(obj))
 		{
 			((DebtActivity)getActivity()).getDebtBuilder().removeSelectedFriend(obj);
-			mAdapter.setSelectedFriends(((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
 		}
 		else
 		{
-			((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().add(obj);
-			mAdapter.setSelectedFriends(((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
+			((DebtActivity)getActivity()).getDebtBuilder().addSelectedFriend(obj);
+		}
+		mAdapter.notifyItemChanged(position);
+
+		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
+		{
+			mDoneBtn.setEnabled(true);
+		}
+		else
+		{
+			mDoneBtn.setEnabled(false);
 		}
 	}
 
@@ -207,5 +222,21 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	private void updateList()
 	{
 		mAdapter.setItemsWithSelected(mFriends, ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
+		if (mFriends != null && mFriends.size() > 0)
+		{
+			mEmpty.setVisibility(View.GONE);
+		}
+		else
+		{
+			mEmpty.setVisibility(View.VISIBLE);
+		}
+		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
+		{
+			mDoneBtn.setEnabled(true);
+		}
+		else
+		{
+			mDoneBtn.setEnabled(false);
+		}
 	}
 }

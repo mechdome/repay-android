@@ -77,11 +77,14 @@ public class FriendViewHolder extends ViewHolder
 	{
 		if (state)
 		{
+			mSelected.setScaleX(0f);
+			mSelected.setScaleY(0f);
+			mSelected.animate()
+				.setDuration(RoundedImageView.ANIMATION_LENGTH)
+				.scaleX(1f)
+				.scaleY(1f)
+				.start();
 			mSelected.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			mSelected.setVisibility(View.INVISIBLE);
 		}
 	}
 }

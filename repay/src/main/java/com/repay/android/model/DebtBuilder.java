@@ -116,16 +116,16 @@ public class DebtBuilder implements Serializable
 		this.mAmount = amount;
 	}
 
-	public ArrayList<String> getAvailableImageUris()
+	public ArrayList<Friend> getFriendsWithImages()
 	{
 		if (mSelectedFriends != null && mSelectedFriends.size() > 0)
 		{
-			ArrayList<String> uris = new ArrayList<String>();
+			ArrayList<Friend> uris = new ArrayList<Friend>();
 			for (Friend friend : mSelectedFriends)
 			{
 				if (!TextUtils.isEmpty(friend.getLookupURI()))
 				{
-					uris.add(friend.getLookupURI());
+					uris.add(friend);
 				}
 			}
 			return uris;

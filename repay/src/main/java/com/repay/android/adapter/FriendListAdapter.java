@@ -158,4 +158,13 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	{
 		return mMultiSelect;
 	}
+
+	public ArrayList<Friend> getSelectedFriends()
+	{
+		if (mSelectedFriends == null)
+		{
+			mSelectedFriends = new ArrayList<Friend>();
+		}
+		return mSelectedFriends;
+	}
 }

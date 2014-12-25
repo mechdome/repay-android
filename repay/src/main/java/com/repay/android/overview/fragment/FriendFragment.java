@@ -1,4 +1,4 @@
-package com.repay.android.overview;
+package com.repay.android.overview.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.model.Friend;
+import com.repay.android.overview.OnFriendUpdatedListener;
 
 /**
  * Created by Matt Allen

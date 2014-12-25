@@ -29,7 +29,4 @@
     <string name="zero_zero">00</string>
     <string name="zero">0</string>
     <string name="clear">C</string>
-
-    <string name="nobody_here">You haven\'t got anyone here yet?</string>
-    <string name="add_someone">Add Someone</string>
 </resources>

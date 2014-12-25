@@ -1,6 +1,5 @@
 package com.repay.android.overview;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -8,9 +7,7 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +23,8 @@ import com.repay.android.fragment.SettingsFragment;
 import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
+import com.repay.android.overview.fragment.FriendFragment;
+import com.repay.android.overview.fragment.FriendHistoryFragment;
 
 import java.math.BigDecimal;
 
@@ -54,69 +53,16 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_frienddetails);
 		mDB = new DatabaseManager(this);
-
 		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
-
-		mOverViewFrag = new FriendOverviewFragment();
-		mDebtHistoryFrag = new FriendHistoryFragment();
-
-		if (findViewById(R.id.activity_frienddetails_tabView) != null)
-		{
-			mTabView = (ViewPager)findViewById(R.id.activity_frienddetails_tabView);
-			mPageAdapter = new TabPagerAdapter(getFragmentManager(), new FriendFragment[]{mOverViewFrag, mDebtHistoryFrag});
-			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-			mTabView.setAdapter(mPageAdapter);
-			mTabView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
-			{
-
-				@Override
-				public void onPageSelected(int position)
-				{
-					super.onPageSelected(position);
-					// Find the ViewPager Position
-					getSupportActionBar().setSelectedNavigationItem(position);
-					mTabView.setCurrentItem(position, true);
-				}
-			});
-			// Set the ViewPager animation
-			mTabView.setPageTransformer(true, new DepthPageTransformer());
-			// Capture tab button clicks
-			TabListener tabListener = new TabListener()
-			{
-				@Override
-				public void onTabSelected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-				{
-					mTabView.setCurrentItem(tab.getPosition());
-				}
-				@Override
-				public void onTabUnselected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction){}
-				@Override
-				public void onTabReselected(android.support.v7.app.ActionBar.Tab tab, FragmentTransaction fragmentTransaction){}
-			};
-
-			// Create tabs
-			getSupportActionBar().addTab(getSupportActionBar().newTab().setText(mFriend.getName()).setTabListener(tabListener));
-			getSupportActionBar().addTab(getSupportActionBar().newTab().setText(getString(R.string.history)).setTabListener(tabListener));
-		}
-		else
-		{
-			// Just show the fragments otherwise
-			getFragmentManager().beginTransaction().replace(R.id.activity_frienddetails_frame1, mOverViewFrag).commit();
-			getFragmentManager().beginTransaction().replace(R.id.activity_frienddetails_frame2, mDebtHistoryFrag).commit();
-		}
+		getFragmentManager()
+			.beginTransaction()
+			.replace(R.id.history, new FriendHistoryFragment())
+			.commit();
 	}
 
 	public DatabaseManager getDB()
 	{
 		return mDB;
-	}
-
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		mFriend = mDB.getFriendByRepayID(mFriend.getRepayID());
 	}
 
 	private void updateFragments()
@@ -343,53 +289,6 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 
 			default:
 				break;
-		}
-
-	}
-
-	public class DepthPageTransformer implements ViewPager.PageTransformer
-	{
-		private static final float MIN_SCALE = 0.5f;
-
-		@Override
-		public void transformPage(View view, float position)
-		{
-			int pageWidth = view.getWidth();
-
-			if (position < -1)
-			{ // [-Infinity,-1)
-				// This page is way off-screen to the left.
-				view.setAlpha(0);
-
-			}
-			else if (position <= 0)
-			{ // [-1,0]
-				// Use the default slide transition when moving to the left page
-				view.setAlpha(1);
-				view.setTranslationX(0);
-				view.setScaleX(1);
-				view.setScaleY(1);
-
-			}
-			else if (position <= 1)
-			{ // (0,1]
-				// Fade the page out.
-				view.setAlpha(1 - position);
-
-				// Counteract the default slide transition
-				view.setTranslationX(pageWidth * -position);
-
-				// Scale the page down (between MIN_SCALE and 1)
-				float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
-				view.setScaleX(scaleFactor);
-				view.setScaleY(scaleFactor);
-
-			}
-			else
-			{ // (1,+Infinity]
-				// This page is way off-screen to the right.
-				view.setAlpha(0);
-			}
 		}
 	}
 }

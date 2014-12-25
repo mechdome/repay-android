@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	>
+	android:layout_height="match_parent">
 
 	<Button
 		style="@style/CustomBtn"
@@ -11,10 +11,8 @@
 		android:id="@+id/donebtn"
 		android:layout_alignParentBottom="true"
 		android:background="@drawable/btn_wide_red"
-		android:fontFamily="sans-serif-condensed"
 		android:onClick="onNextButtonClick"
-		android:text="@string/done"
-		/>
+		android:text="@string/done"/>
 
 	<LinearLayout
 		android:layout_width="fill_parent"
@@ -22,8 +20,7 @@
 		android:id="@+id/radio_group"
 		android:layout_above="@id/donebtn"
 		android:background="@color/inactive"
-		android:orientation="horizontal"
-		>
+		android:orientation="horizontal">
 
 		<TextView
 			android:layout_width="0dp"
@@ -31,16 +28,13 @@
 			android:id="@+id/they_owe_me"
 			android:layout_weight="1"
 			android:background="@color/inactive"
-			android:fontFamily="sans-serif-condensed"
 			android:gravity="center_horizontal"
 			android:paddingBottom="10dp"
 			android:paddingTop="10dp"
 			android:text="@string/they_owe_me"
 			android:textAllCaps="true"
 			android:textColor="@android:color/white"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			/>
+			android:textSize="18sp"/>
 
 		<TextView
 			android:layout_width="0dp"
@@ -48,16 +42,14 @@
 			android:id="@+id/i_owe_them"
 			android:layout_weight="1"
 			android:background="@color/inactive"
-			android:fontFamily="sans-serif-condensed"
 			android:gravity="center_horizontal"
 			android:paddingBottom="10dp"
 			android:paddingTop="10dp"
 			android:text="@string/i_owe_them"
 			android:textAllCaps="true"
 			android:textColor="@android:color/white"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			/>
+			android:textSize="18sp"/>
+
 	</LinearLayout>
 
 	<LinearLayout
@@ -65,14 +57,12 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/header"
 		android:layout_centerHorizontal="true"
-		android:orientation="horizontal"
-		>
+		android:orientation="horizontal">
 
 		<RelativeLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			>
+			android:layout_margin="16dp">
 
 			<com.repay.android.view.RoundedImageView
 				android:layout_width="140dp"
@@ -80,8 +70,7 @@
 				android:id="@+id/header_pic3"
 				android:layout_marginLeft="80dp"
 				android:contentDescription="@string/contentDesc"
-				android:visibility="gone"
-				/>
+				android:visibility="gone"/>
 
 			<com.repay.android.view.RoundedImageView
 				android:layout_width="140dp"
@@ -89,15 +78,13 @@
 				android:id="@+id/header_pic2"
 				android:layout_marginLeft="40dp"
 				android:contentDescription="@string/contentDesc"
-				android:visibility="gone"
-				/>
+				android:visibility="gone"/>
 
 			<com.repay.android.view.RoundedImageView
 				android:layout_width="140dp"
 				android:layout_height="140dp"
 				android:id="@+id/header_pic"
-				android:contentDescription="@string/contentDesc"
-				/>
+				android:contentDescription="@string/contentDesc"/>
 
 		</RelativeLayout>
 
@@ -105,12 +92,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:id="@+id/overflow_text"
-			android:layout_alignParentRight="true"
 			android:fontFamily="sans-serif-light"
 			android:gravity="center"
 			android:textSize="30sp"
-			android:visibility="gone"
-			/>
+			android:visibility="gone"/>
 
 	</LinearLayout>
 
@@ -124,8 +109,7 @@
 		android:layout_marginRight="16dp"
 		android:layout_marginTop="8dp"
 		android:hint="@string/description_hint"
-		android:padding="8dp"
-		/>
+		android:padding="8dp"/>
 
 	<CheckBox
 		android:layout_width="fill_parent"
@@ -136,8 +120,7 @@
 		android:layout_marginRight="16dp"
 		android:checked="false"
 		android:padding="8dp"
-		android:text="@string/split_amount"
-		/>
+		android:text="@string/split_amount"/>
 
 	<CheckBox
 		android:layout_width="fill_parent"
@@ -148,8 +131,7 @@
 		android:layout_marginRight="16dp"
 		android:checked="false"
 		android:padding="8dp"
-		android:text="@string/including_me"
-		/>
+		android:text="@string/including_me"/>
 
 	<TextView
 		android:layout_width="fill_parent"
@@ -161,7 +143,6 @@
 		android:gravity="center_horizontal|center_vertical"
 		android:padding="8dp"
 		android:textColor="@android:color/secondary_text_light"
-		android:textSize="60sp"
-		/>
+		android:textSize="60sp"/>
 
 </RelativeLayout>

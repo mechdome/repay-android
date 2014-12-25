@@ -6,26 +6,10 @@
 		<item name="android:maxLines">1</item>
     </style>
 
-    <style name="FriendsList.EmptyListText" parent="@android:style/Widget.Holo.TextView">
+    <style name="EmptyText">
         <item name="android:textStyle">italic</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">#666666</item>
-    </style>
-
-    <style name="AddDebt.LabelText" parent="@android:style/TextAppearance.Holo.Medium">
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="AddDebt.SelectedFriendText" parent="@android:style/TextAppearance.Holo.Medium">
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="FriendChooser.ListText" parent="@android:style/TextAppearance.Holo.Medium">
-        <item name="android:textSize">25sp</item>
-    </style>
-
-    <style name="AddDebt.AmountEditText" parent="@android:style/Widget.EditText">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/secondary_text</item>
     </style>
 
     <style name="EnterDebtAmount_Button">
@@ -45,7 +29,6 @@
     <style name="CustomBtn" parent="@android:style/Widget.Holo.Button">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
 

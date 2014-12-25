@@ -3,6 +3,8 @@ package com.repay.android.overview;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
+import com.repay.android.overview.fragment.FriendFragment;
+
 public class TabPagerAdapter extends FragmentPagerAdapter
 {
 

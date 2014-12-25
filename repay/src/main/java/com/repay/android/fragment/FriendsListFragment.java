@@ -1,6 +1,5 @@
 package com.repay.android.fragment;
 
-import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
@@ -29,6 +28,7 @@ import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Debt;
 import com.repay.android.model.Friend;
 import com.repay.android.overview.FriendActivity;
+import com.repay.android.view.TotalDialog;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,10 +49,10 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	public static final String TAG = FriendsListFragment.class.getName();
 
 	private RecyclerView mList;
-	private TextView mEmptyState;
 	private FriendListAdapter mAdapter;
 	private ProgressBar mProgressBar;
-	private int mListItem = R.layout.friend_grid_item, mSortOrder;
+	private int mSortOrder;
+	private TextView mEmpty;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -63,6 +63,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		mProgressBar.setVisibility(ProgressBar.GONE);
 		((FloatingActionButton)view.findViewById(R.id.add)).attachToRecyclerView(mList);
 		((FloatingActionButton)view.findViewById(R.id.add)).setOnClickListener(this);
+		mEmpty = (TextView)view.findViewById(R.id.empty);
 		return view;
 	}
 
@@ -120,6 +121,15 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		mList.setVisibility(View.VISIBLE);
 		mProgressBar.setVisibility(ProgressBar.GONE);
 		mAdapter.setItems(((MainActivity)getActivity()).getFriends());
+		if (((MainActivity)getActivity()).getFriends() != null &&
+			((MainActivity)getActivity()).getFriends().size() > 0)
+		{
+			mEmpty.setVisibility(View.GONE);
+		}
+		else
+		{
+			mEmpty.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private BigDecimal calculateTotalDebt()
@@ -141,26 +151,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 
 	public void showTotalDialog()
 	{
-		View v = LayoutInflater.from(getActivity()).inflate(R.layout.total_dialog, null, false);
-		BigDecimal totalAmount = calculateTotalDebt();
-
-		if (totalAmount.compareTo(BigDecimal.ZERO) == 1)
-		{
-			((TextView)v.findViewById(R.id.title)).setText(R.string.youre_owed);
-			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
-		}
-		else if (totalAmount.compareTo(BigDecimal.ZERO) == 0)
-		{
-			((TextView)v.findViewById(R.id.title)).setText(R.string.even_debt);
-			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().toString());
-		}
-		else if (totalAmount.compareTo(BigDecimal.ZERO) == -1)
-		{
-			((TextView)v.findViewById(R.id.title)).setText(R.string.i_owe);
-			((TextView)v.findViewById(R.id.amount)).setText(SettingsFragment.getCurrencySymbol(getActivity()) + calculateTotalDebt().negate().toString());
-		}
-
-		new Builder(getActivity()).setView(v).setPositiveButton(R.string.close, null).show();
+		new TotalDialog(getActivity(), ((MainActivity)getActivity()).getFriends()).show(getFragmentManager(), null);
 	}
 
 	@Override
