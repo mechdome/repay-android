@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<declare-styleable name="RoundedImageView">
+		<attr name="cropImage" format="boolean"/>
+		<attr name="animateChanges" format="boolean"/>
+		<attr name="outerBackground" format="color"/>
+	</declare-styleable>
+</resources>
