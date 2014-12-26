@@ -3,7 +3,9 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_height="wrap_content"
+	android:minHeight="72dp"
+	android:padding="16dp"
 	android:background="?android:attr/selectableItemBackground">
 
 	<TextView
@@ -14,26 +16,33 @@
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"
 		android:textSize="22sp"
-		android:padding="8dp"/>
+		android:paddingLeft="8dp"/>
 
-	<TextView
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/description"
 		android:layout_centerVertical="true"
 		android:layout_toLeftOf="@id/amount"
 		android:layout_toStartOf="@id/amount"
-		android:textSize="18sp"
-		android:padding="8dp"/>
+		android:orientation="vertical">
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/date"
-		android:layout_above="@id/description"
-		android:layout_toLeftOf="@id/amount"
-		android:layout_toStartOf="@id/amount"
-		android:textColor="@color/secondary_text"
-		android:textSize="14sp"/>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/description"
+			android:minHeight="16dp"
+			android:gravity="bottom"
+			android:textSize="16sp"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/date"
+			android:minHeight="16dp"
+			android:gravity="top"
+			android:textColor="@color/secondary_text"
+			android:textSize="14sp"/>
+
+	</LinearLayout>
 
 </RelativeLayout>
