@@ -55,6 +55,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 	{
 		super.onActivityCreated(savedInstanceState);
 		mAdapter = new DebtListAdapter();
+		mAdapter.setOnItemLongClickListener(this);
 		mList = (RecyclerView)getView().findViewById(R.id.list);
 		mList.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mList.setAdapter(mAdapter);
