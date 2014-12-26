@@ -44,8 +44,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.fragment_frienddetails, container, false);
-		return view;
+		return inflater.inflate(R.layout.fragment_frienddetails, container, false);
 	}
 
 	@Override
