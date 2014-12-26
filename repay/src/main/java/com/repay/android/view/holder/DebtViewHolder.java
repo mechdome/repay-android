@@ -35,16 +35,19 @@ public class DebtViewHolder extends ViewHolder
 		if (model.getAmount().compareTo(BigDecimal.ZERO) == 1)
 		{
 			mAmount.setTextColor(SettingsFragment.getPositiveDebtColourPreference(mAmount.getContext()));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount()));
 		}
 		else if (model.getAmount().compareTo(BigDecimal.ZERO) == -1)
 		{
 			mAmount.setTextColor(SettingsFragment.getNegativeDebtColourPreference(mAmount.getContext()));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount().negate()));
 		}
 		else
 		{
 			mAmount.setTextColor(mAmount.getContext().getResources().getColor(R.color.primary_text));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount()));
 		}
-		mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount()));
+
 		if (!TextUtils.isEmpty(model.getDescription()))
 		{
 			mDescription.setText(model.getDescription());
