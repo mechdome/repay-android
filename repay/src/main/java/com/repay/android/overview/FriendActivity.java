@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,8 +41,6 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 	public static final String FRIEND = "friend";
 	private static final int PICK_CONTACT_REQUEST = 1;
 	private Friend mFriend;
-	private ViewPager mTabView;
-	private TabPagerAdapter mPageAdapter;
 	private DatabaseManager mDB;
 	private FriendFragment mOverViewFrag, mDebtHistoryFrag;
 
@@ -54,9 +51,10 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		setContentView(R.layout.activity_frienddetails);
 		mDB = new DatabaseManager(this);
 		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
+		mDebtHistoryFrag = new FriendHistoryFragment();
 		getFragmentManager()
 			.beginTransaction()
-			.replace(R.id.history, new FriendHistoryFragment())
+			.replace(R.id.history, mDebtHistoryFrag)
 			.commit();
 	}
 
@@ -67,19 +65,8 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 
 	private void updateFragments()
 	{
-		if (mPageAdapter != null)
-		{
-			// Iterate through them and update them
-			for (int i = 0; i < mPageAdapter.getCount(); i++)
-			{
-				mPageAdapter.getItem(i).onFriendUpdated(mFriend);
-			}
-		}
-		else
-		{
-			mOverViewFrag.onFriendUpdated(mFriend);
-			mDebtHistoryFrag.onFriendUpdated(mFriend);
-		}
+		if (mOverViewFrag != null) mOverViewFrag.onFriendUpdated(mFriend);
+		if (mDebtHistoryFrag != null) mDebtHistoryFrag.onFriendUpdated(mFriend);
 	}
 
 	public Friend getFriend()
@@ -175,9 +162,10 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 				mFriend = new Friend(mFriend.getRepayID(), null, mFriend.getName(), mFriend.getDebt());
 				mDB.updateFriendRecord(mFriend);
 				return true;
-		}
 
-		return false;
+			default:
+				return false;
+		}
 	}
 
 	private void clearAllDebts()
