@@ -17,11 +17,8 @@ import com.repay.android.images.download.MyImageDownloader;
  */
 public class Application extends android.app.Application
 {
-
 	private static final String TAG = Application.class.getSimpleName();
-
 	private static DisplayImageOptions mImageOptions;
-
 	public static DisplayImageOptions getImageOptions()
 	{
 		return mImageOptions;
@@ -37,8 +34,8 @@ public class Application extends android.app.Application
 			.cacheInMemory(true)
 			.cacheOnDisk(true)
 			.imageScaleType(ImageScaleType.NONE)
-			.showImageOnLoading(R.drawable.friend_image_light)
-			.showImageForEmptyUri(R.drawable.friend_image_light)
+			.showImageOnLoading(R.drawable.person_fallback)
+			.showImageForEmptyUri(R.drawable.person_fallback)
 			.build();
 
 		ImageLoaderConfiguration mLoadConfig = new ImageLoaderConfiguration.Builder(this).imageDownloader(new MyImageDownloader(this)).build();
