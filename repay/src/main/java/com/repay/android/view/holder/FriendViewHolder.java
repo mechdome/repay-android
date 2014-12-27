@@ -86,5 +86,9 @@ public class FriendViewHolder extends ViewHolder
 				.start();
 			mSelected.setVisibility(View.VISIBLE);
 		}
+		else
+		{
+			mSelected.setVisibility(View.INVISIBLE);
+		}
 	}
 }
