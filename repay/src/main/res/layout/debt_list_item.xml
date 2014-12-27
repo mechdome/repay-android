@@ -32,6 +32,7 @@
 			android:id="@+id/description"
 			android:minHeight="16dp"
 			android:gravity="bottom"
+			android:textColor="@color/primary_text"
 			android:textSize="16sp"/>
 
 		<TextView
