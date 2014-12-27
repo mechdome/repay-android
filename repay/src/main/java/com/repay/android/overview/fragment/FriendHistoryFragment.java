@@ -176,7 +176,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 		{
 			mProgressBar.setVisibility(ProgressBar.GONE);
 			mAdapter.setItems(result);
-			if (result.size() == 0)
+			if (result == null || result.size() == 0)
 			{
 				mNoDebtsMsg.setVisibility(TextView.VISIBLE);
 			}
