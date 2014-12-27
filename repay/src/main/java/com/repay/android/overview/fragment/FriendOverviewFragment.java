@@ -28,9 +28,6 @@ import java.math.BigDecimal;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
- * This software is distributed under the Apache v2.0 license and use
- * of the Repay name may not be used without explicit permission from the project owner.
  */
 
 public class FriendOverviewFragment extends FriendFragment implements OnClickListener
@@ -83,7 +80,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 				}
 				else
 				{
-					Toast.makeText(getActivity(), "There's no debt between you", Toast.LENGTH_SHORT).show(); // TODO Localise
+					Toast.makeText(getActivity(), "There's no debt between you", Toast.LENGTH_SHORT).show();
 				}
 				break;
 		}
