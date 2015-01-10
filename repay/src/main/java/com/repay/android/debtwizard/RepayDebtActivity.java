@@ -24,18 +24,16 @@ import java.math.BigDecimal;
 
 public class RepayDebtActivity extends DebtActivity
 {
-	private int mFrameId = R.id.activity_adddebt_framelayout;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_adddebt);
+		setContentView(R.layout.activity_fragmentholder);
 
 		mBuilder.setDescription(DEBT_REPAID_TEXT);
 
-		getFragmentManager().beginTransaction().replace(mFrameId, new EnterAmountFragment()).commit();
+		getFragmentManager().beginTransaction().replace(R.id.fragment, new EnterAmountFragment()).commit();
 	}
 
 	@Override
@@ -44,7 +42,7 @@ public class RepayDebtActivity extends DebtActivity
 		switch (v.getId())
 		{
 			case R.id.fragment_enterdebtamount_donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrameId)).saveFields();
+				((DebtFragment)getFragmentManager().findFragmentById(R.id.fragment)).saveFields();
 				save();
 				break;
 

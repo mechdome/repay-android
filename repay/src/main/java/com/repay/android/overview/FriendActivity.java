@@ -23,7 +23,7 @@ import com.repay.android.helper.ContactsContractHelper;
 import com.repay.android.manager.DatabaseManager;
 import com.repay.android.model.Friend;
 import com.repay.android.overview.fragment.FriendFragment;
-import com.repay.android.overview.fragment.FriendHistoryFragment;
+import com.repay.android.overview.fragment.FriendOverviewFragment;
 
 import java.math.BigDecimal;
 
@@ -42,19 +42,19 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 	private static final int PICK_CONTACT_REQUEST = 1;
 	private Friend mFriend;
 	private DatabaseManager mDB;
-	private FriendFragment mOverViewFrag, mDebtHistoryFrag;
+	private FriendFragment mOverViewFrag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_frienddetails);
+		setContentView(R.layout.activity_fragmentholder);
 		mDB = new DatabaseManager(this);
 		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
-		mDebtHistoryFrag = new FriendHistoryFragment();
+		mOverViewFrag = new FriendOverviewFragment();
 		getFragmentManager()
 			.beginTransaction()
-			.replace(R.id.history, mDebtHistoryFrag)
+			.replace(R.id.fragment, mOverViewFrag)
 			.commit();
 	}
 
@@ -63,10 +63,9 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		return mDB;
 	}
 
-	private void updateFragments()
+	private void updateFragment()
 	{
 		if (mOverViewFrag != null) mOverViewFrag.onFriendUpdated(mFriend);
-		if (mDebtHistoryFrag != null) mDebtHistoryFrag.onFriendUpdated(mFriend);
 	}
 
 	public Friend getFriend()
@@ -77,7 +76,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 	public void updateFriend()
 	{
 		mFriend = mDB.getFriendByRepayID(mFriend.getRepayID());
-		updateFragments();
+		updateFragment();
 	}
 
 	@Override

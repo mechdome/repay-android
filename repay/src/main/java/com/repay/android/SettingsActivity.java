@@ -24,8 +24,8 @@ public class SettingsActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.settings_activity);
-		getFragmentManager().beginTransaction().replace(R.id.settings_FrameLayout, new SettingsFragment()).commit();
+		setContentView(R.layout.activity_fragmentholder);
+		getFragmentManager().beginTransaction().replace(R.id.fragment, new SettingsFragment()).commit();
 
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 			.addApi(Drive.API)

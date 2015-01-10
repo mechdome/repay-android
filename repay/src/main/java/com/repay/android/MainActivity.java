@@ -32,11 +32,11 @@ public class MainActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_fragmentholder);
 
 		mDB = new DatabaseManager(this);
 
-		getFragmentManager().beginTransaction().replace(R.id.start_fragmentframe, new FriendsListFragment()).commit();
+		getFragmentManager().beginTransaction().replace(R.id.fragment, new FriendsListFragment()).commit();
 	}
 
 	@Override

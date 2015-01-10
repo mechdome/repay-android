@@ -28,11 +28,11 @@ public class EditDebtActivity extends DebtActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_adddebt);
+		setContentView(R.layout.activity_fragmentholder);
 
 		isEditing = true;
 
-		mFrame = R.id.activity_adddebt_framelayout;
+		mFrame = R.id.fragment;
 
 		if (getFragmentManager().findFragmentById(mFrame) == null)
 		{
