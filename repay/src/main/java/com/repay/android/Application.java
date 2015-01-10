@@ -1,7 +1,5 @@
 package com.repay.android;
 
-import android.util.Log;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,7 +26,6 @@ public class Application extends android.app.Application
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d(TAG, "Image options now being set");
 		mImageOptions = new DisplayImageOptions.Builder()
 			.resetViewBeforeLoading(true)
 			.cacheInMemory(true)
