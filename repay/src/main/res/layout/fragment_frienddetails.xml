@@ -1,72 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	>
+	android:orientation="vertical">
 
-	<View
+	<LinearLayout
 		android:layout_width="fill_parent"
-		android:layout_height="120dp"
+		android:layout_height="wrap_content"
 		android:id="@+id/top_background"
 		android:background="#CCCCCC"
-		/>
+		android:padding="16dp"
+		android:orientation="horizontal">
 
 	<com.repay.android.view.RoundedImageView
-		android:layout_width="180dp"
-		android:layout_height="180dp"
+		android:layout_width="140dp"
+		android:layout_height="140dp"
 		android:id="@+id/friend_image"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="28dp"
-		android:contentDescription="@string/contentDesc"
-		android:scaleType="centerCrop"
-		/>
+		android:layout_gravity="center"
+		android:contentDescription="@string/contentDesc"/>
 
-	<TextView
-		android:layout_width="fill_parent"
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_gravity="center">
+
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/owe_status"
+				android:gravity="center_horizontal"
+				android:textColor="#FFFFFF"
+				android:textSize="18sp"
+				android:textStyle="italic"/>
+
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/amount"
+				android:fontFamily="sans-serif-light"
+				android:gravity="top|center_horizontal"
+				android:textColor="#FFFFFF"
+				android:textSize="45sp"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/owe_status"
-		android:layout_below="@+id/friend_image"
-		android:fontFamily="sans-serif-condensed"
-		android:gravity="center_horizontal"
-		android:paddingTop="10dp"
-		android:textColor="@android:color/secondary_text_light"
-		android:textSize="25sp"
-		android:textStyle="italic"
-		/>
+		android:id="@+id/history"/>
 
-	<TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/amount"
-		android:layout_below="@+id/owe_status"
-		android:layout_marginTop="-10dp"
-		android:fontFamily="sans-serif-condensed"
-		android:gravity="top|center_horizontal"
-		android:textColor="@android:color/secondary_text_light"
-		android:textSize="60sp"
-		/>
-
-	<Button
-		style="@style/CustomBtn"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/share"
-		android:layout_alignParentBottom="true"
-		android:background="@drawable/btn_wide_red"
-		android:fontFamily="sans-serif-condensed"
-		android:text="@string/share"
-		/>
-
-	<Button
-		style="@style/CustomBtn"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/repaid"
-		android:layout_above="@id/share"
-		android:background="@drawable/btn_wide_red_darker"
-		android:fontFamily="sans-serif-condensed"
-		android:onClick="onClick"
-		android:text="@string/debt_repaid"
-		/>
-
-</RelativeLayout>
+</LinearLayout>
