@@ -117,5 +117,7 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 			mFriendPic.setOuterColor(mTheyOweMeColour);
 			mHeaderBg.setBackgroundColor(mTheyOweMeColour);
 		}
+
+        mHistory.onFriendUpdated(friend);
 	}
 }
