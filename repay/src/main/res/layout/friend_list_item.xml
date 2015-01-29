@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:minHeight="56dp"
-	android:background="?android:attr/selectableItemBackground">
+	android:background="?android:attr/selectableItemBackground"
+	android:minHeight="56dp">
 
 	<com.repay.android.view.RoundedImageView
 		android:id="@+id/image"
+		style="@style/SingleLineListItem.LeftItem"
 		android:layout_centerVertical="true"
-		android:contentDescription="@string/contentDesc"
-		style="@style/SingleLineListItem.LeftItem"/>
+		android:contentDescription="@string/contentDesc" />
 
 	<com.repay.android.view.RoundedImageView
 		android:id="@+id/selected"
+		style="@style/SingleLineListItem.LeftItem"
 		android:layout_centerVertical="true"
-		android:src="@drawable/ic_tick"
-		style="@style/SingleLineListItem.LeftItem"/>
+		android:src="@drawable/ic_tick" />
 
 	<TextView
+		android:id="@+id/amount"
+		style="@style/SingleLineListItem.RightItem"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/amount"
-		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"
-		android:layout_centerVertical="true"
-		style="@style/SingleLineListItem.RightItem"/>
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true" />
 
 	<TextView
 		android:id="@+id/name"
+		style="@style/SingleLineListItem.Text"
 		android:layout_centerVertical="true"
-		android:layout_toRightOf="@id/image"
 		android:layout_toEndOf="@id/image"
 		android:layout_toLeftOf="@id/amount"
-		android:layout_toStartOf="@id/amount"
-		style="@style/SingleLineListItem.Text"/>
+		android:layout_toRightOf="@id/image"
+		android:layout_toStartOf="@id/amount" />
 
 </RelativeLayout>

@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
 	<Button
+		android:id="@+id/donebtn"
 		style="@style/CustomBtn"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/donebtn"
 		android:layout_alignParentBottom="true"
 		android:background="@drawable/btn_wide_red"
 		android:onClick="onNextButtonClick"
-		android:text="@string/done"/>
+		android:text="@string/done" />
 
 	<LinearLayout
+		android:id="@+id/radio_group"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/radio_group"
 		android:layout_above="@id/donebtn"
 		android:background="@color/inactive"
 		android:orientation="horizontal">
 
 		<TextView
+			android:id="@+id/they_owe_me"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:id="@+id/they_owe_me"
 			android:layout_weight="1"
 			android:background="@color/inactive"
 			android:gravity="center_horizontal"
@@ -34,12 +33,12 @@
 			android:text="@string/they_owe_me"
 			android:textAllCaps="true"
 			android:textColor="@android:color/white"
-			android:textSize="18sp"/>
+			android:textSize="18sp" />
 
 		<TextView
+			android:id="@+id/i_owe_them"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:id="@+id/i_owe_them"
 			android:layout_weight="1"
 			android:background="@color/inactive"
 			android:gravity="center_horizontal"
@@ -48,14 +47,14 @@
 			android:text="@string/i_owe_them"
 			android:textAllCaps="true"
 			android:textColor="@android:color/white"
-			android:textSize="18sp"/>
+			android:textSize="18sp" />
 
 	</LinearLayout>
 
 	<LinearLayout
+		android:id="@+id/header"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/header"
 		android:layout_centerHorizontal="true"
 		android:orientation="horizontal">
 
@@ -65,84 +64,84 @@
 			android:layout_margin="16dp">
 
 			<com.repay.android.view.RoundedImageView
+				android:id="@+id/header_pic3"
 				android:layout_width="140dp"
 				android:layout_height="140dp"
-				android:id="@+id/header_pic3"
 				android:layout_marginLeft="80dp"
 				android:contentDescription="@string/contentDesc"
-				android:visibility="gone"/>
+				android:visibility="gone" />
 
 			<com.repay.android.view.RoundedImageView
+				android:id="@+id/header_pic2"
 				android:layout_width="140dp"
 				android:layout_height="140dp"
-				android:id="@+id/header_pic2"
 				android:layout_marginLeft="40dp"
 				android:contentDescription="@string/contentDesc"
-				android:visibility="gone"/>
+				android:visibility="gone" />
 
 			<com.repay.android.view.RoundedImageView
+				android:id="@+id/header_pic"
 				android:layout_width="140dp"
 				android:layout_height="140dp"
-				android:id="@+id/header_pic"
-				android:contentDescription="@string/contentDesc"/>
+				android:contentDescription="@string/contentDesc" />
 
 		</RelativeLayout>
 
 		<TextView
+			android:id="@+id/overflow_text"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
-			android:id="@+id/overflow_text"
 			android:fontFamily="sans-serif-light"
 			android:gravity="center"
 			android:textSize="30sp"
-			android:visibility="gone"/>
+			android:visibility="gone" />
 
 	</LinearLayout>
 
 	<EditText
+		android:id="@+id/description"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/description"
 		android:layout_below="@id/header"
 		android:layout_marginBottom="8dp"
 		android:layout_marginLeft="16dp"
 		android:layout_marginRight="16dp"
 		android:layout_marginTop="8dp"
 		android:hint="@string/description_hint"
-		android:padding="8dp"/>
+		android:padding="8dp" />
 
 	<CheckBox
+		android:id="@+id/split_amount"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/split_amount"
 		android:layout_below="@id/description"
 		android:layout_marginLeft="16dp"
 		android:layout_marginRight="16dp"
 		android:checked="false"
 		android:padding="8dp"
-		android:text="@string/split_amount"/>
+		android:text="@string/split_amount" />
 
 	<CheckBox
+		android:id="@+id/incl_me"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/incl_me"
 		android:layout_below="@id/split_amount"
 		android:layout_marginLeft="16dp"
 		android:layout_marginRight="16dp"
 		android:checked="false"
 		android:padding="8dp"
-		android:text="@string/including_me"/>
+		android:text="@string/including_me" />
 
 	<TextView
+		android:id="@+id/amount"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/amount"
 		android:layout_above="@id/radio_group"
 		android:layout_below="@id/incl_me"
 		android:fontFamily="sans-serif-condensed"
 		android:gravity="center_horizontal|center_vertical"
 		android:padding="8dp"
 		android:textColor="@android:color/secondary_text_light"
-		android:textSize="60sp"/>
+		android:textSize="60sp" />
 
 </RelativeLayout>

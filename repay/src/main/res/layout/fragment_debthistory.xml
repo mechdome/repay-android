@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:padding="16dp">
 
 	<TextView
+		android:id="@+id/empty"
+		style="@style/EmptyText"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/empty"
-		android:text="@string/no_debts"
 		android:layout_centerInParent="true"
-		style="@style/EmptyText"/>
+		android:text="@string/no_debts" />
 
 	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
@@ -23,29 +22,29 @@
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/history"
-			android:textColor="@color/primary_dark"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:paddingTop="16dp"
-			android:paddingBottom="0dp"/>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingBottom="0dp"
+				android:paddingLeft="16dp"
+				android:paddingRight="16dp"
+				android:paddingTop="16dp"
+				android:text="@string/history"
+				android:textColor="@color/primary_dark" />
 
-		<android.support.v7.widget.RecyclerView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/list"/>
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
 
 		</LinearLayout>
 
 	</android.support.v7.widget.CardView>
 
 	<ProgressBar
+		android:id="@+id/progress"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/progress"
-		android:layout_centerInParent="true"/>
+		android:layout_centerInParent="true" />
 
 </RelativeLayout>
