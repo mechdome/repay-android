@@ -43,14 +43,13 @@ public class ShareManager
 			int people = db.getNumberOfPeople();
 			int debts = db.getNumberOfDebts();
 			emailBody = "API Level: " + Integer.toString(Build.VERSION.SDK_INT) +
-				"\nManufacturer: " + Build.MANUFACTURER + "\nModel: " + Build.MODEL + "\nDB:\nPeople=" +
-				Integer.toString(people) + "\nDebts=" + Integer.toString(debts) +
-				"\n\nMessage\n-----------------\n";
-		}
-		catch (Exception e)
+					"\nManufacturer: " + Build.MANUFACTURER + "\nModel: " + Build.MODEL + "\nDB:\nPeople=" +
+					Integer.toString(people) + "\nDebts=" + Integer.toString(debts) +
+					"\n\nMessage\n-----------------\n";
+		} catch (Exception e)
 		{
 			emailBody = "API Level: " + Integer.toString(Build.VERSION.SDK_INT) +
-				"\nManufacturer: " + Build.MANUFACTURER + "\nModel: " + Build.MODEL + "\n\nMessage\n-----------------\n";
+					"\nManufacturer: " + Build.MANUFACTURER + "\nModel: " + Build.MODEL + "\n\nMessage\n-----------------\n";
 			Log.e(TAG, "Could not get number of people/debts in DB");
 		}
 		intent.putExtra(Intent.EXTRA_TEXT, emailBody);
@@ -62,9 +61,9 @@ public class ShareManager
 	/**
 	 * Send an email to a person telling them the state of the debt
 	 *
-	 * @param c Context to run in
+	 * @param c      Context to run in
 	 * @param amount Negate if you owe them
-	 * @param email Address to send to
+	 * @param email  Address to send to
 	 */
 	public static void emailFriend(Context c, BigDecimal amount, String email)
 	{
@@ -77,8 +76,7 @@ public class ShareManager
 		{
 			// Positive number
 			emailBody = "Hey, it seems you owe me " + SettingsFragment.getCurrencySymbol(c) + SettingsFragment.getFormattedAmount(amount);
-		}
-		else
+		} else
 		{
 			// Negative number
 			emailBody = "Hey, I owe you " + SettingsFragment.getCurrencySymbol(c) + SettingsFragment.getFormattedAmount(amount.negate()) + ", I'll pay you back soon";
@@ -98,8 +96,7 @@ public class ShareManager
 		{
 			// Positive number
 			smsBody = "Hey, it seems you owe me " + SettingsFragment.getCurrencySymbol(c) + SettingsFragment.getFormattedAmount(amount);
-		}
-		else
+		} else
 		{
 			// Negative number
 			smsBody = "Hey, I owe you " + SettingsFragment.getCurrencySymbol(c) + SettingsFragment.getFormattedAmount(amount.negate()) + ", I'll pay you back soon";

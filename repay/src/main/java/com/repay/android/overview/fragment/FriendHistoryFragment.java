@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,13 +56,13 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 		super.onActivityCreated(savedInstanceState);
 		mAdapter = new DebtListAdapter();
 		mAdapter.setOnItemLongClickListener(this);
-		mList = (RecyclerView)getView().findViewById(R.id.list);
-		mList.setLayoutManager(new LinearLayoutManager(getActivity()));
+		mList = (RecyclerView) getView().findViewById(R.id.list);
+		mList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 		mList.setAdapter(mAdapter);
-		mNoDebtsMsg = (TextView)getView().findViewById(R.id.empty);
-		mProgressBar = (ProgressBar)getView().findViewById(R.id.progress);
+		mNoDebtsMsg = (TextView) getView().findViewById(R.id.empty);
+		mProgressBar = (ProgressBar) getView().findViewById(R.id.progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
-		new GetDebtsFromDB().execute(((FriendActivity)getActivity()).getFriend());
+		new GetDebtsFromDB().execute(((FriendActivity) getActivity()).getFriend());
 	}
 
 	private void deleteDebt(final Debt debt)
@@ -76,7 +76,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 			public void onClick(DialogInterface dialog, int which)
 			{
 				deleteDebtFromDatabase(debt);
-				((FriendActivity)getActivity()).updateFriend();
+				((FriendActivity) getActivity()).updateFriend();
 			}
 		});
 
@@ -93,14 +93,15 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 	/**
 	 * Remove a debt from the database and update the amount stored
 	 * in the friends table
+	 *
 	 * @param debtToDelete The debt that is to be removed
 	 */
 	public void deleteDebtFromDatabase(Debt debtToDelete)
 	{
 		try
 		{
-			((FriendActivity)getActivity()).getDB().removeDebt(debtToDelete.getDebtID());
-			ArrayList<Debt> allDebts = ((FriendActivity)getActivity()).getDB().getDebtsByRepayID(((FriendActivity)getActivity()).getFriend().getRepayID());
+			((FriendActivity) getActivity()).getDB().removeDebt(debtToDelete.getDebtID());
+			ArrayList<Debt> allDebts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(((FriendActivity) getActivity()).getFriend().getRepayID());
 			BigDecimal newAmount = new BigDecimal("0");
 			if (allDebts != null && allDebts.size() > 0)
 			{
@@ -110,17 +111,17 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 				}
 			}
 
-			((FriendActivity)getActivity()).getFriend().setDebt(newAmount);
-			((FriendActivity)getActivity()).getDB().updateFriendRecord(((FriendActivity)getActivity()).getFriend());
-		}
-		catch (Exception e)
+			((FriendActivity) getActivity()).getFriend().setDebt(newAmount);
+			((FriendActivity) getActivity()).getDB().updateFriendRecord(((FriendActivity) getActivity()).getFriend());
+		} catch (Exception e)
 		{
 			e.printStackTrace();
 			Toast.makeText(getActivity(), "Could not remove debt from database", Toast.LENGTH_SHORT).show();
 		}
 	}
 
-	@Override public void onItemLongClick(final Debt obj, int position)
+	@Override
+	public void onItemLongClick(final Debt obj, int position)
 	{
 		AlertDialog.Builder chooseDialog = new AlertDialog.Builder(getActivity());
 		chooseDialog.setTitle(R.string.manage_debt);
@@ -133,10 +134,9 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 				{
 					Intent i = new Intent(getActivity(), EditDebtActivity.class);
 					i.putExtra(DebtActivity.DEBT, obj);
-					i.putExtra(DebtActivity.FRIEND, ((FriendActivity)getActivity()).getFriend());
+					i.putExtra(DebtActivity.FRIEND, ((FriendActivity) getActivity()).getFriend());
 					getActivity().startActivity(i);
-				}
-				else if (which == 1)
+				} else if (which == 1)
 				{
 					deleteDebt(obj);
 				}
@@ -160,11 +160,10 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 		{
 			try
 			{
-				ArrayList<Debt> debts = ((FriendActivity)getActivity()).getDB().getDebtsByRepayID(params[0].getRepayID());
+				ArrayList<Debt> debts = ((FriendActivity) getActivity()).getDB().getDebtsByRepayID(params[0].getRepayID());
 				Collections.sort(debts);
 				return debts;
-			}
-			catch (Throwable e)
+			} catch (Throwable e)
 			{
 				e.printStackTrace();
 			}
@@ -179,8 +178,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 			if (result == null || result.size() == 0)
 			{
 				mNoDebtsMsg.setVisibility(TextView.VISIBLE);
-			}
-			else
+			} else
 			{
 				mList.setVisibility(ListView.VISIBLE);
 			}

@@ -33,10 +33,10 @@ public class FriendViewHolder extends ViewHolder
 	public FriendViewHolder(View itemView)
 	{
 		super(itemView);
-		mImage = (RoundedImageView)itemView.findViewById(R.id.image);
-		mName = (TextView)itemView.findViewById(R.id.name);
-		mAmount = (TextView)itemView.findViewById(R.id.amount);
-		mSelected = (RoundedImageView)itemView.findViewById(R.id.selected);
+		mImage = (RoundedImageView) itemView.findViewById(R.id.image);
+		mName = (TextView) itemView.findViewById(R.id.name);
+		mAmount = (TextView) itemView.findViewById(R.id.amount);
+		mSelected = (RoundedImageView) itemView.findViewById(R.id.selected);
 		mSelected.setVisibility(View.INVISIBLE);
 	}
 
@@ -53,8 +53,7 @@ public class FriendViewHolder extends ViewHolder
 			mImage.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
 			mSelected.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
-		}
-		else
+		} else
 		{
 			mImage.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
 			mSelected.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
@@ -80,13 +79,12 @@ public class FriendViewHolder extends ViewHolder
 			mSelected.setScaleX(0f);
 			mSelected.setScaleY(0f);
 			mSelected.animate()
-				.setDuration(RoundedImageView.ANIMATION_LENGTH)
-				.scaleX(1f)
-				.scaleY(1f)
-				.start();
+					.setDuration(RoundedImageView.ANIMATION_LENGTH)
+					.scaleX(1f)
+					.scaleY(1f)
+					.start();
 			mSelected.setVisibility(View.VISIBLE);
-		}
-		else
+		} else
 		{
 			mSelected.setVisibility(View.INVISIBLE);
 		}

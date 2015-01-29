@@ -72,6 +72,6 @@ public class Friend implements Comparable<Friend>, Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		return (o.getClass() == Friend.class && ((Friend)o).getRepayID().equals(repayID));
+		return (o.getClass() == Friend.class && ((Friend) o).getRepayID().equals(repayID));
 	}
 }

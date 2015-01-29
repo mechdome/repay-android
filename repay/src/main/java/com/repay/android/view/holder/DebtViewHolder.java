@@ -25,9 +25,9 @@ public class DebtViewHolder extends ViewHolder
 	public DebtViewHolder(View itemView)
 	{
 		super(itemView);
-		mAmount = (TextView)itemView.findViewById(R.id.amount);
-		mDescription = (TextView)itemView.findViewById(R.id.description);
-		mDate = (TextView)itemView.findViewById(R.id.date);
+		mAmount = (TextView) itemView.findViewById(R.id.amount);
+		mDescription = (TextView) itemView.findViewById(R.id.description);
+		mDate = (TextView) itemView.findViewById(R.id.date);
 	}
 
 	public void populateView(Debt model)
@@ -36,13 +36,11 @@ public class DebtViewHolder extends ViewHolder
 		{
 			mAmount.setTextColor(SettingsFragment.getPositiveDebtColourPreference(mAmount.getContext()));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount()));
-		}
-		else if (model.getAmount().compareTo(BigDecimal.ZERO) == -1)
+		} else if (model.getAmount().compareTo(BigDecimal.ZERO) == -1)
 		{
 			mAmount.setTextColor(SettingsFragment.getNegativeDebtColourPreference(mAmount.getContext()));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount().negate()));
-		}
-		else
+		} else
 		{
 			mAmount.setTextColor(mAmount.getContext().getResources().getColor(R.color.primary_text));
 			mAmount.setText(SettingsFragment.getCurrencySymbol(mAmount.getContext()) + SettingsFragment.getFormattedAmount(model.getAmount()));
@@ -51,8 +49,7 @@ public class DebtViewHolder extends ViewHolder
 		if (!TextUtils.isEmpty(model.getDescription()))
 		{
 			mDescription.setText(model.getDescription());
-		}
-		else
+		} else
 		{
 			mDescription.setText("No Description");
 		}

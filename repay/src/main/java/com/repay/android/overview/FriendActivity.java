@@ -50,12 +50,12 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragmentholder);
 		mDB = new DatabaseManager(this);
-		mFriend = (Friend)getIntent().getExtras().get(FRIEND);
+		mFriend = (Friend) getIntent().getExtras().get(FRIEND);
 		mOverViewFrag = new FriendOverviewFragment();
 		getFragmentManager()
-			.beginTransaction()
-			.replace(R.id.fragment, mOverViewFrag)
-			.commit();
+				.beginTransaction()
+				.replace(R.id.fragment, mOverViewFrag)
+				.commit();
 	}
 
 	public DatabaseManager getDB()
@@ -115,8 +115,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 								mDB.removeFriend(mFriend.getRepayID());
 								finish();
 							}
-						}
-						catch (Exception e)
+						} catch (Exception e)
 						{
 							e.printStackTrace();
 						}
@@ -185,8 +184,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 					mDB.updateFriendRecord(mFriend);
 					Toast.makeText(getApplicationContext(), "Debt of " + SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString() + " cleared", Toast.LENGTH_SHORT).show();
 					finish();
-				}
-				catch (Throwable e)
+				} catch (Throwable e)
 				{
 					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 					e.printStackTrace();
@@ -226,13 +224,11 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri, displayName, mFriend.getDebt());
 
 				mDB.updateFriendRecord(pickerResult);
-			}
-			catch (IndexOutOfBoundsException e)
+			} catch (IndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
 				Toast.makeText(this, "Problem in getting result from your contacts", Toast.LENGTH_SHORT).show();
-			}
-			catch (SQLException e)
+			} catch (SQLException e)
 			{
 				e.printStackTrace();
 				Toast.makeText(this, "Unable to add this person to the database", Toast.LENGTH_SHORT).show();
@@ -259,16 +255,14 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 							if (which == 0)
 							{
 								clearAllDebts();
-							}
-							else if (which == 1)
+							} else if (which == 1)
 							{
 								clearPartialDebt();
 							}
 						}
 					});
 					clearDebtDialog.show();
-				}
-				else
+				} else
 				{
 					Toast.makeText(this, "No debts to clear", Toast.LENGTH_SHORT).show();
 				}

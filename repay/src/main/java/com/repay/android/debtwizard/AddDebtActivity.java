@@ -40,9 +40,9 @@ public class AddDebtActivity extends DebtActivity
 		{
 			// Show the first fragment
 			getFragmentManager()
-				.beginTransaction()
-				.replace(mFrame, new ChoosePersonFragment())
-				.commit();
+					.beginTransaction()
+					.replace(mFrame, new ChoosePersonFragment())
+					.commit();
 		}
 	}
 
@@ -64,30 +64,26 @@ public class AddDebtActivity extends DebtActivity
 
 	public void onNextButtonClick(View v)
 	{
-		((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
-		if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof ChoosePersonFragment)
+		((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
+		if (((DebtFragment) getFragmentManager().findFragmentById(mFrame)) instanceof ChoosePersonFragment)
 		{
 			if (getDebtBuilder().getSelectedFriends() != null && getDebtBuilder().getSelectedFriends().size() > 0)
 			{
 				getFragmentManager().beginTransaction().replace(mFrame, new EnterAmountFragment()).addToBackStack(null).commit();
-			}
-			else
+			} else
 			{
 				Toast.makeText(this, "Please choose 1 or more people first", Toast.LENGTH_SHORT).show();
 			}
-		}
-		else if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof EnterAmountFragment)
+		} else if (((DebtFragment) getFragmentManager().findFragmentById(mFrame)) instanceof EnterAmountFragment)
 		{
 			if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
 			{
 				getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
-			}
-			else
+			} else
 			{
 				Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
 			}
-		}
-		else if (((DebtFragment)getFragmentManager().findFragmentById(mFrame)) instanceof DebtSummaryFragment)
+		} else if (((DebtFragment) getFragmentManager().findFragmentById(mFrame)) instanceof DebtSummaryFragment)
 		{
 			save();
 		}

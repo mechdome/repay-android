@@ -46,7 +46,7 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 		View v = convertView;
 		if (v == null)
 		{
-			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(layoutId, null);
 		}
 		Debt debt = debts.get(position);
@@ -54,18 +54,17 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 		if (debt != null)
 		{
 			v.setTag(debt);
-			TextView description = (TextView)v.findViewById(R.id.description);
-			TextView amount = (TextView)v.findViewById(R.id.amount);
-			TextView dateTxt = (TextView)v.findViewById(R.id.default_activity_button);
-			ImageView icon = (ImageView)v.findViewById(R.id.icon);
+			TextView description = (TextView) v.findViewById(R.id.description);
+			TextView amount = (TextView) v.findViewById(R.id.amount);
+			TextView dateTxt = (TextView) v.findViewById(R.id.default_activity_button);
+			ImageView icon = (ImageView) v.findViewById(R.id.icon);
 
 			if (debt.getAmount().compareTo(BigDecimal.ZERO) < 0)
 			{
 				if (SettingsFragment.getDebtHistoryColourPreference(context) == SettingsFragment.DEBTHISTORY_GREEN_BLUE)
 				{
 					//icon.setImageResource(R.drawable.debt_ind_blue);
-				}
-				else
+				} else
 				{
 					//icon.setImageResource(R.drawable.debt_ind_red);
 				}
@@ -73,8 +72,7 @@ public class FriendHistoryAdapter extends ArrayAdapter<Debt>
 				StringBuilder sb = new StringBuilder(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
 				sb.deleteCharAt(1);
 				amount.setText(sb.toString());
-			}
-			else if (debt.getAmount().compareTo(BigDecimal.ZERO) >= 0)
+			} else if (debt.getAmount().compareTo(BigDecimal.ZERO) >= 0)
 			{
 				amount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(debt.getAmount()));
 				//icon.setImageResource(R.drawable.debt_ind_green);

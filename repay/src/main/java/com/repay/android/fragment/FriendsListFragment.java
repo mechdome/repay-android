@@ -58,12 +58,12 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_friendslist, container, false);
-		mList = (RecyclerView)view.findViewById(R.id.list);
-		mProgressBar = (ProgressBar)view.findViewById(R.id.progress);
+		mList = (RecyclerView) view.findViewById(R.id.list);
+		mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
 		mProgressBar.setVisibility(ProgressBar.GONE);
-		((FloatingActionButton)view.findViewById(R.id.add)).attachToRecyclerView(mList);
-		((FloatingActionButton)view.findViewById(R.id.add)).setOnClickListener(this);
-		mEmpty = (TextView)view.findViewById(R.id.empty);
+		((FloatingActionButton) view.findViewById(R.id.add)).attachToRecyclerView(mList);
+		((FloatingActionButton) view.findViewById(R.id.add)).setOnClickListener(this);
+		mEmpty = (TextView) view.findViewById(R.id.empty);
 		return view;
 	}
 
@@ -79,7 +79,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	{
 		super.onActivityCreated(savedInstanceState);
 		mList.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.mainactivity_cols), StaggeredGridLayoutManager.VERTICAL));
-		mAdapter = new FriendListAdapter(getActivity(), ((MainActivity)getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
+		mAdapter = new FriendListAdapter(getActivity(), ((MainActivity) getActivity()).getFriends(), FriendListAdapter.VIEW_GRID);
 		mAdapter.setOnItemClickListener(this);
 		mList.setAdapter(mAdapter);
 	}
@@ -95,7 +95,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 				return true;
 
 			case R.id.action_recalculateTotals:
-				new RecalculateTotalDebts().execute(((MainActivity)getActivity()).getDB());
+				new RecalculateTotalDebts().execute(((MainActivity) getActivity()).getDB());
 
 			default:
 				return true;
@@ -120,13 +120,12 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	{
 		mList.setVisibility(View.VISIBLE);
 		mProgressBar.setVisibility(ProgressBar.GONE);
-		mAdapter.setItems(((MainActivity)getActivity()).getFriends());
-		if (((MainActivity)getActivity()).getFriends() != null &&
-			((MainActivity)getActivity()).getFriends().size() > 0)
+		mAdapter.setItems(((MainActivity) getActivity()).getFriends());
+		if (((MainActivity) getActivity()).getFriends() != null &&
+				((MainActivity) getActivity()).getFriends().size() > 0)
 		{
 			mEmpty.setVisibility(View.GONE);
-		}
-		else
+		} else
 		{
 			mEmpty.setVisibility(View.VISIBLE);
 		}
@@ -134,16 +133,15 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 
 	private BigDecimal calculateTotalDebt()
 	{
-		if (((MainActivity)getActivity()).getFriends() != null)
+		if (((MainActivity) getActivity()).getFriends() != null)
 		{
 			BigDecimal total = new BigDecimal("0");
-			for (Friend friend : ((MainActivity)getActivity()).getFriends())
+			for (Friend friend : ((MainActivity) getActivity()).getFriends())
 			{
 				total = total.add(friend.getDebt());
 			}
 			return total;
-		}
-		else
+		} else
 		{
 			return new BigDecimal("0");
 		}
@@ -151,7 +149,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 
 	public void showTotalDialog()
 	{
-		new TotalDialog(getActivity(), ((MainActivity)getActivity()).getFriends()).show(getFragmentManager(), null);
+		new TotalDialog(getActivity(), ((MainActivity) getActivity()).getFriends()).show(getFragmentManager(), null);
 	}
 
 	@Override
@@ -162,7 +160,8 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		startActivity(i);
 	}
 
-	@Override public void onClick(View v)
+	@Override
+	public void onClick(View v)
 	{
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), AddDebtActivity.class);
@@ -206,8 +205,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 						try
 						{
 							newAmount = totalAllDebts(params[0].getDebtsByRepayID(friends.get(i).getRepayID()));
-						}
-						catch (Exception e)
+						} catch (Exception e)
 						{
 							e.printStackTrace();
 							newAmount = new BigDecimal("0");
@@ -216,8 +214,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 						{
 							friends.get(i).setDebt(newAmount);
 							params[0].updateFriendRecord(friends.get(i));
-						}
-						catch (Exception e)
+						} catch (Exception e)
 						{
 							e.printStackTrace();
 						}
@@ -230,8 +227,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 					}
 					return friends;
 				}
-			}
-			catch (CursorIndexOutOfBoundsException e)
+			} catch (CursorIndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
 			}
@@ -243,7 +239,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		{
 			if (result != null)
 			{
-				((MainActivity)getActivity()).setFriends(result);
+				((MainActivity) getActivity()).setFriends(result);
 				updateList();
 			}
 

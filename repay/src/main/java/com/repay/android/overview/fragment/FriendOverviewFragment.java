@@ -48,18 +48,18 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 
 		mHistory = new FriendHistoryFragment();
 		getFragmentManager()
-			.beginTransaction()
-			.replace(R.id.history, mHistory)
-			.commit();
+				.beginTransaction()
+				.replace(R.id.history, mHistory)
+				.commit();
 
-		mFriendPic = (RoundedImageView)getView().findViewById(R.id.friend_image);
-		mTotalOwed = (TextView)getView().findViewById(R.id.amount);
-		mTotalOwedPrefix = (TextView)getView().findViewById(R.id.owe_status);
-		mHeaderBg = (LinearLayout)getView().findViewById((R.id.top_background));
+		mFriendPic = (RoundedImageView) getView().findViewById(R.id.friend_image);
+		mTotalOwed = (TextView) getView().findViewById(R.id.amount);
+		mTotalOwedPrefix = (TextView) getView().findViewById(R.id.owe_status);
+		mHeaderBg = (LinearLayout) getView().findViewById((R.id.top_background));
 
 		mUseNeutralColour = SettingsFragment.isUsingNeutralColour(getActivity());
 
-		onFriendUpdated(((FriendActivity)getActivity()).getFriend());
+		onFriendUpdated(((FriendActivity) getActivity()).getFriend());
 	}
 
 	@Override
@@ -68,12 +68,11 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 		switch (v.getId())
 		{
 			case R.id.share:
-				if (((FriendActivity)getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) != 0)
+				if (((FriendActivity) getActivity()).getFriend().getDebt().compareTo(BigDecimal.ZERO) != 0)
 				{
-					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity)getActivity()).getFriend());
+					AlertDialog.Builder shareDialog = new ShareDialog(getActivity(), ((FriendActivity) getActivity()).getFriend());
 					shareDialog.show();
-				}
-				else
+				} else
 				{
 					Toast.makeText(getActivity(), "There's no debt between you", Toast.LENGTH_SHORT).show();
 				}
@@ -94,22 +93,19 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 			{
 				mFriendPic.setOuterColor(mNeutralColour);
 				mHeaderBg.setBackgroundColor(mNeutralColour);
-			}
-			else
+			} else
 			{
 				mFriendPic.setOuterColor(mTheyOweMeColour);
 				mHeaderBg.setBackgroundColor(mTheyOweMeColour);
 			}
-		}
-		else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
+		} else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mTotalOwedPrefix.setText(R.string.i_owe);
 			String amount = SettingsFragment.getFormattedAmount(friend.getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + amount);
 			mFriendPic.setOuterColor(mIOweThemColour);
 			mHeaderBg.setBackgroundColor(mIOweThemColour);
-		}
-		else if (friend.getDebt().compareTo(BigDecimal.ZERO) > 0)
+		} else if (friend.getDebt().compareTo(BigDecimal.ZERO) > 0)
 		{
 			mTotalOwedPrefix.setText(R.string.they_owe);
 			String amount = SettingsFragment.getFormattedAmount(friend.getDebt());
@@ -118,6 +114,6 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 			mHeaderBg.setBackgroundColor(mTheyOweMeColour);
 		}
 
-        mHistory.onFriendUpdated(friend);
+		mHistory.onFriendUpdated(friend);
 	}
 }

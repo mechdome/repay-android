@@ -105,8 +105,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 					values.put(Names.D_DESCRIPTION, debts.get(i).getDescription());
 					db.insert(Names.D_TABLENAME, null, values);
 				}
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				Log.e(TAG, e.getMessage());
 				e.printStackTrace();
@@ -116,7 +115,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 
 	/**
 	 * @return All friends stored in the database as ArrayList
-	 *
 	 * @throws android.database.SQLException
 	 */
 	public ArrayList<Friend> getAllFriends() throws SQLException, NullPointerException, CursorIndexOutOfBoundsException
@@ -145,7 +143,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Convenience method for knowing how many friend entries are in the database
 	 *
 	 * @return Number of friends in database
-	 *
 	 * @throws NullPointerException If no records are found
 	 */
 	public int getNumberOfPeople() throws NullPointerException
@@ -159,7 +156,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Convenience method for knowing how many debt entries are in the database
 	 *
 	 * @return Number of debts in database
-	 *
 	 * @throws NullPointerException If no records are found
 	 */
 	public int getNumberOfDebts() throws NullPointerException
@@ -173,7 +169,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Add a friend into the database. To get a RepayID, use generateRepayID()
 	 *
 	 * @param friend
-	 *
 	 * @throws android.database.SQLException
 	 */
 	public void addFriend(final Friend friend) throws SQLException
@@ -184,8 +179,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		try
 		{
 			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
-		}
-		catch (NullPointerException e)
+		} catch (NullPointerException e)
 		{
 			Log.i(TAG, "Added by name, Null for lookupUri");
 			values.putNull(Names.F_LOOKUPURI);
@@ -202,7 +196,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * @param repayID
 	 * @param amount
 	 * @param description
-	 *
 	 * @throws android.database.SQLException
 	 * @throws NullPointerException
 	 */
@@ -232,9 +225,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 
 	/**
 	 * @param repayID
-	 *
 	 * @return List of all debts related to given Friend
-	 *
 	 * @throws android.database.SQLException
 	 * @throws java.text.ParseException
 	 * @throws android.database.CursorIndexOutOfBoundsException
@@ -259,16 +250,14 @@ public class DatabaseManager extends SQLiteOpenHelper
 				{
 					dateString = c.getString(1);
 					date = sdf.parse(dateString);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					date = new Date();
 				}
 				try
 				{
 					description = c.getString(3);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					description = "";
 				}
@@ -284,9 +273,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Get information on friend by passing in their RepayID
 	 *
 	 * @param repayID
-	 *
 	 * @return Friend object representation of person
-	 *
 	 * @throws IndexOutOfBoundsException
 	 * @throws android.database.SQLException
 	 */
@@ -300,8 +287,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		try
 		{
 			friend = new Friend(repayID, c.getString(1), c.getString(2), new BigDecimal(c.getString(3)));
-		}
-		catch (NullPointerException e)
+		} catch (NullPointerException e)
 		{
 			Log.i(TAG, "No ContactURI present, passing null");
 			friend = new Friend(repayID, null, c.getString(2), new BigDecimal(c.getString(3)));
@@ -322,8 +308,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		if (friend.getLookupURI() != null)
 		{
 			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
-		}
-		else
+		} else
 		{
 			values.putNull(Names.F_LOOKUPURI);
 		}
@@ -333,14 +318,12 @@ public class DatabaseManager extends SQLiteOpenHelper
 		try
 		{
 			db.update(Names.F_TABLENAME, values, Names.F_REPAYID + "=?", new String[]{friend.getRepayID()});
-		}
-		catch (SQLException e)
+		} catch (SQLException e)
 		{
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 			throw e;
-		}
-		finally
+		} finally
 		{
 			db.close();
 		}
@@ -350,9 +333,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Remove a person from both tables of the database
 	 *
 	 * @param repayID
-	 *
 	 * @return Number of rows in database removed
-	 *
 	 * @throws android.database.SQLException
 	 * @throws NullPointerException
 	 */
@@ -384,7 +365,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * Lookup the most recent entry in the database
 	 *
 	 * @return Debt representation of most recent debt entered into database
-	 *
 	 * @throws java.text.ParseException
 	 * @throws NullPointerException
 	 * @throws android.database.sqlite.SQLiteException
@@ -403,9 +383,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 
 	/**
 	 * @param debtID
-	 *
 	 * @return The debt stored against the two given attributes
-	 *
 	 * @throws android.database.SQLException
 	 * @throws IndexOutOfBoundsException
 	 * @throws java.text.ParseException

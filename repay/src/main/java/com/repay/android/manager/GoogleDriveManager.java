@@ -39,6 +39,7 @@ public class GoogleDriveManager
 
 	/**
 	 * If the database file already exists in Google Drive
+	 *
 	 * @return
 	 */
 	public boolean doesFileExist()

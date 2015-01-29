@@ -23,24 +23,23 @@ public class ContactsContractHelper
 	private static final String TAG = ContactsContractHelper.class.getName();
 
 	private static int[] typesPhone = new int[]
-	{
-		ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
-		ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
-		ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
-		ContactsContract.CommonDataKinds.Phone.TYPE_WORK
-	};
+			{
+					ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+					ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
+					ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
+					ContactsContract.CommonDataKinds.Phone.TYPE_WORK
+			};
 
 	private static int[] typesEmail = new int[]
-	{
-		ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
-		ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
-		ContactsContract.CommonDataKinds.Phone.TYPE_WORK
-	};
+			{
+					ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
+					ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+					ContactsContract.CommonDataKinds.Phone.TYPE_WORK
+			};
 
 	/**
 	 * @param c
 	 * @param contactID
-	 *
 	 * @return Phone number, if available. The search order is: mobile, main, home, work.
 	 */
 	public static HashMap<String, String> getContactPhoneNumber(Context c, String contactID)
@@ -55,16 +54,13 @@ public class ContactsContractHelper
 				if (ContactsContract.CommonDataKinds.Phone.TYPE_HOME == typesPhone[i])
 				{
 					phoneNums.put("Home", phoneNum);
-				}
-				else if (ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE == typesPhone[i])
+				} else if (ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE == typesPhone[i])
 				{
 					phoneNums.put("Mobile", phoneNum);
-				}
-				else if (ContactsContract.CommonDataKinds.Phone.TYPE_WORK == typesPhone[i])
+				} else if (ContactsContract.CommonDataKinds.Phone.TYPE_WORK == typesPhone[i])
 				{
 					phoneNums.put("Work", phoneNum);
-				}
-				else if (ContactsContract.CommonDataKinds.Phone.TYPE_MAIN == typesPhone[i])
+				} else if (ContactsContract.CommonDataKinds.Phone.TYPE_MAIN == typesPhone[i])
 				{
 					phoneNums.put("Main", phoneNum);
 				}
@@ -124,10 +120,8 @@ public class ContactsContractHelper
 	 * Get the main email address of the contact
 	 *
 	 * @param contactID The last known ContactID of the contact
-	 * @param c The context to run in
-	 *
+	 * @param c         The context to run in
 	 * @return String representation of their email address
-	 *
 	 * @throws android.database.CursorIndexOutOfBoundsException
 	 */
 	public static HashMap<String, String> getContactsEmailAddress(String contactID, Context c) throws CursorIndexOutOfBoundsException
@@ -146,12 +140,10 @@ public class ContactsContractHelper
 				if (ContactsContract.CommonDataKinds.Phone.TYPE_HOME == typesEmail[i])
 				{
 					emails.put("Home", email);
-				}
-				else if (ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE == typesEmail[i])
+				} else if (ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE == typesEmail[i])
 				{
 					emails.put("Other", email);
-				}
-				else if (ContactsContract.CommonDataKinds.Phone.TYPE_WORK == typesEmail[i])
+				} else if (ContactsContract.CommonDataKinds.Phone.TYPE_WORK == typesEmail[i])
 				{
 					emails.put("Work", email);
 				}
@@ -180,9 +172,8 @@ public class ContactsContractHelper
 	/**
 	 * Lookup the name of a contact in the system contacts app
 	 *
-	 * @param c For {@link android.content.ContentResolver}
+	 * @param c         For {@link android.content.ContentResolver}
 	 * @param lookupURI The LOOKUP_URI for the contact
-	 *
 	 * @return String reresentation for the contacts display name as set in the Contacts app
 	 */
 	public static String getNameForContact(Context c, String lookupURI)

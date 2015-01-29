@@ -37,7 +37,8 @@ public class DebtListAdapter extends Adapter<DebtViewHolder>
 		{
 			holder.setOnLongClick(new OnLongClickListener()
 			{
-				@Override public boolean onLongClick(View v)
+				@Override
+				public boolean onLongClick(View v)
 				{
 					mListener.onItemLongClick(mDebts.get(position), position);
 					return true;

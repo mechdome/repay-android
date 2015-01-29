@@ -53,12 +53,12 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 
 		if (v == null)
 		{
-			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(mLayoutID, null);
 		}
 		Friend friend = mFriends.get(position);
-		TextView name = (TextView)v.findViewById(R.id.name);
-		final ImageView pic = (ImageView)v.findViewById(R.id.image);
+		TextView name = (TextView) v.findViewById(R.id.name);
+		final ImageView pic = (ImageView) v.findViewById(R.id.image);
 		if (friend != null)
 		{
 			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
@@ -67,8 +67,7 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 			if (mSelectedFriends.contains(friend))
 			{
 				v.setBackgroundColor(SELECTED_COLOUR);
-			}
-			else
+			} else
 			{
 				v.setBackgroundColor(DESELECTED_COLOUR);
 			}

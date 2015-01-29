@@ -47,8 +47,7 @@ public class RoundedImageView extends ImageView
 				mCrop = array.getBoolean(R.styleable.RoundedImageView_cropImage, true);
 				mAnimate = array.getBoolean(R.styleable.RoundedImageView_animateChanges, true);
 				color = array.getColor(R.styleable.RoundedImageView_outerBackground, R.color.debt_neutral);
-			}
-			finally
+			} finally
 			{
 				array.recycle();
 			}
@@ -65,8 +64,7 @@ public class RoundedImageView extends ImageView
 		if (bmp.getWidth() != radius || bmp.getHeight() != radius)
 		{
 			sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
-		}
-		else
+		} else
 		{
 			sbmp = bmp;
 		}
@@ -99,7 +97,7 @@ public class RoundedImageView extends ImageView
 		{
 			return;
 		}
-		Bitmap b = ((BitmapDrawable)getDrawable()).getBitmap();
+		Bitmap b = ((BitmapDrawable) getDrawable()).getBitmap();
 		Bitmap bitmap = b.copy(Config.ARGB_8888, true);
 
 		double w = getWidth() * SCALE_FACTOR;
@@ -109,14 +107,13 @@ public class RoundedImageView extends ImageView
 
 		if (mCrop)
 		{
-			Bitmap roundBitmap = getCroppedBitmap(bitmap, (int)w);
+			Bitmap roundBitmap = getCroppedBitmap(bitmap, (int) w);
 			canvas.drawCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, mBackgroundPaint);
-			canvas.drawBitmap(roundBitmap, (int)left / 2, (int)top / 2, null);
-		}
-		else
+			canvas.drawBitmap(roundBitmap, (int) left / 2, (int) top / 2, null);
+		} else
 		{
 			canvas.drawCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, mBackgroundPaint);
-			canvas.drawBitmap(bitmap, (int)left / 2, (int)top / 2, null);
+			canvas.drawBitmap(bitmap, (int) left / 2, (int) top / 2, null);
 		}
 	}
 

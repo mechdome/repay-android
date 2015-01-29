@@ -28,9 +28,9 @@ public class SettingsActivity extends ActionBarActivity
 		getFragmentManager().beginTransaction().replace(R.id.fragment, new SettingsFragment()).commit();
 
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
-			.addApi(Drive.API)
-			.addScope(Drive.SCOPE_FILE)
-			.build();
+				.addApi(Drive.API)
+				.addScope(Drive.SCOPE_FILE)
+				.build();
 	}
 
 	public GoogleApiClient getGoogleApiClient()

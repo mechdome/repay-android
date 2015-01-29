@@ -46,19 +46,18 @@ public class EditDebtActivity extends DebtActivity
 		switch (v.getId())
 		{
 			case R.id.fragment_enterdebtamount_donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+				((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 				if (getDebtBuilder().getAmount().compareTo(BigDecimal.ZERO) > 0)
 				{
 					getFragmentManager().beginTransaction().replace(mFrame, new DebtSummaryFragment()).addToBackStack(null).commit();
-				}
-				else
+				} else
 				{
 					Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show();
 				}
 				break;
 
 			case R.id.donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(mFrame)).saveFields();
+				((DebtFragment) getFragmentManager().findFragmentById(mFrame)).saveFields();
 				save();
 				break;
 		}

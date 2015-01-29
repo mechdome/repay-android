@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- *
+ * <p/>
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
@@ -66,8 +66,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 					Intent intent = new Intent(Intent.ACTION_PICK);
 					intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
 					startActivityForResult(intent, PICK_CONTACT_REQUEST);
-				}
-				else if (which == 1)
+				} else if (which == 1)
 				{
 					addFriendByName();
 				}
@@ -87,21 +86,19 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				String name = ((EditText)v.findViewById(R.id.name_entry)).getText().toString();
+				String name = ((EditText) v.findViewById(R.id.name_entry)).getText().toString();
 				try
 				{
 					if (!TextUtils.isEmpty(name))
 					{
 						Friend newFriend = new Friend(DatabaseManager.generateRepayID(), null, name, new BigDecimal("0"));
-						((DebtActivity)getActivity()).getDBHandler().addFriend(newFriend);
+						((DebtActivity) getActivity()).getDBHandler().addFriend(newFriend);
 						new GetFriendsFromDB().execute();
-					}
-					else
+					} else
 					{
-						((EditText)v.findViewById(R.id.name_entry)).setError(getActivity().getResources().getString(R.string.please_enter_name));
+						((EditText) v.findViewById(R.id.name_entry)).setError(getActivity().getResources().getString(R.string.please_enter_name));
 					}
-				}
-				catch (SQLException e)
+				} catch (SQLException e)
 				{
 					Toast.makeText(getActivity(), R.string.friend_could_not_be_added, Toast.LENGTH_SHORT).show();
 				}
@@ -122,16 +119,14 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
 				Friend pickerResult = new Friend(DatabaseManager.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
-				((DebtActivity)getActivity()).getDBHandler().addFriend(pickerResult);
+				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
 
 				new GetFriendsFromDB().execute();
-			}
-			catch (IndexOutOfBoundsException e)
+			} catch (IndexOutOfBoundsException e)
 			{
 				e.printStackTrace();
 				Toast.makeText(getActivity(), R.string.problem_getting_from_contacts, Toast.LENGTH_LONG).show();
-			}
-			catch (SQLException e)
+			} catch (SQLException e)
 			{
 				e.printStackTrace();
 				Toast.makeText(getActivity(), R.string.problem_adding_to_repay, Toast.LENGTH_LONG).show();
@@ -151,9 +146,9 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		super.onActivityCreated(savedInstanceState);
 		getActivity().setTitle(R.string.title_activity_add_debt);
 		getView().findViewById(R.id.add_person).setOnClickListener(this);
-		mEmpty = ((TextView)getView().findViewById(R.id.empty));
-		RecyclerView mListView = (RecyclerView)getView().findViewById(R.id.list);
-		mDoneBtn = ((Button)getView().findViewById(R.id.done));
+		mEmpty = ((TextView) getView().findViewById(R.id.empty));
+		RecyclerView mListView = (RecyclerView) getView().findViewById(R.id.list);
+		mDoneBtn = ((Button) getView().findViewById(R.id.done));
 		mListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mAdapter = new FriendListAdapter(getActivity(), mFriends, FriendListAdapter.VIEW_LIST);
 		mListView.setAdapter(mAdapter);
@@ -169,29 +164,29 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		// No need to do anything here. This fragment uses the DebtBuilder object as storage.
 	}
 
-	@Override public void onItemClicked(Friend obj, int position)
+	@Override
+	public void onItemClicked(Friend obj, int position)
 	{
-		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().contains(obj))
+		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().contains(obj))
 		{
-			((DebtActivity)getActivity()).getDebtBuilder().removeSelectedFriend(obj);
-		}
-		else
+			((DebtActivity) getActivity()).getDebtBuilder().removeSelectedFriend(obj);
+		} else
 		{
-			((DebtActivity)getActivity()).getDebtBuilder().addSelectedFriend(obj);
+			((DebtActivity) getActivity()).getDebtBuilder().addSelectedFriend(obj);
 		}
 		mAdapter.notifyItemChanged(position);
 
-		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
+		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
 		{
 			mDoneBtn.setEnabled(true);
-		}
-		else
+		} else
 		{
 			mDoneBtn.setEnabled(false);
 		}
 	}
 
-	@Override public void onClick(View v)
+	@Override
+	public void onClick(View v)
 	{
 		showAddFriendDialog();
 	}
@@ -203,9 +198,8 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		{
 			try
 			{
-				return ((DebtActivity)getActivity()).getDBHandler().getAllFriends();
-			}
-			catch (Throwable e)
+				return ((DebtActivity) getActivity()).getDBHandler().getAllFriends();
+			} catch (Throwable e)
 			{
 				return null;
 			}
@@ -221,20 +215,18 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 
 	private void updateList()
 	{
-		mAdapter.setItemsWithSelected(mFriends, ((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends());
+		mAdapter.setItemsWithSelected(mFriends, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
 		if (mFriends != null && mFriends.size() > 0)
 		{
 			mEmpty.setVisibility(View.GONE);
-		}
-		else
+		} else
 		{
 			mEmpty.setVisibility(View.VISIBLE);
 		}
-		if (((DebtActivity)getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
+		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().size() > 0)
 		{
 			mDoneBtn.setEnabled(true);
-		}
-		else
+		} else
 		{
 			mDoneBtn.setEnabled(false);
 		}

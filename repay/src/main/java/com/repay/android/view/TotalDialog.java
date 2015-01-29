@@ -39,9 +39,9 @@ public class TotalDialog extends DialogFragment
 		BigDecimal theyOwe = getTheyOweTotal();
 		BigDecimal iOwe = getIOweTotal();
 		View view = LayoutInflater.from(mContext).inflate(R.layout.total_dialog, null, false);
-		((TextView)view.findViewById(R.id.they_owe_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(theyOwe));
-		((TextView)view.findViewById(R.id.i_owe_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(iOwe.negate()));
-		((TextView)view.findViewById(R.id.total_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(theyOwe.add(iOwe)));
+		((TextView) view.findViewById(R.id.they_owe_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(theyOwe));
+		((TextView) view.findViewById(R.id.i_owe_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(iOwe.negate()));
+		((TextView) view.findViewById(R.id.total_amount)).setText(SettingsFragment.getCurrencySymbol(mContext) + SettingsFragment.getFormattedAmount(theyOwe.add(iOwe)));
 		return new AlertDialog.Builder(mContext).setPositiveButton("Close", null).setView(view).create();
 	}
 
@@ -50,7 +50,8 @@ public class TotalDialog extends DialogFragment
 		BigDecimal amount = new BigDecimal("0");
 		for (Friend mFriend : mFriends)
 		{
-			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == 1) amount = amount.add(mFriend.getDebt());
+			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == 1)
+				amount = amount.add(mFriend.getDebt());
 		}
 		return amount;
 	}
@@ -60,7 +61,8 @@ public class TotalDialog extends DialogFragment
 		BigDecimal amount = new BigDecimal("-0");
 		for (Friend mFriend : mFriends)
 		{
-			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == -1) amount = amount.add(mFriend.getDebt());
+			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == -1)
+				amount = amount.add(mFriend.getDebt());
 		}
 		return amount;
 	}

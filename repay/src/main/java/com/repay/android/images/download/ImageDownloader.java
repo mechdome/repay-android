@@ -32,12 +32,10 @@ public interface ImageDownloader
 	 * Retrieves {@link java.io.InputStream} of image by URI.
 	 *
 	 * @param imageUri Image URI
-	 * @param extra Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
-	 * DisplayImageOptions.extraForDownloader(Object)}; can be null
-	 *
+	 * @param extra    Auxiliary object which was passed to {@link com.nostra13.universalimageloader.core.DisplayImageOptions.Builder#extraForDownloader(Object)
+	 *                 DisplayImageOptions.extraForDownloader(Object)}; can be null
 	 * @return {@link java.io.InputStream} of image
-	 *
-	 * @throws java.io.IOException if some I/O error occurs during getting image stream
+	 * @throws java.io.IOException           if some I/O error occurs during getting image stream
 	 * @throws UnsupportedOperationException if image URI has unsupported scheme(protocol)
 	 */
 	InputStream getStream(String imageUri, Object extra) throws IOException;
@@ -62,7 +60,6 @@ public interface ImageDownloader
 		 * Defines scheme of incoming URI
 		 *
 		 * @param uri URI for scheme detection
-		 *
 		 * @return Scheme of incoming URI
 		 */
 		public static Scheme ofUri(String uri)

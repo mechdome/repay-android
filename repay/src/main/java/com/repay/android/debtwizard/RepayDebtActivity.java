@@ -42,7 +42,7 @@ public class RepayDebtActivity extends DebtActivity
 		switch (v.getId())
 		{
 			case R.id.fragment_enterdebtamount_donebtn:
-				((DebtFragment)getFragmentManager().findFragmentById(R.id.fragment)).saveFields();
+				((DebtFragment) getFragmentManager().findFragmentById(R.id.fragment)).saveFields();
 				save();
 				break;
 

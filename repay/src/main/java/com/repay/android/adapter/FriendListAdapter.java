@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * {@link android.support.v7.widget.RecyclerView.Adapter} for showing friends in a list or grid.
  * Whether amounts are to be shown is toggleable.
- *
+ * <p/>
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
@@ -111,7 +111,8 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		vh.populateView(mContext, mFriends.get(i), mShowingAmounts);
 		vh.setOnClickListener(new OnClickListener()
 		{
-			@Override public void onClick(View v)
+			@Override
+			public void onClick(View v)
 			{
 				if (mItemClickListener != null)
 				{
@@ -124,8 +125,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 			if (mSelectedFriends.contains(mFriends.get(i)))
 			{
 				vh.setSelected(true);
-			}
-			else
+			} else
 			{
 				vh.setSelected(false);
 			}

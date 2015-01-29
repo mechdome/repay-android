@@ -60,20 +60,17 @@ public class ShareDialog extends Builder implements OnClickListener
 			if (mPhoneNums.size() >= 1)
 			{
 				ShareManager.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mFriend.getDebt());
-			}
-			else
+			} else
 			{
 				Toast.makeText(mContext, "No Numbers Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
 			}
-		}
-		else if (which == 1)
+		} else if (which == 1)
 		{
 			Log.i(TAG, "Email Selected");
 			if (mEmails.size() >= 1)
 			{
 				ShareManager.emailFriend(mContext, mFriend.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
-			}
-			else
+			} else
 			{
 				Toast.makeText(mContext, "No Email Addresses Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
 			}

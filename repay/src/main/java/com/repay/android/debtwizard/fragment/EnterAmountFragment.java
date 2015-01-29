@@ -53,10 +53,9 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_DEC) != null)
 		{
 			mAmountDec = savedInstanceState.getString(NUMBER_DEC);
-		}
-		else if (((DebtActivity)getActivity()).getDebtBuilder().getAmount() != null)
+		} else if (((DebtActivity) getActivity()).getDebtBuilder().getAmount() != null)
 		{
-			String[] string = ((DebtActivity)getActivity()).getDebtBuilder().getAmount().toString().split(".");
+			String[] string = ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString().split(".");
 			if (string.length > 1)
 			{
 				mAmountDec = string[1];
@@ -66,18 +65,17 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 		if (savedInstanceState != null && savedInstanceState.getString(NUMBER_INT) != null)
 		{
 			mAmountInt = savedInstanceState.getString(NUMBER_INT);
-		}
-		else if (((DebtActivity)getActivity()).getDebtBuilder().getAmount() != null)
+		} else if (((DebtActivity) getActivity()).getDebtBuilder().getAmount() != null)
 		{
-			String[] string = ((DebtActivity)getActivity()).getDebtBuilder().getAmount().toString().split(".");
+			String[] string = ((DebtActivity) getActivity()).getDebtBuilder().getAmount().toString().split(".");
 			if (string.length > 0)
 			{
 				mAmountInt = string[0];
 			}
 		}
 
-		mAmountDisplay = (TextView)getView().findViewById(R.id.fragment_enterdebtamount_amount);
-		mDoneBtn = (Button)getView().findViewById(R.id.fragment_enterdebtamount_donebtn);
+		mAmountDisplay = (TextView) getView().findViewById(R.id.fragment_enterdebtamount_amount);
+		mDoneBtn = (Button) getView().findViewById(R.id.fragment_enterdebtamount_donebtn);
 		mAmountDisplay.setText(mAmountInt + "." + mAmountDec);
 		// Set OnClickListeners for all buttons on the view (Other than done btn)
 		getView().findViewById(R.id.fragment_enterdebtamount_backspace).setOnClickListener(this);
@@ -117,8 +115,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 				{
 					mAmountDec = mAmountInt.substring(mAmountInt.length() - 1, mAmountInt.length()) + mAmountDec.substring(0, 1);
 					mAmountInt = "0";
-				}
-				else
+				} else
 				{
 					mAmountDec = mAmountInt.substring(mAmountInt.length() - 1) + mAmountDec.substring(0, 1);
 					mAmountInt = mAmountInt.substring(0, mAmountInt.length() - 1);
@@ -188,8 +185,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 			if (numberToCarryOver.equals("0") && mAmountInt.equals("0"))
 			{
 				// Do nothing
-			}
-			else
+			} else
 			{
 				mAmountInt += numberToCarryOver;
 			}
@@ -199,8 +195,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 			{
 				mAmountInt = mAmountInt.substring(1);
 			}
-		}
-		else
+		} else
 		{
 			Toast.makeText(getActivity(), "Too many digits", Toast.LENGTH_SHORT).show();
 		}
@@ -224,8 +219,7 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 			mAmountDec = splitAmount[1];
 			Log.i(TAG, "Amount set to " + amount);
 			mAmountDisplay.setText(mAmountInt + "." + mAmountDec);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			Log.i(TAG, "No data. Using 0.00");
 		}
@@ -234,6 +228,6 @@ public class EnterAmountFragment extends DebtFragment implements OnClickListener
 	@Override
 	public void saveFields()
 	{
-		((DebtActivity)getActivity()).getDebtBuilder().setAmount(getAmount());
+		((DebtActivity) getActivity()).getDebtBuilder().setAmount(getAmount());
 	}
 }

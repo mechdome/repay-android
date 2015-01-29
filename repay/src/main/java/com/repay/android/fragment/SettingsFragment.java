@@ -55,7 +55,6 @@ public class SettingsFragment extends PreferenceFragment
 
 	/**
 	 * @param c The Context to operate in
-	 *
 	 * @return The currency symbol based on the preference set by the user. If not preference has been set, the GBP symbol will be returned
 	 */
 	public static String getCurrencySymbol(Context c)
@@ -66,18 +65,15 @@ public class SettingsFragment extends PreferenceFragment
 		{
 			Currency currency = Currency.getInstance(Locale.UK);
 			return currency.getSymbol();
-		}
-		else if (currencyPref.equals("2"))
+		} else if (currencyPref.equals("2"))
 		{
 			Currency currency = Currency.getInstance(Locale.US);
 			return currency.getSymbol();
-		}
-		else if (currencyPref.equals("3"))
+		} else if (currencyPref.equals("3"))
 		{
 			Currency currency = Currency.getInstance(Locale.GERMANY);
 			return currency.getSymbol();
-		}
-		else if (currencyPref.equals("4"))
+		} else if (currencyPref.equals("4"))
 		{
 			Currency currency = Currency.getInstance(Locale.getDefault());
 			return currency.getSymbol();
@@ -86,9 +82,8 @@ public class SettingsFragment extends PreferenceFragment
 	}
 
 	/**
-	 * @param c The Context to operate in
+	 * @param c    The Context to operate in
 	 * @param date The date as returned from the database
-	 *
 	 * @return The date, formatted as the user preference specifies
 	 */
 	@SuppressLint("SimpleDateFormat")
@@ -104,21 +99,17 @@ public class SettingsFragment extends PreferenceFragment
 		if (datePref.equals("1"))
 		{
 			return dateString;
-		}
-		else if (datePref.equals("2"))
+		} else if (datePref.equals("2"))
 		{
 			return (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR);
-		}
-		else if (datePref.equals("3"))
+		} else if (datePref.equals("3"))
 		{
 			SimpleDateFormat format = new SimpleDateFormat("EEE d MMM yyyy");
 			return format.format(date);
-		}
-		else if (datePref.equals("4")) // Device default
+		} else if (datePref.equals("4")) // Device default
 		{
 			return DateFormat.getDateFormat(c).format(date);
-		}
-		else if (datePref.equals("5"))
+		} else if (datePref.equals("5"))
 		{
 			return (cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH));
 		}
@@ -127,7 +118,6 @@ public class SettingsFragment extends PreferenceFragment
 
 	/**
 	 * @param amount The amount returned from the database
-	 *
 	 * @return The amount specified, in a consistent format
 	 */
 	public static String getFormattedAmount(BigDecimal amount)
@@ -141,7 +131,6 @@ public class SettingsFragment extends PreferenceFragment
 	 * Get preference on colours used in DebtHistoryFragment
 	 *
 	 * @param c Context to run in
-	 *
 	 * @return Integer representation of preference. Use constants to reveal setting
 	 */
 	public static int getDebtHistoryColourPreference(Context c)
@@ -185,7 +174,6 @@ public class SettingsFragment extends PreferenceFragment
 
 	/**
 	 * @param c
-	 *
 	 * @return The order represented by an int
 	 */
 	public static int getSortOrder(Context c)
@@ -213,24 +201,26 @@ public class SettingsFragment extends PreferenceFragment
 		});
 		findPreference(PREF_KEY_RESTORE).setOnPreferenceClickListener(new OnPreferenceClickListener()
 		{
-			@Override public boolean onPreferenceClick(Preference preference)
+			@Override
+			public boolean onPreferenceClick(Preference preference)
 			{
 				new Builder(getActivity())
-					.setTitle(R.string.restore_from_google)
-					.setMessage(R.string.are_you_sure)
-					.setPositiveButton("Yes", new OnClickListener()
-					{
-						@Override public void onClick(DialogInterface dialog, int which)
+						.setTitle(R.string.restore_from_google)
+						.setMessage(R.string.are_you_sure)
+						.setPositiveButton("Yes", new OnClickListener()
 						{
-							IntentSender intentSender = Drive.DriveApi
-								.newOpenFileActivityBuilder()
-								.setMimeType(new String[]{"file/file"})
-								.build(((SettingsActivity)getActivity()).getGoogleApiClient());
-							// Restore from this file
-						}
-					})
-					.setNegativeButton("Cancel", null)
-					.show();
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{
+								IntentSender intentSender = Drive.DriveApi
+										.newOpenFileActivityBuilder()
+										.setMimeType(new String[]{"file/file"})
+										.build(((SettingsActivity) getActivity()).getGoogleApiClient());
+								// Restore from this file
+							}
+						})
+						.setNegativeButton("Cancel", null)
+						.show();
 				return true;
 			}
 		});
@@ -244,7 +234,6 @@ public class SettingsFragment extends PreferenceFragment
 	 * Determine if the user wants the app to show people with a neutral debt on a different colour
 	 *
 	 * @param c
-	 *
 	 * @return True if you should use a neutral colour
 	 */
 	public static boolean isUsingNeutralColour(Context c)

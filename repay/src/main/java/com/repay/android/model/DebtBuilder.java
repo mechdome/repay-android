@@ -142,8 +142,7 @@ public class DebtBuilder implements Serializable
 			{
 				name += friend.getName() + "\n";
 			}
-		}
-		else if (mSelectedFriends.size() > 2)
+		} else if (mSelectedFriends.size() > 2)
 		{
 			if (shortened)
 			{
@@ -152,8 +151,7 @@ public class DebtBuilder implements Serializable
 					name += mSelectedFriends.get(i).getName() + "\n";
 				}
 				name += "and more...";
-			}
-			else
+			} else
 			{
 				for (int i = 0; i <= 5; i++)
 				{
@@ -198,13 +196,11 @@ public class DebtBuilder implements Serializable
 			if (includingMe)
 			{
 				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size() + 1), RoundingMode.CEILING);
-			}
-			else
+			} else
 			{
 				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size()), BigDecimal.ROUND_CEILING);
 			}
-		}
-		else
+		} else
 		{
 			debtAmount = mAmount;
 		}

@@ -28,8 +28,7 @@ public abstract class FriendFragment extends Fragment implements OnFriendUpdated
 		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_red);
-		}
-		else
+		} else
 		{
 			mTheyOweMeColour = getActivity().getResources().getColor(R.color.debt_green);
 			mIOweThemColour = getActivity().getResources().getColor(R.color.debt_blue);

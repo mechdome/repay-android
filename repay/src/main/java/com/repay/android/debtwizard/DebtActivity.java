@@ -42,21 +42,20 @@ public abstract class DebtActivity extends ActionBarActivity
 
 		if (savedInstanceState != null && savedInstanceState.get(DEBT_BUILDER) != null)
 		{
-			mBuilder = (DebtBuilder)savedInstanceState.get(DEBT_BUILDER);
-		}
-		else
+			mBuilder = (DebtBuilder) savedInstanceState.get(DEBT_BUILDER);
+		} else
 		{
 			mBuilder = new DebtBuilder();
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
 			{
-				mFriend = (Friend)getIntent().getExtras().get(FRIEND);
+				mFriend = (Friend) getIntent().getExtras().get(FRIEND);
 				mBuilder.addSelectedFriend(mFriend);
 			}
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
 			{
-				mDebt = (Debt)getIntent().getExtras().get(DEBT);
+				mDebt = (Debt) getIntent().getExtras().get(DEBT);
 				mBuilder.setAmount(mDebt.getAmount());
 				mBuilder.setDescription(mDebt.getDescription());
 				mBuilder.setDate(mDebt.getDate());
@@ -90,8 +89,7 @@ public abstract class DebtActivity extends ActionBarActivity
 			mFriend.setDebt(mFriend.getDebt().add(mDebt.getAmount()));
 			mDB.updateFriendRecord(mFriend);
 			finish();
-		}
-		else
+		} else
 		{
 			// Add the debts into the DB
 			for (Debt debt : mBuilder.getNewDebts())
