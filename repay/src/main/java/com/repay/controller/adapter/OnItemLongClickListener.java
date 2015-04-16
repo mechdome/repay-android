@@ -1,4 +1,4 @@
-package com.repay.android.adapter;
+package com.repay.controller.adapter;
 
 /**
  * @author Matt Allen

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.model.Friend;
+import com.repay.model.Person;
 import com.repay.android.overview.OnFriendUpdatedListener;
 
 /**
@@ -36,5 +36,5 @@ public abstract class FriendFragment extends Fragment implements OnFriendUpdated
 		mNeutralColour = getActivity().getResources().getColor(R.color.debt_neutral);
 	}
 
-	public abstract void onFriendUpdated(Friend friend);
+	public abstract void onFriendUpdated(Person person);
 }

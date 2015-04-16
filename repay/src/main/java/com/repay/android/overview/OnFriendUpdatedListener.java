@@ -1,6 +1,6 @@
 package com.repay.android.overview;
 
-import com.repay.android.model.Friend;
+import com.repay.model.Person;
 
 /**
  * Created by Matt Allen
@@ -11,5 +11,5 @@ import com.repay.android.model.Friend;
  */
 public interface OnFriendUpdatedListener
 {
-	public void onFriendUpdated(Friend mFriend);
+	public void onFriendUpdated(Person mPerson);
 }

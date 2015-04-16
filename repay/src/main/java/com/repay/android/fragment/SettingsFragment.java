@@ -18,8 +18,8 @@ import android.text.format.DateFormat;
 import com.google.android.gms.drive.Drive;
 import com.repay.android.R;
 import com.repay.android.SettingsActivity;
-import com.repay.android.manager.GoogleDriveManager;
-import com.repay.android.manager.ShareManager;
+import com.repay.lib.manager.GoogleDriveManager;
+import com.repay.lib.manager.ShareManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

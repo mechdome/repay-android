@@ -1,4 +1,4 @@
-package com.repay.android.view.holder;
+package com.repay.view.holder;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.model.Debt;
+import com.repay.model.Debt;
 
 import java.math.BigDecimal;
 

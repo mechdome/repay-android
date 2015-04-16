@@ -8,8 +8,8 @@ import android.view.MenuItem;
 
 import com.repay.android.fragment.FriendsListFragment;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.manager.DatabaseManager;
-import com.repay.android.model.Friend;
+import com.repay.lib.manager.DatabaseManager;
+import com.repay.model.Person;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import java.util.Collections;
 public class MainActivity extends ActionBarActivity
 {
 	private DatabaseManager mDB;
-	private ArrayList<Friend> mFriends;
+	private ArrayList<Person> mPersons;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -68,21 +68,21 @@ public class MainActivity extends ActionBarActivity
 		}
 	}
 
-	public ArrayList<Friend> getFriends()
+	public ArrayList<Person> getFriends()
 	{
-		return mFriends;
+		return mPersons;
 	}
 
-	public void setFriends(ArrayList<Friend> friends)
+	public void setFriends(ArrayList<Person> persons)
 	{
-		mFriends = friends;
+		mPersons = persons;
 	}
 
 	public void updateFriends()
 	{
-		for (Friend friend : mFriends)
+		for (Person person : mPersons)
 		{
-			mDB.updateFriendRecord(friend);
+			mDB.updateFriendRecord(person);
 		}
 	}
 
@@ -95,12 +95,12 @@ public class MainActivity extends ActionBarActivity
 	public void onResume()
 	{
 		super.onResume();
-		mFriends = mDB.getAllFriends();
+		mPersons = mDB.getAllFriends();
 		// Sort the list
-		Collections.sort(mFriends);
+		Collections.sort(mPersons);
 		if (SettingsFragment.getSortOrder(this) == SettingsFragment.SORTORDER_OWETHEM)
 		{
-			Collections.reverse(mFriends);
+			Collections.reverse(mPersons);
 		}
 	}
 }

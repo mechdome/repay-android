@@ -11,13 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
+import com.repay.android.MainApplication;
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.model.Friend;
+import com.repay.model.Person;
 import com.repay.android.overview.FriendActivity;
 import com.repay.android.overview.ShareDialog;
-import com.repay.android.view.RoundedImageView;
+import com.repay.view.RoundedImageView;
 
 import java.math.BigDecimal;
 
@@ -81,11 +81,11 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 	}
 
 	@Override
-	public void onFriendUpdated(Friend friend)
+	public void onFriendUpdated(Person person)
 	{
-		ImageLoader.getInstance().displayImage(friend.getLookupURI(), mFriendPic, Application.getImageOptions());
+		ImageLoader.getInstance().displayImage(person.getLookupURI(), mFriendPic, MainApplication.getImageOptions());
 
-		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0)
+		if (person.getDebt().compareTo(BigDecimal.ZERO) == 0)
 		{
 			mTotalOwedPrefix.setText(R.string.even_debt);
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + "0");
@@ -98,22 +98,22 @@ public class FriendOverviewFragment extends FriendFragment implements OnClickLis
 				mFriendPic.setOuterColor(mTheyOweMeColour);
 				mHeaderBg.setBackgroundColor(mTheyOweMeColour);
 			}
-		} else if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
+		} else if (person.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mTotalOwedPrefix.setText(R.string.i_owe);
-			String amount = SettingsFragment.getFormattedAmount(friend.getDebt().negate());
+			String amount = SettingsFragment.getFormattedAmount(person.getDebt().negate());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + amount);
 			mFriendPic.setOuterColor(mIOweThemColour);
 			mHeaderBg.setBackgroundColor(mIOweThemColour);
-		} else if (friend.getDebt().compareTo(BigDecimal.ZERO) > 0)
+		} else if (person.getDebt().compareTo(BigDecimal.ZERO) > 0)
 		{
 			mTotalOwedPrefix.setText(R.string.they_owe);
-			String amount = SettingsFragment.getFormattedAmount(friend.getDebt());
+			String amount = SettingsFragment.getFormattedAmount(person.getDebt());
 			mTotalOwed.setText(SettingsFragment.getCurrencySymbol(getActivity()) + amount);
 			mFriendPic.setOuterColor(mTheyOweMeColour);
 			mHeaderBg.setBackgroundColor(mTheyOweMeColour);
 		}
 
-		mHistory.onFriendUpdated(friend);
+		mHistory.onFriendUpdated(person);
 	}
 }

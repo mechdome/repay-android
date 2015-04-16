@@ -1,5 +1,7 @@
 package com.repay.android;
 
+import android.app.Application;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -13,9 +15,9 @@ import com.repay.android.images.download.MyImageDownloader;
  * <p/>
  * A simple singleton for the app-wide variables needed for various functions
  */
-public class Application extends android.app.Application
+public class MainApplication extends Application
 {
-	private static final String TAG = Application.class.getSimpleName();
+	private static final String TAG = MainApplication.class.getSimpleName();
 	private static DisplayImageOptions mImageOptions;
 
 	public static DisplayImageOptions getImageOptions()

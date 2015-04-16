@@ -5,14 +5,14 @@
 	android:gravity="center_horizontal"
 	android:padding="8dp">
 
-	<com.repay.android.view.RoundedImageView
+	<com.repay.view.RoundedImageView
 		android:id="@+id/image"
 		android:layout_width="140dp"
 		android:layout_height="140dp"
 		android:layout_centerHorizontal="true"
 		android:contentDescription="@string/contentDesc" />
 
-	<com.repay.android.view.RoundedImageView
+	<com.repay.view.RoundedImageView
 		android:id="@+id/selected"
 		android:layout_width="140dp"
 		android:layout_height="140dp"

@@ -5,13 +5,13 @@
 	android:background="?android:attr/selectableItemBackground"
 	android:minHeight="56dp">
 
-	<com.repay.android.view.RoundedImageView
+	<com.repay.view.RoundedImageView
 		android:id="@+id/image"
 		style="@style/SingleLineListItem.LeftItem"
 		android:layout_centerVertical="true"
 		android:contentDescription="@string/contentDesc" />
 
-	<com.repay.android.view.RoundedImageView
+	<com.repay.view.RoundedImageView
 		android:id="@+id/selected"
 		style="@style/SingleLineListItem.LeftItem"
 		android:layout_centerVertical="true"

@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-import com.repay.android.manager.DatabaseManager;
-import com.repay.android.model.Debt;
-import com.repay.android.model.DebtBuilder;
-import com.repay.android.model.Friend;
+import com.repay.lib.manager.DatabaseManager;
+import com.repay.model.Debt;
+import com.repay.lib.builder.DebtBuilder;
+import com.repay.model.Person;
 
 /**
  * Property of Matt Allen
@@ -27,7 +27,7 @@ public abstract class DebtActivity extends ActionBarActivity
 
 	protected DatabaseManager mDB;
 
-	protected Friend mFriend;
+	protected Person mPerson;
 	protected Debt mDebt;
 
 	protected DebtBuilder mBuilder;
@@ -49,8 +49,8 @@ public abstract class DebtActivity extends ActionBarActivity
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(FRIEND) != null)
 			{
-				mFriend = (Friend) getIntent().getExtras().get(FRIEND);
-				mBuilder.addSelectedFriend(mFriend);
+				mPerson = (Person) getIntent().getExtras().get(FRIEND);
+				mBuilder.addSelectedFriend(mPerson);
 			}
 
 			if (getIntent().getExtras() != null && getIntent().getExtras().get(DEBT) != null)
@@ -80,14 +80,14 @@ public abstract class DebtActivity extends ActionBarActivity
 		if (isEditing)
 		{
 			// Subtract the old amount
-			mFriend.setDebt(mFriend.getDebt().subtract(mDebt.getAmount()));
+			mPerson.setDebt(mPerson.getDebt().subtract(mDebt.getAmount()));
 			// Get the newly entered data
 			mDebt.setAmount(mBuilder.getAmountToApply());
 			mDebt.setDescription(mBuilder.getDescription());
 			mDB.updateDebt(mDebt);
 			// Add the new amount
-			mFriend.setDebt(mFriend.getDebt().add(mDebt.getAmount()));
-			mDB.updateFriendRecord(mFriend);
+			mPerson.setDebt(mPerson.getDebt().add(mDebt.getAmount()));
+			mDB.updateFriendRecord(mPerson);
 			finish();
 		} else
 		{
@@ -97,9 +97,9 @@ public abstract class DebtActivity extends ActionBarActivity
 				mDB.addDebt(debt.getRepayID(), debt.getAmount(), debt.getDescription());
 			}
 			// Then update the friend objects
-			for (Friend friend : mBuilder.getUpdatedFriends())
+			for (Person person : mBuilder.getUpdatedFriends())
 			{
-				mDB.updateFriendRecord(friend);
+				mDB.updateFriendRecord(person);
 			}
 		}
 

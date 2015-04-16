@@ -1,4 +1,4 @@
-package com.repay.android.adapter;
+package com.repay.controller.adapter;
 
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 
 import com.repay.android.R;
-import com.repay.android.model.Debt;
-import com.repay.android.view.holder.DebtViewHolder;
+import com.repay.model.Debt;
+import com.repay.view.holder.DebtViewHolder;
 
 import java.util.ArrayList;
 

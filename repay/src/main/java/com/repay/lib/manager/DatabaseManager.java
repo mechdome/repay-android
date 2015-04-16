@@ -1,4 +1,4 @@
-package com.repay.android.manager;
+package com.repay.lib.manager;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -11,8 +11,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.repay.android.model.Debt;
-import com.repay.android.model.Friend;
+import com.repay.model.Debt;
+import com.repay.model.Person;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -25,7 +25,7 @@ import java.util.Date;
  * Property of Matt Allen
  * mattallen092@gmail.com
  * http://mattallensoftware.co.uk/
- * <p/>
+ *
  * This software is distributed under the Apache v2.0 license and use
  * of the Repay name may not be used without explicit permission from the project owner.
  */
@@ -117,10 +117,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * @return All friends stored in the database as ArrayList
 	 * @throws android.database.SQLException
 	 */
-	public ArrayList<Friend> getAllFriends() throws SQLException, NullPointerException, CursorIndexOutOfBoundsException
+	public ArrayList<Person> getAllFriends() throws SQLException, NullPointerException, CursorIndexOutOfBoundsException
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
-		ArrayList<Friend> friends = new ArrayList<Friend>();
+		ArrayList<Person> persons = new ArrayList<Person>();
 
 		Cursor c = db.query(Names.F_TABLENAME, new String[]{Names.F_REPAYID, Names.F_LOOKUPURI, Names.F_NAME, Names.F_DEBT}, null, null, null, null, null);
 
@@ -130,13 +130,13 @@ public class DatabaseManager extends SQLiteOpenHelper
 
 			do
 			{
-				friends.add(new Friend(c.getString(0), c.getString(1), c.getString(2), new BigDecimal(c.getString(3))));
+				persons.add(new Person(c.getString(0), c.getString(1), c.getString(2), new BigDecimal(c.getString(3))));
 			}
 			while (c.moveToNext());
 		}
 		db.close();
 
-		return friends;
+		return persons;
 	}
 
 	/**
@@ -168,24 +168,24 @@ public class DatabaseManager extends SQLiteOpenHelper
 	/**
 	 * Add a friend into the database. To get a RepayID, use generateRepayID()
 	 *
-	 * @param friend
+	 * @param person
 	 * @throws android.database.SQLException
 	 */
-	public void addFriend(final Friend friend) throws SQLException
+	public void addFriend(final Person person) throws SQLException
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(Names.F_REPAYID, friend.getRepayID());
+		values.put(Names.F_REPAYID, person.getRepayID());
 		try
 		{
-			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
+			values.put(Names.F_LOOKUPURI, person.getLookupURI());
 		} catch (NullPointerException e)
 		{
 			Log.i(TAG, "Added by name, Null for lookupUri");
 			values.putNull(Names.F_LOOKUPURI);
 		}
-		values.put(Names.F_NAME, friend.getName());
-		values.put(Names.F_DEBT, friend.getDebt().toString());
+		values.put(Names.F_NAME, person.getName());
+		values.put(Names.F_DEBT, person.getDebt().toString());
 		db.insert(Names.F_TABLENAME, null, values);
 		db.close();
 	}
@@ -277,47 +277,47 @@ public class DatabaseManager extends SQLiteOpenHelper
 	 * @throws IndexOutOfBoundsException
 	 * @throws android.database.SQLException
 	 */
-	public Friend getFriendByRepayID(String repayID) throws IndexOutOfBoundsException, SQLException, NullPointerException
+	public Person getFriendByRepayID(String repayID) throws IndexOutOfBoundsException, SQLException, NullPointerException
 	{
-		Friend friend = null;
+		Person person = null;
 		Cursor c = null;
 		SQLiteDatabase db = this.getReadableDatabase();
 		c = db.query(Names.F_TABLENAME, new String[]{Names.F_REPAYID, Names.F_LOOKUPURI, Names.F_NAME, Names.F_DEBT}, Names.F_REPAYID + "=?", new String[]{repayID}, null, null, null);
 		c.moveToFirst();
 		try
 		{
-			friend = new Friend(repayID, c.getString(1), c.getString(2), new BigDecimal(c.getString(3)));
+			person = new Person(repayID, c.getString(1), c.getString(2), new BigDecimal(c.getString(3)));
 		} catch (NullPointerException e)
 		{
 			Log.i(TAG, "No ContactURI present, passing null");
-			friend = new Friend(repayID, null, c.getString(2), new BigDecimal(c.getString(3)));
+			person = new Person(repayID, null, c.getString(2), new BigDecimal(c.getString(3)));
 		}
 		db.close();
-		return friend;
+		return person;
 	}
 
 	/**
 	 * Replace friend data in database with that passed in here
 	 *
-	 * @param friend
+	 * @param person
 	 */
-	public void updateFriendRecord(Friend friend) throws SQLException, NullPointerException
+	public void updateFriendRecord(Person person) throws SQLException, NullPointerException
 	{
 		ContentValues values = new ContentValues();
-		values.put(Names.F_REPAYID, friend.getRepayID());
-		if (friend.getLookupURI() != null)
+		values.put(Names.F_REPAYID, person.getRepayID());
+		if (person.getLookupURI() != null)
 		{
-			values.put(Names.F_LOOKUPURI, friend.getLookupURI());
+			values.put(Names.F_LOOKUPURI, person.getLookupURI());
 		} else
 		{
 			values.putNull(Names.F_LOOKUPURI);
 		}
-		values.put(Names.F_NAME, friend.getName());
-		values.put(Names.F_DEBT, friend.getDebt().toString());
+		values.put(Names.F_NAME, person.getName());
+		values.put(Names.F_DEBT, person.getDebt().toString());
 		SQLiteDatabase db = this.getWritableDatabase();
 		try
 		{
-			db.update(Names.F_TABLENAME, values, Names.F_REPAYID + "=?", new String[]{friend.getRepayID()});
+			db.update(Names.F_TABLENAME, values, Names.F_REPAYID + "=?", new String[]{person.getRepayID()});
 		} catch (SQLException e)
 		{
 			Log.e(TAG, e.getMessage());

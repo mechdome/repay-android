@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
+import com.repay.android.MainApplication;
 import com.repay.android.R;
-import com.repay.android.model.Friend;
+import com.repay.model.Person;
 
 import java.util.ArrayList;
 
@@ -25,24 +25,24 @@ import java.util.ArrayList;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class ChoosePersonAdapter extends ArrayAdapter<Friend>
+public class ChoosePersonAdapter extends ArrayAdapter<Person>
 {
 	public static final int SELECTED_COLOUR = Color.parseColor("#FFC3BB"); // Same as "Selected Tint" under colors.xml
 	public static final int DESELECTED_COLOUR = Color.parseColor("#00FFFFFF"); // Invisible
 	private int mLayoutID;
-	private ArrayList<Friend> mFriends, mSelectedFriends;
+	private ArrayList<Person> mPersons, mSelectedPersons;
 
-	public ChoosePersonAdapter(Context context, int layoutId, ArrayList<Friend> friends, ArrayList<Friend> selectedFriends)
+	public ChoosePersonAdapter(Context context, int layoutId, ArrayList<Person> persons, ArrayList<Person> selectedPersons)
 	{
-		super(context, layoutId, friends);
+		super(context, layoutId, persons);
 		this.mLayoutID = layoutId;
-		this.mFriends = friends;
-		this.mSelectedFriends = selectedFriends;
+		this.mPersons = persons;
+		this.mSelectedPersons = selectedPersons;
 	}
 
-	public void setSelectedFriends(ArrayList<Friend> selected)
+	public void setSelectedFriends(ArrayList<Person> selected)
 	{
-		mSelectedFriends = selected;
+		mSelectedPersons = selected;
 		notifyDataSetChanged();
 	}
 
@@ -56,15 +56,15 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(mLayoutID, null);
 		}
-		Friend friend = mFriends.get(position);
+		Person person = mPersons.get(position);
 		TextView name = (TextView) v.findViewById(R.id.name);
 		final ImageView pic = (ImageView) v.findViewById(R.id.image);
-		if (friend != null)
+		if (person != null)
 		{
-			v.setTag(friend); // Stored as a tag to be retrieved later for OnItemClickListener
+			v.setTag(person); // Stored as a tag to be retrieved later for OnItemClickListener
 
 			// Colour the list item based on whether it is in the 'selected' list
-			if (mSelectedFriends.contains(friend))
+			if (mSelectedPersons.contains(person))
 			{
 				v.setBackgroundColor(SELECTED_COLOUR);
 			} else
@@ -72,8 +72,8 @@ public class ChoosePersonAdapter extends ArrayAdapter<Friend>
 				v.setBackgroundColor(DESELECTED_COLOUR);
 			}
 		}
-		ImageLoader.getInstance().displayImage(friend.getLookupURI(), pic, Application.getImageOptions());
-		name.setText(friend.getName());
+		ImageLoader.getInstance().displayImage(person.getLookupURI(), pic, MainApplication.getImageOptions());
+		name.setText(person.getName());
 
 		return v;
 	}

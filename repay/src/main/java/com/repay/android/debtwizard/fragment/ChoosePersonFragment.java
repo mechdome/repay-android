@@ -22,12 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.repay.android.R;
-import com.repay.android.adapter.FriendListAdapter;
-import com.repay.android.adapter.OnItemClickListener;
+import com.repay.controller.adapter.FriendListAdapter;
+import com.repay.controller.adapter.OnItemClickListener;
 import com.repay.android.debtwizard.DebtActivity;
-import com.repay.android.helper.ContactsContractHelper;
-import com.repay.android.manager.DatabaseManager;
-import com.repay.android.model.Friend;
+import com.repay.lib.helper.ContactsContractHelper;
+import com.repay.lib.manager.DatabaseManager;
+import com.repay.model.Person;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,13 +41,13 @@ import java.util.ArrayList;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener<Friend>, OnClickListener
+public class ChoosePersonFragment extends DebtFragment implements OnItemClickListener<Person>, OnClickListener
 {
 	public static final int PICK_CONTACT_REQUEST = 1;
 	private static final String TAG = ChoosePersonFragment.class.getName();
 	private RelativeLayout mEmptyState;
 	private FriendListAdapter mAdapter;
-	private ArrayList<Friend> mFriends;
+	private ArrayList<Person> mPersons;
 	private Button mDoneBtn;
 	private TextView mEmpty;
 
@@ -91,8 +91,8 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				{
 					if (!TextUtils.isEmpty(name))
 					{
-						Friend newFriend = new Friend(DatabaseManager.generateRepayID(), null, name, new BigDecimal("0"));
-						((DebtActivity) getActivity()).getDBHandler().addFriend(newFriend);
+						Person newPerson = new Person(DatabaseManager.generateRepayID(), null, name, new BigDecimal("0"));
+						((DebtActivity) getActivity()).getDBHandler().addFriend(newPerson);
 						new GetFriendsFromDB().execute();
 					} else
 					{
@@ -118,7 +118,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 				String contactUri = data.getData().toString();
 				String displayName = ContactsContractHelper.getNameForContact(getActivity(), contactUri);
 
-				Friend pickerResult = new Friend(DatabaseManager.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
+				Person pickerResult = new Person(DatabaseManager.generateRepayID(), contactUri, displayName, new BigDecimal("0"));
 				((DebtActivity) getActivity()).getDBHandler().addFriend(pickerResult);
 
 				new GetFriendsFromDB().execute();
@@ -150,7 +150,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		RecyclerView mListView = (RecyclerView) getView().findViewById(R.id.list);
 		mDoneBtn = ((Button) getView().findViewById(R.id.done));
 		mListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		mAdapter = new FriendListAdapter(getActivity(), mFriends, FriendListAdapter.VIEW_LIST);
+		mAdapter = new FriendListAdapter(getActivity(), mPersons, FriendListAdapter.VIEW_LIST);
 		mListView.setAdapter(mAdapter);
 		mAdapter.setOnItemClickListener(this);
 		mAdapter.setShowingAmounts(false);
@@ -165,7 +165,7 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 	}
 
 	@Override
-	public void onItemClicked(Friend obj, int position)
+	public void onItemClicked(Person obj, int position)
 	{
 		if (((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().contains(obj))
 		{
@@ -191,10 +191,10 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		showAddFriendDialog();
 	}
 
-	private class GetFriendsFromDB extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
+	private class GetFriendsFromDB extends AsyncTask<DatabaseManager, Integer, ArrayList<Person>>
 	{
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseManager... params)
+		protected ArrayList<Person> doInBackground(DatabaseManager... params)
 		{
 			try
 			{
@@ -206,17 +206,17 @@ public class ChoosePersonFragment extends DebtFragment implements OnItemClickLis
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Friend> result)
+		protected void onPostExecute(ArrayList<Person> result)
 		{
-			mFriends = result;
+			mPersons = result;
 			updateList();
 		}
 	}
 
 	private void updateList()
 	{
-		mAdapter.setItemsWithSelected(mFriends, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
-		if (mFriends != null && mFriends.size() > 0)
+		mAdapter.setItemsWithSelected(mPersons, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends());
+		if (mPersons != null && mPersons.size() > 0)
 		{
 			mEmpty.setVisibility(View.GONE);
 		} else

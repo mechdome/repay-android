@@ -16,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.repay.android.R;
-import com.repay.android.adapter.DebtListAdapter;
-import com.repay.android.adapter.OnItemLongClickListener;
+import com.repay.controller.adapter.DebtListAdapter;
+import com.repay.controller.adapter.OnItemLongClickListener;
 import com.repay.android.debtwizard.DebtActivity;
 import com.repay.android.debtwizard.EditDebtActivity;
-import com.repay.android.model.Debt;
-import com.repay.android.model.Friend;
+import com.repay.model.Debt;
+import com.repay.model.Person;
 import com.repay.android.overview.FriendActivity;
 
 import java.math.BigDecimal;
@@ -85,9 +85,9 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 	}
 
 	@Override
-	public void onFriendUpdated(Friend friend)
+	public void onFriendUpdated(Person person)
 	{
-		new GetDebtsFromDB().execute(friend);
+		new GetDebtsFromDB().execute(person);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 		chooseDialog.show();
 	}
 
-	private class GetDebtsFromDB extends AsyncTask<Friend, Void, ArrayList<Debt>>
+	private class GetDebtsFromDB extends AsyncTask<Person, Void, ArrayList<Debt>>
 	{
 		@Override
 		protected void onPreExecute()
@@ -156,7 +156,7 @@ public class FriendHistoryFragment extends FriendFragment implements OnItemLongC
 		}
 
 		@Override
-		protected ArrayList<Debt> doInBackground(Friend... params)
+		protected ArrayList<Debt> doInBackground(Person... params)
 		{
 			try
 			{

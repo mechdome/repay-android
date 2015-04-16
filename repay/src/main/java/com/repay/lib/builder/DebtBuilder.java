@@ -1,6 +1,9 @@
-package com.repay.android.model;
+package com.repay.lib.builder;
 
 import android.text.TextUtils;
+
+import com.repay.model.Debt;
+import com.repay.model.Person;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,13 +23,13 @@ public class DebtBuilder implements Serializable
 {
 	private String mDescription;
 	private boolean owesMe = true, distributeEvenly = false, includingMe = false;
-	private ArrayList<Friend> mSelectedFriends;
+	private ArrayList<Person> mSelectedPersons;
 	private BigDecimal mAmount;
 	private Date mDate;
 
 	public DebtBuilder()
 	{
-		mSelectedFriends = new ArrayList<Friend>();
+		mSelectedPersons = new ArrayList<Person>();
 	}
 
 	public String getDescription()
@@ -83,27 +86,27 @@ public class DebtBuilder implements Serializable
 		this.includingMe = includingMe;
 	}
 
-	public ArrayList<Friend> getSelectedFriends()
+	public ArrayList<Person> getSelectedFriends()
 	{
-		return mSelectedFriends;
+		return mSelectedPersons;
 	}
 
-	public void setSelectedFriends(ArrayList<Friend> selectedFriends)
+	public void setSelectedFriends(ArrayList<Person> selectedPersons)
 	{
-		this.mSelectedFriends = selectedFriends;
+		this.mSelectedPersons = selectedPersons;
 	}
 
-	public void addSelectedFriend(Friend friend)
+	public void addSelectedFriend(Person person)
 	{
-		if (!mSelectedFriends.contains(friend))
+		if (!mSelectedPersons.contains(person))
 		{
-			mSelectedFriends.add(friend);
+			mSelectedPersons.add(person);
 		}
 	}
 
-	public void removeSelectedFriend(Friend friend)
+	public void removeSelectedFriend(Person person)
 	{
-		mSelectedFriends.remove(friend);
+		mSelectedPersons.remove(person);
 	}
 
 	public BigDecimal getAmount()
@@ -116,16 +119,16 @@ public class DebtBuilder implements Serializable
 		this.mAmount = amount;
 	}
 
-	public ArrayList<Friend> getFriendsWithImages()
+	public ArrayList<Person> getFriendsWithImages()
 	{
-		if (mSelectedFriends != null && mSelectedFriends.size() > 0)
+		if (mSelectedPersons != null && mSelectedPersons.size() > 0)
 		{
-			ArrayList<Friend> uris = new ArrayList<Friend>();
-			for (Friend friend : mSelectedFriends)
+			ArrayList<Person> uris = new ArrayList<Person>();
+			for (Person person : mSelectedPersons)
 			{
-				if (!TextUtils.isEmpty(friend.getLookupURI()))
+				if (!TextUtils.isEmpty(person.getLookupURI()))
 				{
-					uris.add(friend);
+					uris.add(person);
 				}
 			}
 			return uris;
@@ -136,28 +139,28 @@ public class DebtBuilder implements Serializable
 	public String getNamesList(boolean shortened)
 	{
 		String name = "";
-		if (mSelectedFriends.size() < 3)
+		if (mSelectedPersons.size() < 3)
 		{
-			for (Friend friend : mSelectedFriends)
+			for (Person person : mSelectedPersons)
 			{
-				name += friend.getName() + "\n";
+				name += person.getName() + "\n";
 			}
-		} else if (mSelectedFriends.size() > 2)
+		} else if (mSelectedPersons.size() > 2)
 		{
 			if (shortened)
 			{
 				for (int i = 0; i <= 2; i++)
 				{
-					name += mSelectedFriends.get(i).getName() + "\n";
+					name += mSelectedPersons.get(i).getName() + "\n";
 				}
 				name += "and more...";
 			} else
 			{
 				for (int i = 0; i <= 5; i++)
 				{
-					name += mSelectedFriends.get(i).getName() + "\n";
+					name += mSelectedPersons.get(i).getName() + "\n";
 				}
-				if (mSelectedFriends.size() > 5)
+				if (mSelectedPersons.size() > 5)
 				{
 					name += "and more...";
 				}
@@ -176,9 +179,9 @@ public class DebtBuilder implements Serializable
 		BigDecimal debtAmount = getAmountToApply();
 
 		List<Debt> debts = new ArrayList<Debt>();
-		for (Friend friend : mSelectedFriends)
+		for (Person person : mSelectedPersons)
 		{
-			debts.add(new Debt(0, friend.getRepayID(), getDate(), debtAmount, mDescription));
+			debts.add(new Debt(0, person.getRepayID(), getDate(), debtAmount, mDescription));
 		}
 		return debts;
 	}
@@ -195,10 +198,10 @@ public class DebtBuilder implements Serializable
 		{
 			if (includingMe)
 			{
-				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size() + 1), RoundingMode.CEILING);
+				debtAmount = mAmount.divide(new BigDecimal(mSelectedPersons.size() + 1), RoundingMode.CEILING);
 			} else
 			{
-				debtAmount = mAmount.divide(new BigDecimal(mSelectedFriends.size()), BigDecimal.ROUND_CEILING);
+				debtAmount = mAmount.divide(new BigDecimal(mSelectedPersons.size()), BigDecimal.ROUND_CEILING);
 			}
 		} else
 		{
@@ -211,13 +214,13 @@ public class DebtBuilder implements Serializable
 		return debtAmount;
 	}
 
-	public List<Friend> getUpdatedFriends()
+	public List<Person> getUpdatedFriends()
 	{
 		BigDecimal debtAmount = getAmountToApply();
-		ArrayList<Friend> updated = mSelectedFriends;
-		for (Friend friend : updated)
+		ArrayList<Person> updated = mSelectedPersons;
+		for (Person person : updated)
 		{
-			friend.setDebt(friend.getDebt().add(debtAmount));
+			person.setDebt(person.getDebt().add(debtAmount));
 		}
 		return updated;
 	}

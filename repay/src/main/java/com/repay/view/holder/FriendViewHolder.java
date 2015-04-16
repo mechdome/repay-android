@@ -1,4 +1,4 @@
-package com.repay.android.view.holder;
+package com.repay.view.holder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -7,11 +7,11 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
+import com.repay.android.MainApplication;
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.model.Friend;
-import com.repay.android.view.RoundedImageView;
+import com.repay.model.Person;
+import com.repay.view.RoundedImageView;
 
 import java.math.BigDecimal;
 
@@ -24,7 +24,7 @@ public class FriendViewHolder extends ViewHolder
 	/**
 	 * Store the friend object here to later pass with the onClick
 	 */
-	private Friend mFriend;
+	private Person mPerson;
 	private RoundedImageView mImage;
 	private RoundedImageView mSelected;
 	private TextView mName;
@@ -40,26 +40,26 @@ public class FriendViewHolder extends ViewHolder
 		mSelected.setVisibility(View.INVISIBLE);
 	}
 
-	public void populateView(Context context, Friend friend, boolean showingAmount)
+	public void populateView(Context context, Person person, boolean showingAmount)
 	{
-		ImageLoader.getInstance().displayImage(friend.getLookupURI(), mImage, Application.getImageOptions());
-		mName.setText(friend.getName());
+		ImageLoader.getInstance().displayImage(person.getLookupURI(), mImage, MainApplication.getImageOptions());
+		mName.setText(person.getName());
 		if (!showingAmount)
 		{
 			mAmount.setVisibility(View.GONE);
 		}
-		if (friend.getDebt().compareTo(BigDecimal.ZERO) < 0)
+		if (person.getDebt().compareTo(BigDecimal.ZERO) < 0)
 		{
 			mImage.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
 			mSelected.setOuterColor(SettingsFragment.getNegativeDebtColourPreference(context));
-			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt().negate()));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(person.getDebt().negate()));
 		} else
 		{
 			mImage.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
 			mSelected.setOuterColor(SettingsFragment.getPositiveDebtColourPreference(context));
-			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(friend.getDebt()));
+			mAmount.setText(SettingsFragment.getCurrencySymbol(context) + SettingsFragment.getFormattedAmount(person.getDebt()));
 		}
-		if (friend.getDebt().compareTo(BigDecimal.ZERO) == 0 && SettingsFragment.isUsingNeutralColour(context))
+		if (person.getDebt().compareTo(BigDecimal.ZERO) == 0 && SettingsFragment.isUsingNeutralColour(context))
 		{
 			mImage.setOuterColor(SettingsFragment.getNeutralDebtColourPreference(context));
 			mSelected.setOuterColor(SettingsFragment.getNeutralDebtColourPreference(context));

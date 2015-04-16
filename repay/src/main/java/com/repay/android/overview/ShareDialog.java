@@ -8,9 +8,9 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.repay.android.helper.ContactsContractHelper;
-import com.repay.android.manager.ShareManager;
-import com.repay.android.model.Friend;
+import com.repay.lib.helper.ContactsContractHelper;
+import com.repay.lib.manager.ShareManager;
+import com.repay.model.Person;
 
 import java.util.HashMap;
 
@@ -29,18 +29,18 @@ public class ShareDialog extends Builder implements OnClickListener
 	private static final String TAG = ShareDialog.class.getName();
 
 	private HashMap<String, String> mEmails, mPhoneNums;
-	private Friend mFriend;
+	private Person mPerson;
 	private Context mContext;
 
-	public ShareDialog(Context context, Friend friend)
+	public ShareDialog(Context context, Person person)
 	{
 		super(context);
 		mContext = context;
-		mFriend = friend;
+		mPerson = person;
 		Log.d(TAG, "Getting emails from contacts");
-		mEmails = ContactsContractHelper.getContactsEmailAddress(Uri.parse(mFriend.getLookupURI()).getLastPathSegment(), context);
+		mEmails = ContactsContractHelper.getContactsEmailAddress(Uri.parse(mPerson.getLookupURI()).getLastPathSegment(), context);
 		Log.d(TAG, "Getting phone numbers from contacts");
-		mPhoneNums = ContactsContractHelper.getContactPhoneNumber(context, Uri.parse(mFriend.getLookupURI()).getLastPathSegment());
+		mPhoneNums = ContactsContractHelper.getContactPhoneNumber(context, Uri.parse(mPerson.getLookupURI()).getLastPathSegment());
 		String[] items = new String[]{"SMS", "Email"};
 		setTitle("Select Share Method");
 		setItems(items, this);
@@ -59,20 +59,20 @@ public class ShareDialog extends Builder implements OnClickListener
 			Log.i(TAG, "SMS Selected");
 			if (mPhoneNums.size() >= 1)
 			{
-				ShareManager.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mFriend.getDebt());
+				ShareManager.smsFriend(mContext, mPhoneNums.get(mPhoneNums.keySet().iterator().next()), mPerson.getDebt());
 			} else
 			{
-				Toast.makeText(mContext, "No Numbers Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "No Numbers Found For " + mPerson.getName(), Toast.LENGTH_SHORT).show();
 			}
 		} else if (which == 1)
 		{
 			Log.i(TAG, "Email Selected");
 			if (mEmails.size() >= 1)
 			{
-				ShareManager.emailFriend(mContext, mFriend.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
+				ShareManager.emailFriend(mContext, mPerson.getDebt(), mEmails.get(mEmails.keySet().iterator().next()));
 			} else
 			{
-				Toast.makeText(mContext, "No Email Addresses Found For " + mFriend.getName(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "No Email Addresses Found For " + mPerson.getName(), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

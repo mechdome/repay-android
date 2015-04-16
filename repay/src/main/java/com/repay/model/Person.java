@@ -1,7 +1,8 @@
-package com.repay.android.model;
+package com.repay.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Property of Matt Allen
@@ -12,19 +13,14 @@ import java.math.BigDecimal;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class Friend implements Comparable<Friend>, Serializable
+public class Person implements Comparable<Person>, Serializable
 {
-
-	public static final String REPAYID = "repayID";
-	public static final String LOOKUPURI = "lookupUri";
-	public static final String NAME = "name";
-	public static final String AMOUNT = "amount";
-
 	private String name, repayID;
 	private BigDecimal debt;
 	private String lookupURI;
+	private List<Debt> debts;
 
-	public Friend(String repayID, String lookupURI, String name, BigDecimal debt)
+	public Person(String repayID, String lookupURI, String name, BigDecimal debt)
 	{
 		super();
 		this.lookupURI = lookupURI;
@@ -63,8 +59,18 @@ public class Friend implements Comparable<Friend>, Serializable
 		this.debt = debt;
 	}
 
+	public List<Debt> getDebts()
+	{
+		return debts;
+	}
+
+	public void setDebts(List<Debt> debts)
+	{
+		this.debts = debts;
+	}
+
 	@Override
-	public int compareTo(Friend another)
+	public int compareTo(Person another)
 	{
 		return another.getDebt().compareTo(debt);
 	}
@@ -72,6 +78,6 @@ public class Friend implements Comparable<Friend>, Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		return (o.getClass() == Friend.class && ((Friend) o).getRepayID().equals(repayID));
+		return (o.getClass() == Person.class && ((Person) o).getRepayID().equals(repayID));
 	}
 }

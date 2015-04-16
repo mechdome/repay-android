@@ -19,9 +19,9 @@ import com.repay.android.debtwizard.AddDebtActivity;
 import com.repay.android.debtwizard.DebtActivity;
 import com.repay.android.debtwizard.RepayDebtActivity;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.helper.ContactsContractHelper;
-import com.repay.android.manager.DatabaseManager;
-import com.repay.android.model.Friend;
+import com.repay.lib.helper.ContactsContractHelper;
+import com.repay.lib.manager.DatabaseManager;
+import com.repay.model.Person;
 import com.repay.android.overview.fragment.FriendFragment;
 import com.repay.android.overview.fragment.FriendOverviewFragment;
 
@@ -40,7 +40,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 {
 	public static final String FRIEND = "friend";
 	private static final int PICK_CONTACT_REQUEST = 1;
-	private Friend mFriend;
+	private Person mPerson;
 	private DatabaseManager mDB;
 	private FriendFragment mOverViewFrag;
 
@@ -50,7 +50,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragmentholder);
 		mDB = new DatabaseManager(this);
-		mFriend = (Friend) getIntent().getExtras().get(FRIEND);
+		mPerson = (Person) getIntent().getExtras().get(FRIEND);
 		mOverViewFrag = new FriendOverviewFragment();
 		getFragmentManager()
 				.beginTransaction()
@@ -65,17 +65,17 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 
 	private void updateFragment()
 	{
-		if (mOverViewFrag != null) mOverViewFrag.onFriendUpdated(mFriend);
+		if (mOverViewFrag != null) mOverViewFrag.onFriendUpdated(mPerson);
 	}
 
-	public Friend getFriend()
+	public Person getFriend()
 	{
-		return mFriend;
+		return mPerson;
 	}
 
 	public void updateFriend()
 	{
-		mFriend = mDB.getFriendByRepayID(mFriend.getRepayID());
+		mPerson = mDB.getFriendByRepayID(mPerson.getRepayID());
 		updateFragment();
 	}
 
@@ -112,7 +112,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 						{
 							if (mDB != null)
 							{
-								mDB.removeFriend(mFriend.getRepayID());
+								mDB.removeFriend(mPerson.getRepayID());
 								finish();
 							}
 						} catch (Exception e)
@@ -146,7 +146,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 
 			case R.id.action_addDebt:
 				Intent i = new Intent(this, AddDebtActivity.class);
-				i.putExtra(DebtActivity.FRIEND, mFriend);
+				i.putExtra(DebtActivity.FRIEND, mPerson);
 				startActivity(i);
 				return true;
 
@@ -157,8 +157,8 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 				return true;
 
 			case R.id.action_unLinkContact:
-				mFriend = new Friend(mFriend.getRepayID(), null, mFriend.getName(), mFriend.getDebt());
-				mDB.updateFriendRecord(mFriend);
+				mPerson = new Person(mPerson.getRepayID(), null, mPerson.getName(), mPerson.getDebt());
+				mDB.updateFriendRecord(mPerson);
 				return true;
 
 			default:
@@ -178,10 +178,10 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 			{
 				try
 				{
-					BigDecimal debtRepayed = mFriend.getDebt().negate();
-					mDB.addDebt(mFriend.getRepayID(), debtRepayed, "Repaid");
-					mFriend.setDebt(mFriend.getDebt().add(debtRepayed));
-					mDB.updateFriendRecord(mFriend);
+					BigDecimal debtRepayed = mPerson.getDebt().negate();
+					mDB.addDebt(mPerson.getRepayID(), debtRepayed, "Repaid");
+					mPerson.setDebt(mPerson.getDebt().add(debtRepayed));
+					mDB.updateFriendRecord(mPerson);
 					Toast.makeText(getApplicationContext(), "Debt of " + SettingsFragment.getCurrencySymbol(getApplicationContext()) + debtRepayed.toString() + " cleared", Toast.LENGTH_SHORT).show();
 					finish();
 				} catch (Throwable e)
@@ -206,7 +206,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 	private void clearPartialDebt()
 	{
 		Intent i = new Intent(this, RepayDebtActivity.class);
-		i.putExtra(DebtActivity.FRIEND, mFriend);
+		i.putExtra(DebtActivity.FRIEND, mPerson);
 		startActivity(i);
 	}
 
@@ -221,7 +221,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 				String contactUri = data.getData().toString();
 				String displayName = ContactsContractHelper.getNameForContact(this, contactUri);
 
-				Friend pickerResult = new Friend(mFriend.getRepayID(), contactUri, displayName, mFriend.getDebt());
+				Person pickerResult = new Person(mPerson.getRepayID(), contactUri, displayName, mPerson.getDebt());
 
 				mDB.updateFriendRecord(pickerResult);
 			} catch (IndexOutOfBoundsException e)
@@ -242,7 +242,7 @@ public class FriendActivity extends ActionBarActivity implements View.OnClickLis
 		switch (v.getId())
 		{
 			case R.id.repaid:
-				if (mFriend.getDebt().compareTo(BigDecimal.ZERO) != 0)
+				if (mPerson.getDebt().compareTo(BigDecimal.ZERO) != 0)
 				{
 					AlertDialog.Builder clearDebtDialog = new AlertDialog.Builder(this);
 					clearDebtDialog.setTitle(R.string.debt_repaid_title);

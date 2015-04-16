@@ -1,4 +1,4 @@
-package com.repay.android.view;
+package com.repay.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.repay.android.R;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.model.Friend;
+import com.repay.model.Person;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ import java.util.ArrayList;
  */
 public class TotalDialog extends DialogFragment
 {
-	private ArrayList<Friend> mFriends;
+	private ArrayList<Person> mPersons;
 	private Context mContext;
 
-	public TotalDialog(Context context, ArrayList<Friend> friendsList)
+	public TotalDialog(Context context, ArrayList<Person> friendsList)
 	{
 		mContext = context;
-		mFriends = friendsList;
+		mPersons = friendsList;
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class TotalDialog extends DialogFragment
 	public BigDecimal getTheyOweTotal()
 	{
 		BigDecimal amount = new BigDecimal("0");
-		for (Friend mFriend : mFriends)
+		for (Person mPerson : mPersons)
 		{
-			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == 1)
-				amount = amount.add(mFriend.getDebt());
+			if (mPerson.getDebt().compareTo(BigDecimal.ZERO) == 1)
+				amount = amount.add(mPerson.getDebt());
 		}
 		return amount;
 	}
@@ -59,10 +59,10 @@ public class TotalDialog extends DialogFragment
 	public BigDecimal getIOweTotal()
 	{
 		BigDecimal amount = new BigDecimal("-0");
-		for (Friend mFriend : mFriends)
+		for (Person mPerson : mPersons)
 		{
-			if (mFriend.getDebt().compareTo(BigDecimal.ZERO) == -1)
-				amount = amount.add(mFriend.getDebt());
+			if (mPerson.getDebt().compareTo(BigDecimal.ZERO) == -1)
+				amount = amount.add(mPerson.getDebt());
 		}
 		return amount;
 	}

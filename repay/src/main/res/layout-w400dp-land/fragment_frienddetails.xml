@@ -34,7 +34,7 @@
 		android:text="@string/debt_repaid"
 		/>
 
-	<com.repay.android.view.RoundedImageView
+	<com.repay.view.RoundedImageView
 		android:layout_width="160dp"
 		android:layout_height="160dp"
 		android:id="@+id/friend_image"

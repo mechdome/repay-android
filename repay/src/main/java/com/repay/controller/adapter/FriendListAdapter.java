@@ -1,4 +1,4 @@
-package com.repay.android.adapter;
+package com.repay.controller.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -8,8 +8,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.repay.android.R;
-import com.repay.android.model.Friend;
-import com.repay.android.view.holder.FriendViewHolder;
+import com.repay.model.Person;
+import com.repay.view.holder.FriendViewHolder;
 
 import java.util.ArrayList;
 
@@ -28,21 +28,21 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	public static final int VIEW_GRID = 20;
 	private static final String TAG = FriendListAdapter.class.getName();
 
-	private ArrayList<Friend> mFriends;
+	private ArrayList<Person> mPersons;
 	private int mSelectedView;
 	private Context mContext;
-	private OnItemClickListener<Friend> mItemClickListener;
+	private OnItemClickListener<Person> mItemClickListener;
 	private boolean mShowingAmounts = true, mMultiSelect = false;
-	private ArrayList<Friend> mSelectedFriends;
+	private ArrayList<Person> mSelectedPersons;
 
-	public FriendListAdapter(Context context, ArrayList<Friend> friends, int viewStyle)
+	public FriendListAdapter(Context context, ArrayList<Person> persons, int viewStyle)
 	{
 		super();
 		mSelectedView = viewStyle;
 		mContext = context;
-		if (friends != null)
+		if (persons != null)
 		{
-			mFriends = friends;
+			mPersons = persons;
 		}
 	}
 
@@ -63,23 +63,23 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		return mShowingAmounts;
 	}
 
-	public void setItems(ArrayList<Friend> friends)
+	public void setItems(ArrayList<Person> persons)
 	{
-		if (friends != null)
+		if (persons != null)
 		{
-			mFriends = friends;
+			mPersons = persons;
 			notifyDataSetChanged();
 		}
 	}
 
-	public void setItemsWithSelected(ArrayList<Friend> friends, ArrayList<Friend> selected)
+	public void setItemsWithSelected(ArrayList<Person> persons, ArrayList<Person> selected)
 	{
-		if (friends != null)
+		if (persons != null)
 		{
-			mFriends = friends;
+			mPersons = persons;
 			if (selected != null)
 			{
-				mSelectedFriends = selected;
+				mSelectedPersons = selected;
 			}
 			notifyDataSetChanged();
 		}
@@ -108,7 +108,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	@Override
 	public void onBindViewHolder(FriendViewHolder vh, final int i)
 	{
-		vh.populateView(mContext, mFriends.get(i), mShowingAmounts);
+		vh.populateView(mContext, mPersons.get(i), mShowingAmounts);
 		vh.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -116,13 +116,13 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 			{
 				if (mItemClickListener != null)
 				{
-					mItemClickListener.onItemClicked(mFriends.get(i), i);
+					mItemClickListener.onItemClicked(mPersons.get(i), i);
 				}
 			}
 		});
 		if (isMultiSelect())
 		{
-			if (mSelectedFriends.contains(mFriends.get(i)))
+			if (mSelectedPersons.contains(mPersons.get(i)))
 			{
 				vh.setSelected(true);
 			} else
@@ -135,7 +135,7 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 	@Override
 	public int getItemCount()
 	{
-		return mFriends != null ? mFriends.size() : 0;
+		return mPersons != null ? mPersons.size() : 0;
 	}
 
 	public void setOnItemClickListener(OnItemClickListener listener)
@@ -143,9 +143,9 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		mItemClickListener = listener;
 	}
 
-	public void setSelectedFriends(ArrayList<Friend> friends)
+	public void setSelectedFriends(ArrayList<Person> persons)
 	{
-		mSelectedFriends = friends;
+		mSelectedPersons = persons;
 		notifyDataSetChanged();
 	}
 
@@ -159,12 +159,12 @@ public class FriendListAdapter extends Adapter<FriendViewHolder>
 		return mMultiSelect;
 	}
 
-	public ArrayList<Friend> getSelectedFriends()
+	public ArrayList<Person> getSelectedFriends()
 	{
-		if (mSelectedFriends == null)
+		if (mSelectedPersons == null)
 		{
-			mSelectedFriends = new ArrayList<Friend>();
+			mSelectedPersons = new ArrayList<Person>();
 		}
-		return mSelectedFriends;
+		return mSelectedPersons;
 	}
 }

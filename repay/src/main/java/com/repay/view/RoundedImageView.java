@@ -1,4 +1,4 @@
-package com.repay.android.view;
+package com.repay.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

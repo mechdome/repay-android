@@ -1,4 +1,4 @@
-package com.repay.android.adapter;
+package com.repay.controller.adapter;
 
 /**
  * Simple item click listener interface for {@link android.support.v7.widget.RecyclerView}

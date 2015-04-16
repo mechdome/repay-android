@@ -21,14 +21,14 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 import com.repay.android.MainActivity;
 import com.repay.android.R;
-import com.repay.android.adapter.FriendListAdapter;
-import com.repay.android.adapter.OnItemClickListener;
+import com.repay.controller.adapter.FriendListAdapter;
+import com.repay.controller.adapter.OnItemClickListener;
 import com.repay.android.debtwizard.AddDebtActivity;
-import com.repay.android.manager.DatabaseManager;
-import com.repay.android.model.Debt;
-import com.repay.android.model.Friend;
+import com.repay.lib.manager.DatabaseManager;
+import com.repay.model.Debt;
+import com.repay.model.Person;
 import com.repay.android.overview.FriendActivity;
-import com.repay.android.view.TotalDialog;
+import com.repay.view.TotalDialog;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.Collections;
  * of the Repay name may not be used without explicit permission from the project owner.
  */
 
-public class FriendsListFragment extends Fragment implements OnItemClickListener<Friend>, OnClickListener
+public class FriendsListFragment extends Fragment implements OnItemClickListener<Person>, OnClickListener
 {
 
 	public static final String TAG = FriendsListFragment.class.getName();
@@ -136,9 +136,9 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		if (((MainActivity) getActivity()).getFriends() != null)
 		{
 			BigDecimal total = new BigDecimal("0");
-			for (Friend friend : ((MainActivity) getActivity()).getFriends())
+			for (Person person : ((MainActivity) getActivity()).getFriends())
 			{
-				total = total.add(friend.getDebt());
+				total = total.add(person.getDebt());
 			}
 			return total;
 		} else
@@ -153,7 +153,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 	}
 
 	@Override
-	public void onItemClicked(Friend obj, int position)
+	public void onItemClicked(Person obj, int position)
 	{
 		Intent i = new Intent(getActivity(), FriendActivity.class);
 		i.putExtra(FriendActivity.FRIEND, obj);
@@ -168,7 +168,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		startActivity(intent);
 	}
 
-	private class RecalculateTotalDebts extends AsyncTask<DatabaseManager, Integer, ArrayList<Friend>>
+	private class RecalculateTotalDebts extends AsyncTask<DatabaseManager, Integer, ArrayList<Person>>
 	{
 
 		@Override
@@ -192,19 +192,19 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		}
 
 		@Override
-		protected ArrayList<Friend> doInBackground(DatabaseManager... params)
+		protected ArrayList<Person> doInBackground(DatabaseManager... params)
 		{
 			try
 			{
-				ArrayList<Friend> friends = params[0].getAllFriends();
-				if (friends != null)
+				ArrayList<Person> persons = params[0].getAllFriends();
+				if (persons != null)
 				{
-					for (int i = 0; i <= friends.size() - 1; i++)
+					for (int i = 0; i <= persons.size() - 1; i++)
 					{
 						BigDecimal newAmount;
 						try
 						{
-							newAmount = totalAllDebts(params[0].getDebtsByRepayID(friends.get(i).getRepayID()));
+							newAmount = totalAllDebts(params[0].getDebtsByRepayID(persons.get(i).getRepayID()));
 						} catch (Exception e)
 						{
 							e.printStackTrace();
@@ -212,20 +212,20 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 						}
 						try
 						{
-							friends.get(i).setDebt(newAmount);
-							params[0].updateFriendRecord(friends.get(i));
+							persons.get(i).setDebt(newAmount);
+							params[0].updateFriendRecord(persons.get(i));
 						} catch (Exception e)
 						{
 							e.printStackTrace();
 						}
 					}
 
-					Collections.sort(friends);
+					Collections.sort(persons);
 					if (mSortOrder == SettingsFragment.SORTORDER_OWETHEM)
 					{
-						Collections.reverse(friends);
+						Collections.reverse(persons);
 					}
-					return friends;
+					return persons;
 				}
 			} catch (CursorIndexOutOfBoundsException e)
 			{
@@ -235,7 +235,7 @@ public class FriendsListFragment extends Fragment implements OnItemClickListener
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Friend> result)
+		protected void onPostExecute(ArrayList<Person> result)
 		{
 			if (result != null)
 			{

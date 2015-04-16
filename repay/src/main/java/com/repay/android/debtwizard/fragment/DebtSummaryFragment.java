@@ -12,11 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.repay.android.Application;
+import com.repay.android.MainApplication;
 import com.repay.android.R;
 import com.repay.android.debtwizard.DebtActivity;
 import com.repay.android.fragment.SettingsFragment;
-import com.repay.android.view.RoundedImageView;
+import com.repay.view.RoundedImageView;
 
 import java.math.BigDecimal;
 
@@ -85,19 +85,19 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 			mNamesTxt.setText(((DebtActivity) getActivity()).getDebtBuilder().getNamesList(false).trim());
 		}
 
-		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(0).getLookupURI(), mHeaderPic, Application.getImageOptions());
+		ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(0).getLookupURI(), mHeaderPic, MainApplication.getImageOptions());
 		setOuterColor(mHeaderPic, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(0).getDebt());
 
 		if (numberOfPeople >= 2)
 		{
 			mHeaderPic2.setVisibility(View.VISIBLE);
-			ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(1).getLookupURI(), mHeaderPic2, Application.getImageOptions());
+			ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(1).getLookupURI(), mHeaderPic2, MainApplication.getImageOptions());
 			setOuterColor(mHeaderPic2, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(1).getDebt());
 		}
 		if (numberOfPeople >= 3)
 		{
 			mHeaderPic3.setVisibility(View.VISIBLE);
-			ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(2).getLookupURI(), mHeaderPic3, Application.getImageOptions());
+			ImageLoader.getInstance().displayImage(((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(2).getLookupURI(), mHeaderPic3, MainApplication.getImageOptions());
 			setOuterColor(mHeaderPic3, ((DebtActivity) getActivity()).getDebtBuilder().getSelectedFriends().get(2).getDebt());
 		}
 		if (numberOfPeople > 3)

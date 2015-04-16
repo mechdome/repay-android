@@ -1,4 +1,4 @@
-package com.repay.android.manager;
+package com.repay.lib.manager;
 
 import android.content.Context;
 
