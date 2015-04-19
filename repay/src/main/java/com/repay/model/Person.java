@@ -15,17 +15,17 @@ import java.util.List;
 
 public class Person implements Comparable<Person>, Serializable
 {
-	private String name, repayID;
+	private String name, id;
 	private BigDecimal debt;
 	private String lookupURI;
 	private List<Debt> debts;
 
-	public Person(String repayID, String lookupURI, String name, BigDecimal debt)
+	public Person(String id, String lookupURI, String name, BigDecimal debt)
 	{
 		super();
 		this.lookupURI = lookupURI;
 		this.name = name;
-		this.repayID = repayID;
+		this.id = id;
 		this.debt = debt;
 	}
 
@@ -39,9 +39,9 @@ public class Person implements Comparable<Person>, Serializable
 		this.name = name;
 	}
 
-	public String getRepayID()
+	public String getId()
 	{
-		return repayID;
+		return id;
 	}
 
 	public String getLookupURI()
@@ -78,6 +78,6 @@ public class Person implements Comparable<Person>, Serializable
 	@Override
 	public boolean equals(Object o)
 	{
-		return (o.getClass() == Person.class && ((Person) o).getRepayID().equals(repayID));
+		return (o.getClass() == Person.class && ((Person) o).getId().equals(id));
 	}
 }

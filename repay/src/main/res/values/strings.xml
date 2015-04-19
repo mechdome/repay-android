@@ -55,5 +55,8 @@
 	<string name="i_am_owed">I Am Owed</string>
 	<string name="im_owed">I\'m Owed</string>
 	<string name="total">Total</string>
+	<string name="activity_migration">Migration</string>
+	<string name="been_some_changes">So, there\'s been some changes...</string>
+	<string name="migration_message">Your records are now stored slightly differently, so they need to be moved over to the location. This should only take a few seconds.</string>
 
 </resources>
