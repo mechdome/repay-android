@@ -38,12 +38,4 @@
             android:summary="@string/settings_friendsList_sortOrder_summary"
             android:title="@string/settings_friendsList_sortOrder_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_feedback">
-        <Preference
-            android:key="feedback"
-            android:selectable="true"
-            android:summary="@string/settings_feedback_summary"
-            android:title="@string/settings_feedback_title" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

@@ -145,11 +145,11 @@ public class DebtSummaryFragment extends DebtFragment implements OnClickListener
 
     private void setOweStatusColour(boolean isInDebtToMe) {
         if (!isInDebtToMe) {
-            mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
-            mIOweThem.setBackgroundColor(mNeutralColor);
-        } else {
             mTheyOweMe.setBackgroundColor(mNeutralColor);
             mIOweThem.setBackgroundColor(mIOweThemColour);
+        } else {
+            mTheyOweMe.setBackgroundColor(mTheyOweMeColour);
+            mIOweThem.setBackgroundColor(mNeutralColor);
         }
     }
 

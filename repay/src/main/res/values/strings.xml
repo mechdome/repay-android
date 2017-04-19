@@ -23,6 +23,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_adddebt">Add Debt</string>
+    <string name="action_about_mechdome">About Mechdome</string>
     <string name="action_addperson">Add Person</string>
     <string name="action_total">Total</string>
     <string name="action_cleardebt">Debt Repaid</string>

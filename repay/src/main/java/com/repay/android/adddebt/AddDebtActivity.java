@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mechdome.aboutmechdome.AboutMechDomeActivity;
 import com.repay.android.R;
 import com.repay.android.settings.SettingsActivity;
 
@@ -66,6 +67,12 @@ public class AddDebtActivity extends DebtActivity
 				Intent intent = new Intent();
 				intent.setClass(this, SettingsActivity.class);
 				startActivity(intent);
+				return true;
+
+			case R.id.action_about_mechdome:
+				Intent intentAboutMD = new Intent();
+				intentAboutMD.setClass(this, AboutMechDomeActivity.class);
+				startActivity(intentAboutMD);
 				return true;
 
 			default:

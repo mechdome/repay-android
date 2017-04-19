@@ -71,6 +71,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.repay.android.MainActivity" />
         </activity>
+        <meta-data android:name="md_remove_ads" android:value="com.repay.android.MechDomeAd" />
     </application>
 
 </manifest>

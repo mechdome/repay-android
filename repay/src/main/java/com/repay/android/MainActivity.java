@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mechdome.aboutmechdome.AboutMechDomeActivity;
 import com.repay.android.adddebt.AddDebtActivity;
 import com.repay.android.database.DatabaseHandler;
 import com.repay.android.model.Friend;
@@ -69,6 +70,12 @@ public class MainActivity extends Activity
 				Intent intentSettings = new Intent();
 				intentSettings.setClass(this, SettingsActivity.class);
 				startActivity(intentSettings);
+				return true;
+
+			case R.id.action_about_mechdome:
+				Intent intentAboutMD = new Intent();
+				intentAboutMD.setClass(this, AboutMechDomeActivity.class);
+				startActivity(intentAboutMD);
 				return true;
 
 			default:

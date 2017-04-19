@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mechdome.aboutmechdome.AboutMechDomeActivity;
 import com.repay.android.ContactsContractHelper;
 import com.repay.android.R;
 import com.repay.android.adddebt.AddDebtActivity;
@@ -149,6 +150,12 @@ public class FriendActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(this, SettingsActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.action_about_mechdome:
+                Intent intentAboutMD = new Intent();
+                intentAboutMD.setClass(this, AboutMechDomeActivity.class);
+                startActivity(intentAboutMD);
                 return true;
 
             case R.id.action_delete:

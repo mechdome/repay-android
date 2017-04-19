@@ -140,13 +140,13 @@ public class SettingsFragment extends PreferenceFragment implements CurrencyPick
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.pref_general);
         // Response for when the feedback option is used
-        findPreference("feedback").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                SendMail.sendFeedback(getActivity());
-                return true;
-            }
-        });
+//        findPreference("feedback").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                SendMail.sendFeedback(getActivity());
+//                return true;
+//            }
+//        });
         findPreference("currencies_list").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
